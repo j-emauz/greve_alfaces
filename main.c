@@ -2,6 +2,14 @@
 
 int main(int argc, char *argv[]){
 	char opcao='0';
+	if(argc!=2){
+		printf("Por favor insira o nome do ficheiro \n""Exemplo: ./comboios hahayes.txt\n");
+		exit(0);
+	}
+		
+	if(ler(argv/*,    */) == 0)
+		exit(0);
+		
 	do{
 		menu(&opcao);
 		switch(opcao)
