@@ -1,5 +1,23 @@
 #include "comboios.h"
 
+int ler(char *argv[]/*,    */){
+	FILE *fp;
+	char nome_de_ficheiro[MAX];
+	strcpy(nome_de_ficheiro, argv[1]);
+	
+	fp = fopen(nome_de_ficheiro, "r");
+	
+	if (fp == NULL){
+		printf("Erro na abertura do ficheiro! Verifique se está no sitio certo ou se o nome ta correto\n");
+		return 0;
+		
+	}else{
+		printf("%s\n", nome_de_ficheiro);
+		return 1;
+	}
+	fclose(fp);
+}
+
 void menu(char *opcao){
 	char linha[MAX];
 	char teste;
