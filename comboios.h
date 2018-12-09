@@ -55,6 +55,7 @@ void VerificaColisao(COMBOIO** queComboio, COMBOIO** queComboio2.....);
 
 /* ----------------------------------------------------------------------------------- */
 void menu(char *opcao);
+int ler(*argv[]/*,    */);
 
                              
  #endif
