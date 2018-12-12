@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1544642075 source:c:\users\pedro\dropbox\aulas\greve_alfaces\comboios.c
+	"comboios.h"
+
+1544642207 c:\users\pedro\dropbox\aulas\greve_alfaces\comboios.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1544633215 source:c:\users\pedro\dropbox\aulas\greve_alfaces\main.c
+	"comboios.h"
+

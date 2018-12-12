@@ -1,15 +1,19 @@
 #include "comboios.h"
 
+
 int main(int argc, char *argv[]){
+	int cores[DIMCores][DIMrgb]={ {255,0,0,255},/* vermelho*/
+                                  {0,0,255,255},/* azul    */
+                                  {255,255,0,255}/* AMARELO */};
+
 	char opcao='0';
 	if(argc!=2){
 		printf("Por favor insira o nome do ficheiro \n""Exemplo: ./comboios hahayes.txt\n");
 		exit(0);
 	}
-		
 	if(ler(argv/*,    */) == 0)
 		exit(0);
-		
+
 	do{
 		menu(&opcao);
 		switch(opcao)
