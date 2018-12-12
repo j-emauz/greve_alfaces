@@ -1,6 +1,6 @@
 #include "comboios.h"
 
-int ler(char *argv[]/*,    */){
+int ler(char *argv[]/*, PASSAR ESTRUTURAS */){
 	FILE *fp;
 	char nome_de_ficheiro[MAX];
 	strcpy(nome_de_ficheiro, argv[1]);
@@ -15,6 +15,8 @@ int ler(char *argv[]/*,    */){
 		printf("%s\n", nome_de_ficheiro);
 		return 1;
 	}
+	
+	/* funcao para criar/adicionar a lista*/
 	fclose(fp);
 }
 
