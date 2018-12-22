@@ -45,3 +45,53 @@ void menu(char *opcao){
 		menu(opcao);
 	}
 }
+
+COMBOIO* init_Comboios(){
+    COMBOIO*head = (COMBOIO*)calloc(1,sizeof(COMBOIO));
+    if (head==NULL){
+     printf("Falha na aquisiçao de bloco de memória, função initcomboio \n");
+     exit(0);
+    }
+    head->prox=NULL;
+    return head;
+}
+
+
+COMBOIO* add_Comboio(COMBOIO* head,CARRUAGEM dados){
+    COMBOIO* temp = head;
+
+    COMBOIO* novo = (COMBOIO*) calloc(1,sizeof(COMBOIO) );
+    if (novo == NULL){
+        printf("Falha na aquisiçao de bloco de memória \n");
+        return head;
+    }
+    novo->cart=dados;
+    novo->prox=NULL;
+
+    while (head->prox!=NULL ) //pretendemos inserir a carruagem sempre depois da anterior, ou seja, inserior sempre no fim da lista.
+        head=head->prox;
+    head->prox = novo;
+
+    return temp;
+}
+
+void mostraComboio(COMBOIO* topo) {
+    //WIP
+    printf("Da locomotiva...\n");
+    while(topo->prox!=NULL){
+        printf("%s \n",topo->prox->cart.ident);
+        printf("%d %d \n",topo->prox->cart.PosiNoGraf[0],topo->prox->cart.PosiNoGraf[1]);
+        printf("%p \n",topo->prox);
+        topo=topo->prox;
+    }
+    printf("à ultima carruagem \n");
+
+}
+
+void gera_cor(COMBOIO* Combo){
+    /*
+    para as estações
+
+
+    */
+}
