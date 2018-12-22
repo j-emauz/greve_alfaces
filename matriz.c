@@ -41,12 +41,12 @@ int main(int argc, char *argv[]){
         carro2.PosiNoGraf[0] = 120;
         carro2.PosiNoGraf[1] = 120;
 
+
     /* Criamos um comboio */
     add_Comboio(tchooBase,carro1);
-    mostraComboio(tchooBase);
     add_Comboio(tchooBase,carro2);
+    add_Comboio(tchooBase,carro2);
+    add_Comboio(tchooBase,carro1);
     mostraComboio(tchooBase);
-
-
  return 0;
  }

@@ -78,11 +78,13 @@ COMBOIO* add_Comboio(COMBOIO* head,CARRUAGEM dados){
 void mostraComboio(COMBOIO* topo) {
     //WIP
     printf("Da locomotiva...\n");
-    while(topo->prox!=NULL){
-        printf("%s \n",topo->prox->cart.ident);
-        printf("%d %d \n",topo->prox->cart.PosiNoGraf[0],topo->prox->cart.PosiNoGraf[1]);
-        printf("%p \n",topo->prox);
-        topo=topo->prox;
+
+    for(topo=topo->prox; topo!=NULL; topo=topo->prox)
+    {
+        printf("%s \n",topo->cart.ident);
+        printf("%d %d \n",topo->cart.PosiNoGraf[0],topo->cart.PosiNoGraf[1]);
+        printf("%p \n",topo);
+
     }
     printf("à ultima carruagem \n");
 
