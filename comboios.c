@@ -45,7 +45,7 @@ void menu(char *opcao){
 		menu(opcao);
 	}
 }
-
+/*-----------------COMBOIOS----------------------------*/
 COMBOIO* init_Comboios(){
     COMBOIO*head = (COMBOIO*)calloc(1,sizeof(COMBOIO));
     if (head==NULL){
@@ -77,7 +77,7 @@ COMBOIO* add_Comboio(COMBOIO* head,CARRUAGEM dados){
 
 void mostraComboio(COMBOIO* topo) {
     //WIP
-    printf("Da locomotiva...\n");
+    printf("\n Da locomotiva...\n\n");
 
     for(topo=topo->prox; topo!=NULL; topo=topo->prox)
     {
@@ -86,14 +86,76 @@ void mostraComboio(COMBOIO* topo) {
         printf("%p \n",topo);
 
     }
-    printf("à ultima carruagem \n");
+    printf("\n à ultima carruagem \n\n");
+
+}
+/*------------------LINHAS-------------------*/
+
+FERROVIA* init_Linha(){
+    FERROVIA*head = (FERROVIA*)calloc(1,sizeof(FERROVIA));
+    if (head==NULL){
+     printf("Falha na aquisiçao de bloco de memória, função init_Linha \n");
+     exit(0);
+    }
+    head->prox=NULL;
+    return head;
+}
+
+FERROVIA* add_Linha(FERROVIA* head,PONTOS dados){
+    FERROVIA* temp=head;
+    FERROVIA* novo=(FERROVIA*)calloc(1,sizeof(FERROVIA));
+    if (novo==NULL){
+        printf("Falha na alocação de memória, add_linha \n");
+        return 0;
+    }
+    novo->pont=dados;
+    novo->prox=NULL;
+    while(head->prox != NULL)
+        head=head->prox;
+
+    head->prox=novo;
+    return temp;
+}
+
+
+
+
+void mostraLinha(FERROVIA* topo) {
+    //WIP
+    printf("\n Da primeira estação.... \n\n");
+
+    for(topo=topo->prox; topo!=NULL; topo=topo->prox)
+    /* estou a usar uma espécie de "registo separado para a base",
+    em que o primeiro bloco pode ser usado para colocar dados temporariamente e aponta para a "locomotiva"*/
+    {
+        printf("endereço :  %p \n",topo);
+        printf("IDENTIFICADOR : %s \n",topo->pont.ident);
+    }
+    printf("\n ....à ultima estação \n\n");
 
 }
 
-void gera_cor(COMBOIO* Combo){
-    /*
-    para as estações
 
 
-    */
+
+
+
+
+
+
+
+/* funções de apoio*/
+
+void mostracores(int cores[DIMCores][DIMrgb]){
+    int i,j;
+    for(i=0;i<DIMCores;i++){
+        for(j=0;j<DIMrgb;j++)
+            printf("%d, ", cores[i][j]);
+
+        printf("\n");
+    };
+
 }
+/*------------------------------- */
+
+
