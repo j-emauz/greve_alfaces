@@ -131,12 +131,16 @@ void KonnectLinhas(FERROVIA* linhaSai, FERROVIA* linhaRecebe,char ID_Sai[],char 
     FERROVIA* ligaEntrada = linhaRecebe->RA;
     FERROVIA* ligaSaida = linhaSai->RA;
 
-    printf("ID saida: %p , ID entrada:  %p \n", ligaSaida, ligaEntrada);
+    //printf("ID saida: %p , ID entrada:  %p \n", ligaSaida, ligaEntrada);
     ligaEntrada = ProcuraID(ligaEntrada,ID_Entra);
     ligaSaida = ProcuraID(ligaSaida,ID_Sai);
 
+    if ( ligaSaida->pont.nSaidas == 2 || ligaEntrada->pont.nEntradas==2 ){
+        printf("ERRO, Capacidade de saídas do ponto %s excedido \n",&ID_Entra);
+        return 0;
+    }
 
-    printf("ID saida: %p , ID entrada:  %p \n", ligaSaida, ligaEntrada);
+    //printf("ID saida: %p , ID entrada:  %p \n", ligaSaida, ligaEntrada);
 
     if (ligaSaida -> RA==NULL) {
         printf("ligou por RA \n");
@@ -144,21 +148,19 @@ void KonnectLinhas(FERROVIA* linhaSai, FERROVIA* linhaRecebe,char ID_Sai[],char 
         ligaSaida ->pont.nSaidas++;
         ligaEntrada ->pont.nEntradas++;
 
-    }else if (ligaSaida -> RA != NULL){
+    }else {
        printf("ligou por RB \n");
         ligaSaida -> RB = ligaEntrada;
         ligaSaida ->pont.nSaidas++;
         ligaEntrada ->pont.nEntradas++;
 
-    }else if (ligaSaida -> RA != NULL && ligaSaida -> RB != NULL ){
-        printf("ERRO, Capacidade de saídas do ponto %s excedido \n",&ID_Entra);
     }
 }
 
 
 
 void mostraLinha(FERROVIA* topo) {
-    //WIP
+    //WIP Falta desenvolver a escolha de qual o percurso a seguir nas bifurcaçoes
     topo=topo->RA;
 
     //printf("\n Da primeira estação.... \n\n");
