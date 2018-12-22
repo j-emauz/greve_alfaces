@@ -97,7 +97,8 @@ FERROVIA* init_Linha(){
      printf("Falha na aquisiçao de bloco de memória, função init_Linha \n");
      exit(0);
     }
-    head->prox=NULL;
+    head->RA=NULL;
+    head->RB=NULL;
     return head;
 }
 
@@ -109,42 +110,114 @@ FERROVIA* add_Linha(FERROVIA* head,PONTOS dados){
         return 0;
     }
     novo->pont=dados;
-    novo->prox=NULL;
-    while(head->prox != NULL)
-        head=head->prox;
+    if (head->RA != NULL) // significa que a linha já existe.
+        novo->pont.nEntradas = 1;
 
-    head->prox=novo;
+    novo->RA=NULL;
+    novo->RB=NULL;
+    while(head->RA != NULL){
+        head=head->RA;
+    }
+    head->RA=novo;
+    head->pont.nSaidas = 1;
     return temp;
 }
 
+void KonnectLinhas(FERROVIA* linhaSai, FERROVIA* linhaRecebe,char ID_Sai[],char ID_Entra[]) {
+    // W-MUITO-IP
+    /*FAZER VERIFICAÇAO DE NUMERO DE SAIDAS E ENTRADAS*/
+    printf("ID saida: %s , ID entrada:  %s \n", ID_Sai, ID_Entra);
+
+    FERROVIA* ligaEntrada = linhaRecebe->RA;
+    FERROVIA* ligaSaida = linhaSai->RA;
+
+    printf("ID saida: %p , ID entrada:  %p \n", ligaSaida, ligaEntrada);
+    ligaEntrada = ProcuraID(ligaEntrada,ID_Entra);
+    ligaSaida = ProcuraID(ligaSaida,ID_Sai);
+
+
+    printf("ID saida: %p , ID entrada:  %p \n", ligaSaida, ligaEntrada);
+
+    if (ligaSaida -> RA==NULL) {
+        printf("ligou por RA \n");
+        ligaSaida -> RA = ligaEntrada;
+        ligaSaida ->pont.nSaidas++;
+        ligaEntrada ->pont.nEntradas++;
+
+    }else if (ligaSaida -> RA != NULL){
+       printf("ligou por RB \n");
+        ligaSaida -> RB = ligaEntrada;
+        ligaSaida ->pont.nSaidas++;
+        ligaEntrada ->pont.nEntradas++;
+
+    }else if (ligaSaida -> RA != NULL && ligaSaida -> RB != NULL ){
+        printf("ERRO, Capacidade de saídas do ponto %s excedido \n",&ID_Entra);
+    }
+}
 
 
 
 void mostraLinha(FERROVIA* topo) {
     //WIP
-    printf("\n Da primeira estação.... \n\n");
+    topo=topo->RA;
 
-    for(topo=topo->prox; topo!=NULL; topo=topo->prox)
+    //printf("\n Da primeira estação.... \n\n");
+
+    while(topo!=NULL)
     /* estou a usar uma espécie de "registo separado para a base",
     em que o primeiro bloco pode ser usado para colocar dados temporariamente e aponta para a "locomotiva"*/
     {
-        printf("endereço :  %p \n",topo);
-        printf("IDENTIFICADOR : %s \n",topo->pont.ident);
+
+        if(topo->RA != NULL){
+            printf("endereço :  %p \n",topo);
+            printf("IDENTIFICADOR : %s \n",topo->pont.ident);
+            printf("nEntradas %d  nSaidas %d \n", topo->pont.nEntradas,topo->pont.nSaidas);
+            topo=topo->RA;
+        }else{
+            printf("endereço :  %p \n",topo);
+            printf("IDENTIFICADOR  : %s \n",topo->pont.ident);
+            printf("nEntradas %d  nSaidas %d \n", topo->pont.nEntradas,topo->pont.nSaidas);
+            topo=topo->RB;
+            if(topo != NULL){
+
+                printf("endereço :  %p \n",topo);
+                printf("IDENTIFICADOR Cruzamento : %s \n",topo->pont.ident);
+                printf("nEntradas %d  nSaidas %d \n", topo->pont.nEntradas,topo->pont.nSaidas);
+                topo=topo->RB;
+            }
+
+        }
     }
-    printf("\n ....à ultima estação \n\n");
+    //printf("\n ....à ultima estação \n\n");
 
 }
 
-
-
-
-
-
-
-
-
-
 /* funções de apoio*/
+
+FERROVIA* ProcuraID(FERROVIA* ligaX,char ID_X[]){
+
+    FERROVIA* TempX = ligaX;
+    while( strcmp( TempX->pont.ident,ID_X ) != 0){
+
+        if(TempX->RA != NULL){
+            //printf("endereço :  %p \n",TempX);
+            printf("IDENTIFICADOR : %s \n",TempX->pont.ident);
+            TempX=TempX->RA;
+        }else{
+            //printf("endereço :  %p \n",TempX);
+            printf("IDENTIFICADOR : %s \n",TempX->pont.ident);
+            TempX=TempX->RB;
+        }
+        if(TempX==NULL){
+            printf("ERRO, ID de ponto nao encontrado, verificar ficheiro de config!");
+            exit(0);
+        }
+    }
+    printf("MATCH : %s \n",TempX->pont.ident);
+    printf(" AT Address : %p \n", TempX);
+    return TempX;
+ }
+
 
 void mostracores(int cores[DIMCores][DIMrgb]){
     int i,j;

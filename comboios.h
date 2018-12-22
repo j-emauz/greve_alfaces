@@ -27,10 +27,10 @@ typedef struct pontoslinha {
 }PONTOS;
 
 typedef struct ferrolinha {
+	char ident[5];
 	PONTOS pont;
-	struct ferrolinha *prox;
-	//struct ferrolinha *prox2;
-
+	struct ferrolinha *RA;// abreviado de ROTA A
+	struct ferrolinha *RB;
 }FERROVIA;
 
 typedef struct carr {
@@ -58,7 +58,8 @@ int ler(char *argv[]/*,    */); // pus char aqui.
 /*ADDS*/
 COMBOIO* add_Comboio(COMBOIO* head,CARRUAGEM dados); // no fim da lista
 FERROVIA* add_Linha(FERROVIA* head,PONTOS dados);
-//FERROVIA* add_LinhaN(FERROVIA* head, PONTOS dados,)
+
+void KonnectLinhas(FERROVIA* linhaSai, FERROVIA* linhaRecebe,char ID_Sai[],char ID_Entra[]);
 
 /*INITS*/
 COMBOIO* init_Comboios();
@@ -70,6 +71,7 @@ void mostraLinha(FERROVIA* topo);
 
 /*-------Funções de apoio\debug------*/
 
+FERROVIA* ProcuraID(FERROVIA* ligaX,char ID_X[]);
 
 void mostracores(int cores[DIMCores][DIMrgb]);
 

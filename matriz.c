@@ -47,7 +47,7 @@ int main(int argc, char *argv[]){
     FERROVIA* linha1= init_Linha();
     /* Com os seguintes pontos...*/
     PONTOS start;
-        strcpy(start.ident, "C0");
+        strcpy(start.ident, "A0");
         start.coord[ox]=100;
         start.coord[oy]=100;
         start.cor=AZUL;
@@ -56,7 +56,7 @@ int main(int argc, char *argv[]){
         start.nSaidas=0;
         start.nEntradas=0;
     PONTOS mid;
-        strcpy(mid.ident, "C1");
+        strcpy(mid.ident, "A1");
         mid.coord[ox]=200;
         mid.coord[oy]=100;
         mid.cor=PRETO;
@@ -65,7 +65,7 @@ int main(int argc, char *argv[]){
         mid.nSaidas=0;
         mid.nEntradas=0;
     PONTOS end;
-        strcpy(end.ident, "C2");
+        strcpy(end.ident, "A2");
         end.coord[ox]=300;
         end.coord[oy]=100;
         end.cor=VERMELHO;
@@ -80,24 +80,24 @@ int main(int argc, char *argv[]){
     add_Linha(linha1,end);
 
     mostraLinha(linha1);
-
-    int dibuga;
-    printf("insere um caracter");
-    scanf("%c",&dibuga);
+    printf("-------------------\n\n");
+    //char dibuga;
+   // printf("insere um caracter");
+    //scanf("%c",&dibuga);
     /*agora quero Ligar um ponto de outra Linha no meio da linha*/
 
     PONTOS start2;
-        strcpy(start2.ident, "A0");
+        strcpy(start2.ident, "B0");
         start2.coord[ox]=200;
         start2.coord[oy]=150;
         start2.cor=AMARELO;
         strcpy(start2.TipoDePonto, "EST");
         start2.Dimensao=dimEST;
         start2.nSaidas=0;
-        start2.nEntradas=1;
+        start2.nEntradas=0;
 
     PONTOS end2;
-        strcpy(end2.ident, "A1");
+        strcpy(end2.ident, "B1");
         end2.coord[ox]=100;
         end2.coord[oy]=150;
         end2.cor=AMARELO;
@@ -107,12 +107,55 @@ int main(int argc, char *argv[]){
         end2.nEntradas=0;
 
         FERROVIA* linha2= init_Linha();
-
+        /*Outra Linha*/
         add_Linha(linha2,start2);
         add_Linha(linha2,end2);
-
         mostraLinha(linha2);
+        printf("-------------------\n\n");
 
+
+        //scanf("%c",&dibuga);
+
+        KonnectLinhas(linha2, linha1, "B1", "A1");
+        printf("-------------------\n\n");
+        mostraLinha(linha1);
+        printf("-------------------\n\n");
+        mostraLinha(linha2);
+        printf("-------------------\n\n");
+
+        PONTOS start3;
+        strcpy(start3.ident, "C0");
+        start3.coord[ox]=200;
+        start3.coord[oy]=150;
+        start3.cor=AMARELO;
+        strcpy(start3.TipoDePonto, "EST");
+        start3.Dimensao=dimEST;
+        start3.nSaidas=0;
+        start3.nEntradas=0;
+
+    PONTOS end3;
+        strcpy(end3.ident, "C1");
+        end3.coord[ox]=100;
+        end3.coord[oy]=150;
+        end3.cor=AMARELO;
+        strcpy(end3.TipoDePonto, "EST");
+        end3.Dimensao=dimEST;
+        end3.nSaidas=0;
+        end3.nEntradas=0;
+
+        FERROVIA* linha3= init_Linha();
+        /*Outra Linha*/
+        add_Linha(linha3,start3);
+        add_Linha(linha3,end3);
+        mostraLinha(linha3);
+
+        KonnectLinhas(linha1,linha3,"A1","C0");
+        mostraLinha(linha1);
+        printf("-------------------\n\n");
+        mostraLinha(linha2);
+        printf("-------------------\n\n");
+        mostraLinha(linha3);
+        printf("-------------------\n\n");
 
  return 0;
  }
