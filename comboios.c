@@ -1,6 +1,6 @@
 #include "comboios.h"
 
-int ler(char *argv[]/*, PASSAR ESTRUTURAS */){
+int ler(char *argv[]/*, PASSAR ESTRUTURAS? */){
 	FILE *fp;
 	char nome_de_ficheiro[MAX];
 	strcpy(nome_de_ficheiro, argv[1]);
