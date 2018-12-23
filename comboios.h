@@ -14,6 +14,12 @@
 /*-------------------*/
 #define coordX 0 //
 #define coordY 1
+/*----------------------------------------LER--------------------------------------*/
+void passarespacos(char **aux);
+void lerjanela(char *aux, int *janx, int *jany);
+void lercomboio(char *aux);
+void lerlinha(char *aux);
+void lerligar(char *aux);
 
 /*--------------------------------------------------------------------------------*/
 typedef struct pontoslinha {
