@@ -1,4 +1,6 @@
 #include "comboios.h"
+SDL_Window* g_pWindow = NULL;
+SDL_Renderer* g_pRenderer = NULL;
 
 int ler(char *argv[]/*, PASSAR ESTRUTURAS */){
 	FILE *fp;
@@ -45,19 +47,20 @@ void menu(char *opcao){
 		menu(opcao);
 	}
 }
+
 /*-----------------COMBOIOS----------------------------*/
-COMBOIO* init_Comboios(){
+
+COMBOIO* inic_Comboios(){
     COMBOIO*head = (COMBOIO*)calloc(1,sizeof(COMBOIO));
     if (head==NULL){
-     printf("Falha na aquisiçao de bloco de memória, função initcomboio \n");
+     printf("Falha na aquisiçao de bloco de memória, função iniccomboio \n");
      exit(0);
     }
     head->prox=NULL;
     return head;
 }
 
-
-COMBOIO* add_Comboio(COMBOIO* head,CARRUAGEM dados){
+COMBOIO* addi_Comboio(COMBOIO* head,CARRUAGEM dados){
     COMBOIO* temp = head;
 
     COMBOIO* novo = (COMBOIO*) calloc(1,sizeof(COMBOIO) );
@@ -75,26 +78,43 @@ COMBOIO* add_Comboio(COMBOIO* head,CARRUAGEM dados){
     return temp;
 }
 
+COMBOIO* elimina_comboio(COMBOIO* head){
+    COMBOIO* temp;
+    head=head->prox;
+    while(head!=NULL){
+        temp = head;
+        head=head->prox;
+        free(temp);
+    }
+    return head;
+}
+
 void mostraComboio(COMBOIO* topo) {
     //WIP
+    if (topo==NULL){
+        printf("Comboio inexistente ! \n \n");
+        return;
+    }
+
     printf("\n Da locomotiva...\n\n");
 
     for(topo=topo->prox; topo!=NULL; topo=topo->prox)
     {
         printf("%s \n",topo->cart.ident);
         printf("%d %d \n",topo->cart.PosiNoGraf[0],topo->cart.PosiNoGraf[1]);
-        printf("%p \n",topo);
+        //printf("%p \n",(void*)topo);
 
     }
-    printf("\n à ultima carruagem \n\n");
+    printf("\n \n à ultima carruagem \n");
 
 }
+
 /*------------------LINHAS-------------------*/
 
-FERROVIA* init_Linha(){
+FERROVIA* inic_Linha(){
     FERROVIA*head = (FERROVIA*)calloc(1,sizeof(FERROVIA));
     if (head==NULL){
-     printf("Falha na aquisiçao de bloco de memória, função init_Linha \n");
+     printf("Falha na aquisiçao de bloco de memória, função inic_Linha \n");
      exit(0);
     }
     head->RA=NULL;
@@ -102,11 +122,11 @@ FERROVIA* init_Linha(){
     return head;
 }
 
-FERROVIA* add_Linha(FERROVIA* head,PONTOS dados){
+FERROVIA* addi_Linha(FERROVIA* head,PONTOS dados){
     FERROVIA* temp=head;
     FERROVIA* novo=(FERROVIA*)calloc(1,sizeof(FERROVIA));
     if (novo==NULL){
-        printf("Falha na alocação de memória, add_linha \n");
+        printf("Falha na alocação de memória, addi_linha \n");
         return 0;
     }
     novo->pont=dados;
@@ -131,75 +151,79 @@ void KonnectLinhas(FERROVIA* linhaSai, FERROVIA* linhaRecebe,char ID_Sai[],char 
     FERROVIA* ligaEntrada = linhaRecebe->RA;
     FERROVIA* ligaSaida = linhaSai->RA;
 
-    //printf("ID saida: %p , ID entrada:  %p \n", ligaSaida, ligaEntrada);
+    //printf("ID saida: %p , ID entrada:  %p \n", (void*)ligaSaida, (void*)ligaEntrada);
     ligaEntrada = ProcuraID(ligaEntrada,ID_Entra);
     ligaSaida = ProcuraID(ligaSaida,ID_Sai);
 
-    if ( ligaSaida->pont.nSaidas == 2 || ligaEntrada->pont.nEntradas==2 ){
-        printf("ERRO, Capacidade de saídas do ponto %s excedido \n",&ID_Entra);
-        return 0;
+    if ( ligaSaida->pont.nSaidas == 2){
+        printf("ERRO, Capacidade de saídas do ponto %s excedido \n",ID_Sai);
+        return;
+    }else if(ligaEntrada->pont.nEntradas==2){
+        printf("ERRO, Capacidade de entradas do ponto %s excedido \n",ID_Entra);
+        return;
     }
 
     //printf("ID saida: %p , ID entrada:  %p \n", ligaSaida, ligaEntrada);
 
-    if (ligaSaida -> RA==NULL) {
-        printf("ligou por RA \n");
-        ligaSaida -> RA = ligaEntrada;
+    if (ligaSaida -> RB==NULL) {
+        printf("ligou por RB \n");
+        ligaSaida -> RB = ligaEntrada;
         ligaSaida ->pont.nSaidas++;
         ligaEntrada ->pont.nEntradas++;
 
     }else {
-       printf("ligou por RB \n");
-        ligaSaida -> RB = ligaEntrada;
+        printf("ligou por RA \n");
+        ligaSaida -> RA = ligaEntrada;
         ligaSaida ->pont.nSaidas++;
         ligaEntrada ->pont.nEntradas++;
 
     }
 }
 
-
-
 void mostraLinha(FERROVIA* topo) {
-    //WIP Falta desenvolver a escolha de qual o percurso a seguir nas bifurcaçoes
+    //WIP
+    if (topo==NULL){
+        printf("Linha inexistente! \n\n");
+        return;
+    }
     topo=topo->RA;
-
     //printf("\n Da primeira estação.... \n\n");
-
     while(topo!=NULL)
     /* estou a usar uma espécie de "registo separado para a base",
     em que o primeiro bloco pode ser usado para colocar dados temporariamente e aponta para a "locomotiva"*/
     {
 
         if(topo->RA != NULL){
-            printf("endereço :  %p \n",topo);
+            printf("endereço :  %p \n",(void*)topo);
             printf("IDENTIFICADOR : %s \n",topo->pont.ident);
             printf("nEntradas %d  nSaidas %d \n", topo->pont.nEntradas,topo->pont.nSaidas);
             topo=topo->RA;
         }else{
-            printf("endereço :  %p \n",topo);
+            printf("endereço :  %p \n",(void*)topo);
             printf("IDENTIFICADOR  : %s \n",topo->pont.ident);
             printf("nEntradas %d  nSaidas %d \n", topo->pont.nEntradas,topo->pont.nSaidas);
             topo=topo->RB;
-            if(topo != NULL){
-
-                printf("endereço :  %p \n",topo);
-                printf("IDENTIFICADOR Cruzamento : %s \n",topo->pont.ident);
-                printf("nEntradas %d  nSaidas %d \n", topo->pont.nEntradas,topo->pont.nSaidas);
-                topo=topo->RB;
-            }
-
         }
     }
     //printf("\n ....à ultima estação \n\n");
 
 }
 
-/* funções de apoio*/
+FERROVIA* elimina_linha(FERROVIA* head){
+    FERROVIA* temp;
+    head=head->RA;
+    while(head!=NULL){
+        temp = head;
+        head=head->RA;
+        free(temp);
+    }
+    return head;
+}
+/* funções de apoio e debug*/
 
-FERROVIA* ProcuraID(FERROVIA* ligaX,char ID_X[]){
-
+FERROVIA* ProcuraID(FERROVIA* ligaX,char IDE_X[]){
     FERROVIA* TempX = ligaX;
-    while( strcmp( TempX->pont.ident,ID_X ) != 0){
+    while( strcmp( TempX->pont.ident,IDE_X ) != 0){
 
         if(TempX->RA != NULL){
             //printf("endereço :  %p \n",TempX);
@@ -216,10 +240,20 @@ FERROVIA* ProcuraID(FERROVIA* ligaX,char ID_X[]){
         }
     }
     printf("MATCH : %s \n",TempX->pont.ident);
-    printf(" AT Address : %p \n", TempX);
+    printf(" AT Address : %p \n",(void*)TempX);
     return TempX;
  }
 
+void trocaCarris(FERROVIA* PercursoA){
+    /*WIP*/
+    /*É importante correr esta função duas vezes, uma vez para o comboio passar e segunda depois do comboio passar,
+    porque se alguém apagar uma linha enquanto os carris estão trocados, em vez de apagar essa linha vai apagar uma mistura de linhas.
+    */
+    FERROVIA *temp1=PercursoA->RA;
+    PercursoA->RA = PercursoA->RB;
+    PercursoA->RB = temp1->RA;
+
+ }
 
 void mostracores(int cores[DIMCores][DIMrgb]){
     int i,j;
@@ -229,8 +263,53 @@ void mostracores(int cores[DIMCores][DIMrgb]){
 
         printf("\n");
     };
-
 }
 /*------------------------------- */
+/* JANELA GRAFICA */
+void AbreJanela(int dimJanela[]){
+
+    SDL_Init(SDL_INIT_EVERYTHING);
+    if(SDL_Init(SDL_INIT_EVERYTHING) >= 0)
+    {
+
+		g_pWindow = SDL_CreateWindow("ComboioSim", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+		dimJanela[coordX], dimJanela[coordY], SDL_WINDOW_SHOWN);
+	//se inicializa com sucesso inicia o render
+		if(g_pWindow != 0)
+			g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, 0);
+
+	}else {
+		exit(0);
+	}
+
+        //SDL_Error();
+
+        /* Select the color for drawing. It is set to red here. */
+        SDL_SetRenderDrawColor(g_pRenderer, 255, 0, 0, 255);
+
+        /* Clear the entire screen to our selected color. */
+        SDL_RenderClear(g_pRenderer);
+
+        /* Up until now everything was drawn behind the scenes.
+           This will show the new, red contents of the window. */
+        SDL_RenderPresent(g_pRenderer);
+
+        /* Give us time to see the window. */
+        SDL_Delay(5000);
+
+        /* Always be sure to clean up */
+        SDL_DestroyRenderer(g_pRenderer);
+        g_pRenderer=NULL;
+
+        SDL_Quit();
+
+
+        return;
+
+
+
+	// "limpa" a função de texto
+	//gfxPrimitivesSetFont(NULL, 0, 0);
+}
 
 

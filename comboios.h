@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL2_gfxPrimitives.h>
 #include "cores.h"
 //-------------------
 #define MAX 100
@@ -10,8 +12,8 @@
 #define dimEST 20
 #define dimVIA 10
 /*-------------------*/
-#define ox 0 //
-#define oy 1
+#define coordX 0 //
+#define coordY 1
 
 /*--------------------------------------------------------------------------------*/
 typedef struct pontoslinha {
@@ -56,26 +58,29 @@ typedef struct comboio{
 void menu(char *opcao);
 int ler(char *argv[]/*,    */); // pus char aqui.
 /*ADDS*/
-COMBOIO* add_Comboio(COMBOIO* head,CARRUAGEM dados); // no fim da lista
-FERROVIA* add_Linha(FERROVIA* head,PONTOS dados);
+COMBOIO* addi_Comboio(COMBOIO* head,CARRUAGEM dados); // no fim da lista
+FERROVIA* addi_Linha(FERROVIA* head,PONTOS dados);
 
 void KonnectLinhas(FERROVIA* linhaSai, FERROVIA* linhaRecebe,char ID_Sai[],char ID_Entra[]);
 
 /*INITS*/
-COMBOIO* init_Comboios();
-FERROVIA* init_Linha();
+COMBOIO* inic_Comboios();
+FERROVIA* inic_Linha();
 
 /*MOSTRAS*/
 void mostraComboio(COMBOIO* topo);
 void mostraLinha(FERROVIA* topo);
-
+/*DELETES*/
+COMBOIO* elimina_comboio(COMBOIO* head);
+FERROVIA* elimina_linha(FERROVIA* head);
 /*-------Funções de apoio\debug------*/
 
-FERROVIA* ProcuraID(FERROVIA* ligaX,char ID_X[]);
+FERROVIA* ProcuraID(FERROVIA* ligaX,char IDE_X[]);
 
 void mostracores(int cores[DIMCores][DIMrgb]);
-
-
+void trocaCarris(FERROVIA* PercursoA);
+/*------------SDL---------------------*/
+void AbreJanela(int dimJanela[]);
 
 /*-----------------------------------*/
 #endif
