@@ -1,13 +1,18 @@
 #include "comboios.h"
 
-void passarespacos(char **aux){
+char * passarespacos(char *aux){
+	aux = (strstr(aux, " ") + 1);
 	do{
-		*aux = (strstr(*aux, " ") + 1);
-	}while((*aux)[0] == ' ');
+		if((aux)[0] == '\0')
+			break;
+		
+
+	}while((aux[0] == ' '));
+	return aux;
 }
 
 void lerjanela(char *aux, int *janx, int *jany){
-	passarespacos(&aux);
+	aux = passarespacos(aux);
 	sscanf(aux, "%d %d", janx, jany);
 	 printf("Jan(x,y)= %d %d\n", *janx, *jany);//testar
 }
@@ -15,26 +20,26 @@ void lerjanela(char *aux, int *janx, int *jany){
 void lercomboio(char *aux){
 	char cident[3]={'\0'};
 	int raio;
-	char cor[MAX];
+	char corc[MAX]={'\0'};
 	char lident[5];
 	char pident[5];
 	int tempo;
 	
-	passarespacos(&aux);
+	aux = passarespacos(aux);
 	strncpy(cident, aux, strcspn(aux, " "));
 	 printf("ident = %s ", cident);
-	passarespacos(&aux);
+	aux = passarespacos(aux);
 	sscanf(aux, "%d", &raio);
 	 printf("numero carruagens = %d ", raio);
-	passarespacos(&aux);
-	strncpy(cor, aux, strcspn(aux, " "));
-	 printf("cor = %s ", cor);
-	/* memset(cor,0,strlen(cor));//faz clear da string*/
-	 passarespacos(&aux);
+	aux = passarespacos(aux);
+	strncpy(corc, aux, strcspn(aux, " "));
+	 printf("cor = %s ", corc);
+	memset(corc,0,strlen(corc));//faz clear da string*/
+	 aux = passarespacos(aux);
 	strncpy(lident, aux, strcspn(aux, " "));
-	passarespacos(&aux);
+	aux = passarespacos(aux);
 	strncpy(pident, aux, strcspn(aux, " "));
-	passarespacos(&aux);
+	aux = passarespacos(aux);
 	sscanf(aux, "%d", &tempo);
 	 printf("tempo = %d", tempo);
 	
@@ -47,18 +52,22 @@ void lerlinha(char *aux){
 	char cor[MAX];
 	char tipo[4];
 	
-	passarespacos(&aux);
+	printf("Haha yes\n");
+	fflush(stdout);
+	
+	aux = passarespacos(aux);
+	printf("Haha yes\n");
+	fflush(stdout);
 	strncpy(pident, aux, strcspn(aux, " "));
-	passarespacos(&aux);
+	aux = passarespacos(aux);
 	sscanf(aux, "%d %d", &posx, &posy);
-	passarespacos(&aux);
-	passarespacos(&aux);
+	aux = passarespacos(aux);
 	strncpy(cor, aux, strcspn(aux, " "));
-	passarespacos(&aux);
+	aux = passarespacos(aux);
 	strcpy(tipo, aux);
 	//Adicionar failsafe para cor e tipo errado (igual para comboio)
 	//passar para linha
-	/*-vestigios de quando a funcao tinha outro fgets dentro
+	//-vestigios de quando a funcao tinha outro fgets dentro
 	memset(pident,0,strlen(pident));
 	memset(cor,0,strlen(cor));
 	memset(tipo,0,strlen(tipo));
@@ -71,13 +80,13 @@ void lerligar(char *aux){
 	char lident1[5];
 	char pident1[5];
 	
-	passarespacos(&aux);
+	aux = passarespacos(aux);
 	strncpy(lident, aux, strcspn(aux, " "));
-	passarespacos(&aux);
+	aux = passarespacos(aux);
 	strncpy(pident, aux, strcspn(aux, " "));
-	passarespacos(&aux);
+	aux = passarespacos(aux);
 	strncpy(lident1, aux, strcspn(aux, " "));
-	passarespacos(&aux);
+	aux = passarespacos(aux);
 	strcpy(pident1, aux);
 	
 	//PASSAR PARA ESTRUTURAS
@@ -103,7 +112,7 @@ int ler(char *argv[]/*,    */){
 	else{
 		do{
 			fgets(linha, MAX, fp);
-			if((linha[0]!='%')&&(linha[0]!='\n')){
+			if((linha[0]!='%')&&(linha[0]!='\n')&&(linha[0]!='\0')){
 				aux = linha;
 				if(strspn(linha, "JANELA:")==strlen("JANELA:")){
 					lerjanela(aux, &janx, &jany);
@@ -113,7 +122,7 @@ int ler(char *argv[]/*,    */){
 					//funcao adicionar comboio
 				}
 				if((strspn(linha, "LINHA:") == strlen("LINHA:"))){
-					passarespacos(&aux);
+					aux = passarespacos(aux);
 					strcpy(lident, aux);
 					printf("%s \n", lident);//para testar
 					strcpy(fim_linha, "FIM_DE_LINHA: ");
@@ -121,7 +130,9 @@ int ler(char *argv[]/*,    */){
 					//printf("%s", fim_linha);
 					while(strstr(linha, fim_linha)==NULL){
 						fgets(linha, MAX, fp);
+						
 						if((linha[0]!='%')&&(linha[0]!='\n')){
+							aux = linha;
 							lerlinha(aux);
 						}
 					}
