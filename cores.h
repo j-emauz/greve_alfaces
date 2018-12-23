@@ -1,7 +1,7 @@
 #define R  0
 #define G  1
 #define B  2
-#define ALFA  3
+#define ALPA  3
 
 #define VERMELHO 0
 #define AZUL 1
