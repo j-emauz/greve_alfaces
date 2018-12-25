@@ -2,25 +2,7 @@
 SDL_Window* g_pWindow = NULL;
 SDL_Renderer* g_pRenderer = NULL;
 
-int ler(char *argv[]/*, PASSAR ESTRUTURAS? */){
-	FILE *fp;
-	char nome_de_ficheiro[MAX];
-	strcpy(nome_de_ficheiro, argv[1]);
-
-	fp = fopen(nome_de_ficheiro, "r");
-
-	if (fp == NULL){
-		printf("Erro na abertura do ficheiro! Verifique se está no sitio certo ou se o nome ta correto\n");
-		return 0;
-
-	}else{
-		printf("%s\n", nome_de_ficheiro);
-		return 1;
-	}
-
-	/* funcao para criar/adicionar a lista*/
-	fclose(fp);
-}
+//funcao ler em ler.c
 
 void menu(char *opcao){
 	char linha[MAX];
@@ -51,7 +33,7 @@ void menu(char *opcao){
 /*-----------------COMBOIOS----------------------------*/
 
 COMBOIO* inic_Comboios(){
-    COMBOIO*head = (COMBOIO*)calloc(1,sizeof(COMBOIO));
+    COMBOIO *head = (COMBOIO*)calloc(1,sizeof(COMBOIO));
     if (head==NULL){
      printf("Falha na aquisiçao de bloco de memória, função iniccomboio \n");
      exit(0);
@@ -86,7 +68,7 @@ COMBOIO* elimina_comboio(COMBOIO* head){
         head=head->prox;
         free(temp);
     }
-    return head;
+    return head;//n deve ser preciso returnar nada
 }
 
 void mostraComboio(COMBOIO* topo) {
@@ -98,7 +80,7 @@ void mostraComboio(COMBOIO* topo) {
 
     printf("\n Da locomotiva...\n\n");
 
-    for(topo=topo->prox; topo!=NULL; topo=topo->prox)
+    for(topo=topo->prox; topo!=NULL; topo=topo->prox)//aqui n e preciso inicializar topo... n deveria ser so for(;topo!=NULL;
     {
         printf("%s \n",topo->cart.ident);
         printf("%d %d \n",topo->cart.PosiNoGraf[0],topo->cart.PosiNoGraf[1]);
