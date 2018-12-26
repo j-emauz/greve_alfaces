@@ -249,6 +249,41 @@ void mostracores(int cores[DIMCores][DIMrgb]){
         printf("\n");
     };
 }
+
+int ConvCor(char corestr[]){
+    if ( strcmp(corestr,"VERMELHO") == 0 ){
+        return VERMELHO;
+
+    }else if ( strcmp(corestr,"AMARELO")  == 0 ) {
+        return AMARELO;
+
+    }else if ( strcmp(corestr,"ROXO")  == 0 ) {
+        return ROXO;
+
+    }else if ( strcmp(corestr,"VERDE")  == 0 ) {
+        return VERDE;
+
+    }else if ( strcmp(corestr,"CASTANHO")  == 0 ) {
+        return CASTANHO;
+
+    }else if ( strcmp(corestr,"PRETO")  == 0 ) {
+        return PRETO;
+
+    }else if ( strcmp(corestr,"CINZENTO")  == 0 ) {
+        return CINZENTO;
+
+    }else if ( strcmp(corestr,"BRANCO")  == 0 ) {
+        return BRANCO;
+
+    }else {
+        printf("Erro na conversão de cores, atenção utilizar só as cores especificadas:\n"
+               "VERMELHO, AZUL, AMARELO, CYAN, ROXO, VERDE, CASTANHO, PRETO, CINZENTO, BRANCO \n\n");
+        exit(0);
+    }
+}
+
+
+
 /*------------------------------- */
 /* JANELA GRAFICA */
 void AbreJanela(int dimJanela[]){
