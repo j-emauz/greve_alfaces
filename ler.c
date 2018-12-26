@@ -115,19 +115,19 @@ FERROVIA *lerlinha(char *aux, FERROVIA *head){
 }
 
 void lerligar(char *aux){
-	char lident[5];
-	char pident[5];
 	char lident1[5];
 	char pident1[5];
+	char lident2[5];
+	char pident2[5];
 
-	passarespacos(&aux);
-	strncpy(lident, aux, strcspn(aux, " "));
-	passarespacos(&aux);
-	strncpy(pident, aux, strcspn(aux, " "));
 	passarespacos(&aux);
 	strncpy(lident1, aux, strcspn(aux, " "));
 	passarespacos(&aux);
-	strcpy(pident1, aux);
+	strncpy(pident1, aux, strcspn(aux, " "));
+	passarespacos(&aux);
+	strncpy(lident2, aux, strcspn(aux, " "));
+	passarespacos(&aux);
+	strcpy(pident2, aux);
 
 	//PASSAR PARA ESTRUTURAS
 
