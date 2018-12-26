@@ -1,6 +1,6 @@
 #include "comboios.h"
 /*ISTO É UM FICHEIRO PARA TESTES, SUBSTITUI A MAIN*/
-
+#define sizetodos 100
 int main(int argc, char *argv[]){
 	int cores[DIMCores][DIMrgb]={ {255,0,0,255},// vermelho
                                   {0,0,255,255},// azul
@@ -12,7 +12,13 @@ int main(int argc, char *argv[]){
                                   {0,0,0,255},//Preto
                                   {128,128,128,255},//Cinzento
                                   {255,255,255,255}/*Branco*/};
-    /*CARRUAGEM carro1;
+
+
+COMBOIO* todos[sizetodos];
+
+FERROVIA* todas[sizetodos];
+
+    CARRUAGEM carro1;
         carro1.cor=VERMELHO;
         carro1.DimBOLAS = 10;
         strcpy(carro1.ident,"PE");
@@ -100,13 +106,13 @@ int main(int argc, char *argv[]){
         end3.nSaidas=0;
         end3.nEntradas=0;
 
-    COMBOIO *tchooBase =  inic_Comboios();
+    todos[0] =  inic_Comboios();
 
-    addi_Comboio(tchooBase,carro1);
-    addi_Comboio(tchooBase,carro2);
-    //addi_Comboio(tchooBase,carro2);
-    //addi_Comboio(tchooBase,carro1);
-    mostraComboio(tchooBase);
+    addi_Comboio(todos[0],carro1);
+    addi_Comboio(todos[0],carro2);
+    //addi_Comboio(todos[0],carro2);
+    //addi_Comboio(todos[0],carro1);
+    mostraComboio(todos[0]);
 
 
     FERROVIA* linha1= inic_Linha();
@@ -145,11 +151,11 @@ int main(int argc, char *argv[]){
     printf("-------------------\n\n");
     mostraLinha(linha3);
     printf("-------------------\n\n");
-/*
+
     linha1=elimina_linha(linha1);
     linha2=elimina_linha(linha2);
     linha3=elimina_linha(linha3);
-    tchooBase=elimina_comboio(tchooBase);
+    todos[0]=elimina_comboio(todos[0]);
 
     mostraLinha(linha1);
     printf("-------------------\n\n");
@@ -157,8 +163,8 @@ int main(int argc, char *argv[]){
     printf("-------------------\n\n");
     mostraLinha(linha3);
     printf("-------------------\n\n");
-    mostraComboio(tchooBase);
-*/
+    mostraComboio(todos[0]);
+
 
     int dimJan[2]= {860,600};
     AbreJanela(dimJan);

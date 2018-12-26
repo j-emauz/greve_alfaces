@@ -24,30 +24,30 @@ void lercomboio(char *aux){
 	char lident[5];
 	char pident[5];
 	int tempo;
-	
+
 	passarespacos(&aux);
 	strncpy(cident, aux, strcspn(aux, " "));
 	 printf("ident = %s ", cident);
-	 
+
 	passarespacos(&aux);
 	sscanf(aux, "%d", &raio);
 	 printf("numero carruagens = %d ", raio);
-	 
+
 	passarespacos(&aux);
 	strncpy(corc, aux, strcspn(aux, " "));
 	 printf("cor = %s ", corc);
-	 
+
 	memset(corc,0,strlen(corc));//faz clear da string
 	 passarespacos(&aux);
 	strncpy(lident, aux, strcspn(aux, " "));
-	
+
 	passarespacos(&aux);
 	strncpy(pident, aux, strcspn(aux, " "));
-	
+
 	passarespacos(&aux);
 	sscanf(aux, "%d", &tempo);
 	 printf("tempo = %d", tempo);
-	
+
 	//PASSAR DADOS PARA ESTRUTURA
 }
 
@@ -56,10 +56,10 @@ void lerlinha(char *aux){
 	int posx, posy;
 	char cor[MAX]={'\0'};
 	char tipo[4];
-	
+
 	 printf("Haha yes\n");
 	 fflush(stdout);
-	
+
 	strncpy(pident, aux, strcspn(aux, " "));
 	 printf(" %s ", pident);
 	passarespacos(&aux);
@@ -87,21 +87,21 @@ void lerligar(char *aux){
 	char pident[5];
 	char lident1[5];
 	char pident1[5];
-	
+
 	passarespacos(&aux);
 	strncpy(lident, aux, strcspn(aux, " "));
-	
+
 	passarespacos(&aux);
 	strncpy(pident, aux, strcspn(aux, " "));
-	
+
 	passarespacos(&aux);
 	strncpy(lident1, aux, strcspn(aux, " "));
-	
+
 	passarespacos(&aux);
 	strcpy(pident1, aux);
-	
+
 	//PASSAR PARA ESTRUTURAS
-	
+
 }
 
 int ler(char *argv[]/*,    */){
@@ -111,14 +111,14 @@ int ler(char *argv[]/*,    */){
 	char lident[5];
 	char fim_linha[MAX];
 	int janx, jany; //coordenadas da janela, provavelmente passar por endereço
-	
+
 	fp = fopen(argv[1], "r");
-	
+
 	if (fp == NULL){
 		printf("Erro na abertura do ficheiro! Verifique se está no sitio certo ou se o nome ta correto\n");
-		fclose(fp);
+		//fclose(fp);
 		return 0;
-		
+
 	}
 	else{
 		do{
@@ -152,12 +152,12 @@ int ler(char *argv[]/*,    */){
 					lerligar(aux);
 					//funcao ligar
 				}
-				
+
 			};
 		}while(feof(fp)==0);
 		fclose(fp);
 		return 1;
 	}
-	
+
 }
 

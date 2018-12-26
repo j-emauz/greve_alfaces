@@ -8,6 +8,7 @@
 #include "cores.h"
 //-------------------
 #define MAX 100
+#define MAXCOORD 2
 /*---------defines para linhas----------*/
 #define dimEST 20
 #define dimVIA 10
@@ -15,8 +16,10 @@
 #define coordX 0 //
 #define coordY 1
 /*----------------------------------------LER--------------------------------------*/
+
+int ler(char *argv[],COMBOIO* todos[],FERROVIA* todas[], int jancoord[]); // pus char aqui.
 void passarespacos(char **aux);
-void lerjanela(char *aux, int *janx, int *jany);
+void lerjanela(char *aux, int jancoord[]);
 void lercomboio(char *aux);
 void lerlinha(char *aux);
 void lerligar(char *aux);
@@ -47,10 +50,10 @@ typedef struct carr {
 	int nCarruagens;//numero de carruagens( dimensao)
 	int DimBOLAS; // raio em pixeis
 	int cor; /* cor do comboio é cor da locomotiva, primeira CARRUAGEM*/
-	char lident[5];	/*ex: *LinhaAB->ident e LinhaAB->p->ident ??
+	char PosInicial[10];	/*ex: *LinhaAB->ident e LinhaAB->p->ident ??
     ID da linha + ID do ponto */
-	char pident[5];
-    	int PosiNoGraf[2];//posição atual da carruagem\locomotiva
+	//char pident[5];
+    int PosiNoGraf[2];//posição atual da carruagem\locomotiva
 }CARRUAGEM;
 
 typedef struct comboio{
@@ -63,7 +66,6 @@ typedef struct comboio{
 
 /* ----------------------------------------------------------------------------------- */
 void menu(char *opcao);
-int ler(char *argv[]/*,    */); // pus char aqui.
 /*ADDS*/
 COMBOIO* addi_Comboio(COMBOIO* head,CARRUAGEM dados); // no fim da lista
 FERROVIA* addi_Linha(FERROVIA* head,PONTOS dados);
