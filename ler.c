@@ -11,51 +11,69 @@ void passarespacos(char **aux){
 	}
 }
 
-void lerjanela(char *aux, int *janx, int *jany){
+void lerjanela(char *aux, int jancoord[]){
 	passarespacos(&aux);
-	sscanf(aux, "%d %d", janx, jany);
+	sscanf(aux, "%d %d", jancoord[0], jancoord[1]);
 	 printf("Jan(x,y)= %d %d\n", *janx, *jany);//testar
 }
 
-void lercomboio(char *aux){
+COMBOIO *lercomboio(char *aux){
 	char cident[3]={'\0'};
 	int raio;
 	char corc[MAX]={'\0'};
+	int corn;
 	char lident[5];
 	char pident[5];
-	int tempo;
+	int nservico;
+	CARRUAGEM dados;
+	COMBOIO *thomas;
 	
 	passarespacos(&aux);
+	
 	strncpy(cident, aux, strcspn(aux, " "));
 	 printf("ident = %s ", cident);
-	 
 	passarespacos(&aux);
+	
 	sscanf(aux, "%d", &raio);
 	 printf("numero carruagens = %d ", raio);
-	 
 	passarespacos(&aux);
+	
 	strncpy(corc, aux, strcspn(aux, " "));
 	 printf("cor = %s ", corc);
-	 
-	memset(corc,0,strlen(corc));//faz clear da string
-	 passarespacos(&aux);
+	//passar corc para corn
+	memset(corc,0,strlen(corc));//faz clear da string*/
+	passarespacos(&aux);
+	
 	strncpy(lident, aux, strcspn(aux, " "));
-	
 	passarespacos(&aux);
+	
 	strncpy(pident, aux, strcspn(aux, " "));
-	
 	passarespacos(&aux);
-	sscanf(aux, "%d", &tempo);
-	 printf("tempo = %d", tempo);
 	
-	//PASSAR DADOS PARA ESTRUTURA
+	sscanf(aux, "%d", &nservico);
+	 printf("tempo = %d", nservico);
+	
+	strcpy(dados.cident, cident);
+	dados.nCarruagens = 4;
+	dados.DIimBOLAS = raio;
+	dados.cor = corn;
+	strcpy(dados.lident, lident);
+	strcpy(dados.pident, pident);
+	dados.nservico = nservico;
+	
+	thomas = inic_Comboio();
+	thomas = addi_Comboio(thomas, dados);
+	
+	return thomas;
 }
 
-void lerlinha(char *aux){
+FERRROVIA *lerlinha(char *aux, FERROVIA *head){
 	char pident[5];
 	int posx, posy;
 	char cor[MAX]={'\0'};
+	int cornum;
 	char tipo[4];
+	PONTO pontinho;
 	
 	 printf("Haha yes\n");
 	 fflush(stdout);
@@ -80,6 +98,19 @@ void lerlinha(char *aux){
 	memset(cor,0,strlen(cor));
 	memset(tipo,0,strlen(tipo));
 	//printf("%s", linha);*/
+	
+	
+	strcpy(pontinho.pident, pident);
+	pontinho.coord[0]=posx;
+	pontinho.coord[1]=posy;
+	pontinho.cor=cornum;
+	strcpy(pontinho.tipo, tipo);
+	pontinho.nEntradas = 0;
+	pontinho.nSaidas = 0;
+	
+	addi_Linha = (head, pontinho);
+	
+	return head;
 }
 
 void lerligar(char *aux){
@@ -90,13 +121,10 @@ void lerligar(char *aux){
 	
 	passarespacos(&aux);
 	strncpy(lident, aux, strcspn(aux, " "));
-	
 	passarespacos(&aux);
 	strncpy(pident, aux, strcspn(aux, " "));
-	
 	passarespacos(&aux);
 	strncpy(lident1, aux, strcspn(aux, " "));
-	
 	passarespacos(&aux);
 	strcpy(pident1, aux);
 	
@@ -104,19 +132,18 @@ void lerligar(char *aux){
 	
 }
 
-int ler(char *argv[]/*,    */){
+int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
 	FILE *fp;
 	char linha[MAX];
 	char *aux;
 	char lident[5];
 	char fim_linha[MAX];
-	int janx, jany; //coordenadas da janela, provavelmente passar por endereço
+	int i=0, j=0;
 	
 	fp = fopen(argv[1], "r");
 	
 	if (fp == NULL){
 		printf("Erro na abertura do ficheiro! Verifique se está no sitio certo ou se o nome ta correto\n");
-		fclose(fp);
 		return 0;
 		
 	}
@@ -126,16 +153,19 @@ int ler(char *argv[]/*,    */){
 			if((linha[0]!='%')&&(linha[0]!='\n')&&(linha[0]!='\0')){
 				aux = linha;
 				if(strspn(linha, "JANELA:")==strlen("JANELA:")){
-					lerjanela(aux, &janx, &jany);
+					lerjanela(aux, jancoord);
 				}
 				if(strspn(linha, "COMBOIO:")==strlen("COMBOIO:")){
-					lercomboio(aux);
+					todos[i] = lercomboio(aux);
+					i=i+1;
+
 					//funcao adicionar comboio
 				}
 				if((strspn(linha, "LINHA:") == strlen("LINHA:"))){
 					passarespacos(&aux);
 					strcpy(lident, aux);
 					 printf("%s \n", lident);//para testar
+					todas[j] = inic_Linha(lident);
 					strcpy(fim_linha, "FIM_DE_LINHA: ");
 					//strcat(fim_linha, lident);
 					 printf("%s", fim_linha);
@@ -143,10 +173,12 @@ int ler(char *argv[]/*,    */){
 						fgets(linha, MAX, fp);
 						if((linha[0]!='%')&&(linha[0]!='\n')){
 							aux = linha;
-							lerlinha(aux);
+							todas[j] = lerlinha(aux, todas[j]);
+							
 						}
 					}
 					memset(lident,0,strlen(lident));
+					j=j+1;
 				}
 				if(strspn(linha, "LIGAR:")==strlen("LIGAR:")){
 					lerligar(aux);
