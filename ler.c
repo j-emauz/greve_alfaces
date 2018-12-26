@@ -28,17 +28,22 @@ void lercomboio(char *aux){
 	passarespacos(&aux);
 	strncpy(cident, aux, strcspn(aux, " "));
 	 printf("ident = %s ", cident);
+	 
 	passarespacos(&aux);
 	sscanf(aux, "%d", &raio);
 	 printf("numero carruagens = %d ", raio);
+	 
 	passarespacos(&aux);
 	strncpy(corc, aux, strcspn(aux, " "));
 	 printf("cor = %s ", corc);
-	memset(corc,0,strlen(corc));//faz clear da string*/
+	 
+	memset(corc,0,strlen(corc));//faz clear da string
 	 passarespacos(&aux);
 	strncpy(lident, aux, strcspn(aux, " "));
+	
 	passarespacos(&aux);
 	strncpy(pident, aux, strcspn(aux, " "));
+	
 	passarespacos(&aux);
 	sscanf(aux, "%d", &tempo);
 	 printf("tempo = %d", tempo);
