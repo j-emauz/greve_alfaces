@@ -93,12 +93,13 @@ void mostraComboio(COMBOIO* topo) {
 
 /*------------------LINHAS-------------------*/
 
-FERROVIA* inic_Linha(){
+FERROVIA* inic_Linha(char lident[]){
     FERROVIA*head = (FERROVIA*)calloc(1,sizeof(FERROVIA));
     if (head==NULL){
      printf("Falha na aquisiçao de bloco de memória, função inic_Linha \n");
      exit(0);
     }
+    strcpy(lident, head->lident);
     head->RA=NULL;
     head->RB=NULL;
     return head;
@@ -117,6 +118,7 @@ FERROVIA* addi_Linha(FERROVIA* head,PONTOS dados){
 
     novo->RA=NULL;
     novo->RB=NULL;
+    strcpy(novo->lident, head->lident);
     while(head->RA != NULL){
         head=head->RA;
     }
@@ -125,17 +127,16 @@ FERROVIA* addi_Linha(FERROVIA* head,PONTOS dados){
     return temp;
 }
 
-void KonnectLinhas(FERROVIA* linhaSai, FERROVIA* linhaRecebe,char ID_Sai[],char ID_Entra[]) {
+void KonnectLinhas(FERROVIA* lista[], char lident_Sai[], char lident_Recebe[],char ID_Sai[],char ID_Entra[]) {
     // W-MUITO-IP
     /*FAZER VERIFICAÇAO DE NUMERO DE SAIDAS E ENTRADAS*/
     printf("ID saida: %s , ID entrada:  %s \n", ID_Sai, ID_Entra);
 
-    FERROVIA* ligaEntrada = linhaRecebe->RA;
-    FERROVIA* ligaSaida = linhaSai->RA;
-
+    FERROVIA* ligaEntrada = NULL;
+    FERROVIA* ligaSaida = NULL;
     //printf("ID saida: %p , ID entrada:  %p \n", (void*)ligaSaida, (void*)ligaEntrada);
-    ligaEntrada = ProcuraID(ligaEntrada,ID_Entra);
-    ligaSaida = ProcuraID(ligaSaida,ID_Sai);
+    ligaEntrada = ProcuraID(lista,lident_Recebe,ID_Entra);
+    ligaSaida = ProcuraID(lista,lident_Sai,ID_Sai);
 
     if ( ligaSaida->pont.nSaidas == 2){
         printf("ERRO, Capacidade de saídas do ponto %s excedido \n",ID_Sai);
@@ -147,15 +148,15 @@ void KonnectLinhas(FERROVIA* linhaSai, FERROVIA* linhaRecebe,char ID_Sai[],char 
 
     //printf("ID saida: %p , ID entrada:  %p \n", ligaSaida, ligaEntrada);
 
-    if (ligaSaida -> RB==NULL) {
-        printf("ligou por RB \n");
-        ligaSaida -> RB = ligaEntrada;
+    if (ligaSaida -> RA==NULL) {
+        printf("ligou por RA \n");
+        ligaSaida -> RA = ligaEntrada;
         ligaSaida ->pont.nSaidas++;
         ligaEntrada ->pont.nEntradas++;
 
     }else {
-        printf("ligou por RA \n");
-        ligaSaida -> RA = ligaEntrada;
+        printf("ligou por RB \n");
+        ligaSaida -> RB = ligaEntrada;
         ligaSaida ->pont.nSaidas++;
         ligaEntrada ->pont.nEntradas++;
 
@@ -191,32 +192,64 @@ void mostraLinha(FERROVIA* topo) {
 
 }
 
-FERROVIA* elimina_linha(FERROVIA* head){
-    FERROVIA* temp;
-    head=head->RA;
-    while(head!=NULL){
+void elimina_linha(FERROVIA* lista[], char lident []){
+    FERROVIA* temp = NULL;
+    FERROVIA* head = NULL;
+    int i = 0, j=0;
+    for(i=0;i<MAX;i++){
+        if(strcmp(lident,lista[i]->lident)==0){
+            head=lista[i];
+            break;
+        }
+    }
+
+    if (head==NULL){
+       printf("ERRO, ID de linha nao encontrado, verificar ficheiro de config!");
+       exit(0);
+    }
+
+    for(j=0;j<MAX;j++){
+        if(lista[j]==NULL)
+            break;
+    }
+
+    lista[i]=lista[j-1];
+    lista[j-1]=NULL;
+
+    while((head!=NULL)&&(strcmp(head->lident,lident)==0)){
         temp = head;
         head=head->RA;
         free(temp);
+        temp = NULL;
     }
-    return head;
 }
 /* funções de apoio e debug*/
 
-FERROVIA* ProcuraID(FERROVIA* ligaX,char IDE_X[]){
-    FERROVIA* TempX = ligaX;
-    while( strcmp( TempX->pont.pident,IDE_X ) != 0){
+FERROVIA* ProcuraID(FERROVIA* lista[],char lident[],char IDE_X[]){
+    int i=0;
+    FERROVIA* TempX=NULL;
+
+
+    for(i=0;i<MAX;i++){
+
+
+        printf("\n %s \n %s \n fgfg", lident, lista[i]->lident);
+        fflush(stdout);
+        if(strcmp(lident,lista[i]->lident)==0){
+            TempX=lista[i];
+            break;
+        }
+    }
+    if (TempX==NULL){
+       printf("ERRO, ID de linha nao encontrado, verificar ficheiro de config!");
+       exit(0);
+    }
+    while( (strcmp(TempX->lident,lident)==0) && (strcmp( TempX->pont.pident,IDE_X ) != 0 ) ){
 
         if(TempX->RA != NULL){
-            //printf("endereço :  %p \n",TempX);
             printf("IDENTIFICADOR : %s \n",TempX->pont.pident);
             TempX=TempX->RA;
         }else{
-            //printf("endereço :  %p \n",TempX);
-            printf("IDENTIFICADOR : %s \n",TempX->pont.pident);
-            TempX=TempX->RB;
-        }
-        if(TempX==NULL){
             printf("ERRO, ID de ponto nao encontrado, verificar ficheiro de config!");
             exit(0);
         }
@@ -248,11 +281,16 @@ void mostracores(int cores[DIMCores][DIMrgb]){
 }
 
 int ConvCor(char corestr[]){
+    printf("printei isto ::: === %s", corestr);
+
     if ( strcmp(corestr,"VERMELHO") == 0 ){
         return VERMELHO;
 
     }else if ( strcmp(corestr,"AMARELO")  == 0 ) {
         return AMARELO;
+
+    }else if ( strcmp(corestr,"CYAN")  == 0 ) {
+        return CYAN;
 
     }else if ( strcmp(corestr,"ROXO")  == 0 ) {
         return ROXO;
@@ -272,7 +310,10 @@ int ConvCor(char corestr[]){
     }else if ( strcmp(corestr,"BRANCO")  == 0 ) {
         return BRANCO;
 
-    }else {
+    }else if ( strcmp(corestr,"AZUL")  == 0 ) {
+        return AZUL;
+
+    } else {
         printf("Erro na conversão de cores, atenção utilizar só as cores especificadas:\n"
                "VERMELHO, AZUL, AMARELO, CYAN, ROXO, VERDE, CASTANHO, PRETO, CINZENTO, BRANCO \n\n");
         exit(0);

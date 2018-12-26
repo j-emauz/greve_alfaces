@@ -11,6 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="configu.txt" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
@@ -23,6 +24,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../comboios.h" />
+		<Unit filename="../ler.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../main.c">
 			<Option compilerVar="CC" />
 		</Unit>

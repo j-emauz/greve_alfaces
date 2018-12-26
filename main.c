@@ -6,12 +6,22 @@ int main(int argc, char *argv[]){
                                   {0,0,255,255},/* azul    */
                                   {255,255,0,255}/* AMARELO */};
 
+    COMBOIO* todos[MAX];
+    FERROVIA* todas[MAX];
+    int i=0;
+    int jancoord[2];
+    for (i=0;i<MAX;i++){
+        todos[i]=NULL;
+        todas[i]=NULL;
+    }
+
+
 	char opcao='0';
 	if(argc!=2){
 		printf("Por favor insira o nome do ficheiro \n""Exemplo: ./comboios hahayes.txt\n");
 		exit(0);
 	}
-	if(ler(argv/*,    */) == 0)
+	if(ler(argv,todos,todas,jancoord) == 0)
 		exit(0);
 
 	do{

@@ -2,11 +2,34 @@
 1544642075 source:c:\users\pedro\dropbox\aulas\greve_alfaces\comboios.c
 	"comboios.h"
 
+1544633215 h"
+
 1544642207 c:\users\pedro\dropbox\aulas\greve_alfaces\comboios.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 
+1544642207 
+
 1544633215 source:c:\users\pedro\dropbox\aulas\greve_alfaces\main.c
+	"comboios.h"
+
+1545852958 source:/media/sf_Prog/ProjetoFinal/main.c
+	"comboios.h"
+
+1545857961 /media/sf_Prog/ProjetoFinal/comboios.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL2_gfxPrimitives.h>
+	"cores.h"
+
+1545834837 /media/sf_Prog/ProjetoFinal/cores.h
+
+1545857856 source:/media/sf_Prog/ProjetoFinal/comboios.c
+	"comboios.h"
+
+1545857352 source:/media/sf_Prog/ProjetoFinal/ler.c
 	"comboios.h"
 

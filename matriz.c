@@ -145,7 +145,7 @@ int main(int argc, char *argv[]){
     printf("-------------------\n\n");
     mostraLinha(linha3);
     printf("-------------------\n\n");
-/*
+
     linha1=elimina_linha(linha1);
     linha2=elimina_linha(linha2);
     linha3=elimina_linha(linha3);

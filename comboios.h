@@ -63,21 +63,21 @@ void menu(char *opcao);
 COMBOIO* addi_Comboio(COMBOIO* head,CARRUAGEM dados); // no fim da lista
 FERROVIA* addi_Linha(FERROVIA* head,PONTOS dados);
 
-void KonnectLinhas(FERROVIA* linhaSai, FERROVIA* linhaRecebe,char ID_Sai[],char ID_Entra[]);
+void KonnectLinhas(FERROVIA* Lista[], char lident_Sai[], char lident_Recebe[],char ID_Sai[],char ID_Entra[]);
 
 /*INITS*/
 COMBOIO* inic_Comboios();
-FERROVIA* inic_Linha();
+FERROVIA* inic_Linha(char lident[]);
 
 /*MOSTRAS*/
 void mostraComboio(COMBOIO* topo);
 void mostraLinha(FERROVIA* topo);
 /*DELETES*/
 COMBOIO* elimina_comboio(COMBOIO* head);
-FERROVIA* elimina_linha(FERROVIA* head);
+void elimina_linha(FERROVIA* lista[], char lident[]);
 /*-------Funções de apoio\debug------*/
 int ConvCor(char corestr[]);
-FERROVIA* ProcuraID(FERROVIA* ligaX,char IDE_X[]);
+FERROVIA* ProcuraID(FERROVIA* lista[],char lident[],char IDE_X[]);
 
 void mostracores(int cores[DIMCores][DIMrgb]);
 void trocaCarris(FERROVIA* PercursoA);
@@ -87,7 +87,7 @@ void passarespacos(char **aux);
 void lerjanela(char *aux,int jancoor[]);
 COMBOIO* lercomboio(char *aux);
 FERROVIA* lerlinha(char *aux,FERROVIA *head);
-void lerligar(char *aux);
+void lerligar(char *aux, FERROVIA* todas[]);
 
 
 
