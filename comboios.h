@@ -47,16 +47,14 @@ typedef struct carr {
 	int nCarruagens;//numero de carruagens( dimensao)
 	int DimBOLAS; // raio em pixeis
 	int cor; /* cor do comboio é cor da locomotiva, primeira CARRUAGEM*/
-	/*ex: *LinhaAB->ident e LinhaAB->p->ident ??
+	char lident[5];	/*ex: *LinhaAB->ident e LinhaAB->p->ident ??
     ID da linha + ID do ponto */
-	
+	char pident[5];
     	int PosiNoGraf[2];//posição atual da carruagem\locomotiva
 }CARRUAGEM;
 
 typedef struct comboio{
 	CARRUAGEM cart;
-	char lident[5];	
-	char pident[5];
 	struct comboio *prox; // aponta para a prox carruagem
 }COMBOIO;
 
