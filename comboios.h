@@ -42,18 +42,21 @@ typedef struct ferrolinha {
 }FERROVIA;
 
 typedef struct carr {
-	int raio;//em pixeis
+	//int raio;//em pixeis
 	char ident[3];//BA
 	int nCarruagens;//numero de carruagens( dimensao)
 	int DimBOLAS; // raio em pixeis
 	int cor; /* cor do comboio é cor da locomotiva, primeira CARRUAGEM*/
-	char PosInicial[6];	/*ex: *LinhaAB->ident e LinhaAB->p->ident ??
+	/*ex: *LinhaAB->ident e LinhaAB->p->ident ??
     ID da linha + ID do ponto */
+	
     	int PosiNoGraf[2];//posição atual da carruagem\locomotiva
 }CARRUAGEM;
 
 typedef struct comboio{
 	CARRUAGEM cart;
+	char lident[5];	
+	char pident[5];
 	struct comboio *prox; // aponta para a prox carruagem
 }COMBOIO;
 
