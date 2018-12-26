@@ -24,7 +24,7 @@ void lerligar(char *aux);
 /*--------------------------------------------------------------------------------*/
 typedef struct pontoslinha {
 	//int nOrdem;
-	char ident[5];
+	char pident[5];
 	int coord[2];// em pixeis
 	int cor; // cor=VERMELHO
 	char TipoDePonto[4];//VIA, EST, ponto de via nao aparece ID no boneco
@@ -35,7 +35,7 @@ typedef struct pontoslinha {
 }PONTOS;
 
 typedef struct ferrolinha {
-	char ident[5];
+	char lident[5];
 	PONTOS pont;
 	struct ferrolinha *RA;// abreviado de ROTA A
 	struct ferrolinha *RB;
@@ -63,7 +63,7 @@ typedef struct comboio{
 
 /* ----------------------------------------------------------------------------------- */
 void menu(char *opcao);
-int ler(char *argv[]/*,    */); // pus char aqui.
+int ler(char *argv[], COMBOIOS *todos[], FERROVIA *todas[]); // pus char aqui.
 /*ADDS*/
 COMBOIO* addi_Comboio(COMBOIO* head,CARRUAGEM dados); // no fim da lista
 FERROVIA* addi_Linha(FERROVIA* head,PONTOS dados);
