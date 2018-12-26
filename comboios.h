@@ -14,12 +14,6 @@
 /*-------------------*/
 #define coordX 0 //
 #define coordY 1
-/*----------------------------------------LER--------------------------------------*/
-void passarespacos(char **aux);
-void lerjanela(char *aux, int *janx, int *jany);
-void lercomboio(char *aux);
-void lerlinha(char *aux);
-void lerligar(char *aux);
 
 /*--------------------------------------------------------------------------------*/
 typedef struct pontoslinha {
@@ -43,14 +37,15 @@ typedef struct ferrolinha {
 
 typedef struct carr {
 	//int raio;//em pixeis
-	char ident[3];//BA
+	char cident[3];//BA
 	int nCarruagens;//numero de carruagens( dimensao)
 	int DimBOLAS; // raio em pixeis
 	int cor; /* cor do comboio é cor da locomotiva, primeira CARRUAGEM*/
 	char lident[5];	/*ex: *LinhaAB->ident e LinhaAB->p->ident ??
     ID da linha + ID do ponto */
 	char pident[5];
-    	int PosiNoGraf[2];//posição atual da carruagem\locomotiva
+    int PosiNoGraf[2];//posição atual da carruagem\locomotiva
+    int nservico;
 }CARRUAGEM;
 
 typedef struct comboio{
@@ -63,7 +58,7 @@ typedef struct comboio{
 
 /* ----------------------------------------------------------------------------------- */
 void menu(char *opcao);
-int ler(char *argv[], COMBOIOS *todos[], FERROVIA *todas[]); // pus char aqui.
+
 /*ADDS*/
 COMBOIO* addi_Comboio(COMBOIO* head,CARRUAGEM dados); // no fim da lista
 FERROVIA* addi_Linha(FERROVIA* head,PONTOS dados);
@@ -81,11 +76,21 @@ void mostraLinha(FERROVIA* topo);
 COMBOIO* elimina_comboio(COMBOIO* head);
 FERROVIA* elimina_linha(FERROVIA* head);
 /*-------Funções de apoio\debug------*/
-
+int ConvCor(char corestr[]);
 FERROVIA* ProcuraID(FERROVIA* ligaX,char IDE_X[]);
 
 void mostracores(int cores[DIMCores][DIMrgb]);
 void trocaCarris(FERROVIA* PercursoA);
+/*----------------------------------------LER--------------------------------------*/
+int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]); // pus char aqui.
+void passarespacos(char **aux);
+void lerjanela(char *aux,int jancoor[]);
+COMBOIO* lercomboio(char *aux);
+FERROVIA* lerlinha(char *aux,FERROVIA *head);
+void lerligar(char *aux);
+
+
+
 /*------------SDL---------------------*/
 void AbreJanela(int dimJanela[]);
 
