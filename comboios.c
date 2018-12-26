@@ -82,7 +82,7 @@ void mostraComboio(COMBOIO* topo) {
 
     for(topo=topo->prox; topo!=NULL; topo=topo->prox)//aqui n e preciso inicializar topo... n deveria ser so for(;topo!=NULL;
     {
-        printf("%s \n",topo->cart.ident);
+        printf("%s \n",topo->cart.cident);
         printf("%d %d \n",topo->cart.PosiNoGraf[0],topo->cart.PosiNoGraf[1]);
         //printf("%p \n",(void*)topo);
 
@@ -93,12 +93,13 @@ void mostraComboio(COMBOIO* topo) {
 
 /*------------------LINHAS-------------------*/
 
-FERROVIA* inic_Linha(){
+FERROVIA* inic_Linha(char lident[]){
     FERROVIA*head = (FERROVIA*)calloc(1,sizeof(FERROVIA));
     if (head==NULL){
      printf("Falha na aquisiçao de bloco de memória, função inic_Linha \n");
      exit(0);
     }
+    strcpy(head->lident,lident);
     head->RA=NULL;
     head->RB=NULL;
     return head;
@@ -111,7 +112,9 @@ FERROVIA* addi_Linha(FERROVIA* head,PONTOS dados){
         printf("Falha na alocação de memória, addi_linha \n");
         return 0;
     }
+    strcpy(novo->lident,head->lident);
     novo->pont=dados;
+
     if (head->RA != NULL) // significa que a linha já existe.
         novo->pont.nEntradas = 1;
 
@@ -177,12 +180,12 @@ void mostraLinha(FERROVIA* topo) {
 
         if(topo->RA != NULL){
             printf("endereço :  %p \n",(void*)topo);
-            printf("IDENTIFICADOR : %s \n",topo->pont.ident);
+            printf("IDENTIFICADOR : %s \n",topo->pont.pident);
             printf("nEntradas %d  nSaidas %d \n", topo->pont.nEntradas,topo->pont.nSaidas);
             topo=topo->RA;
         }else{
             printf("endereço :  %p \n",(void*)topo);
-            printf("IDENTIFICADOR  : %s \n",topo->pont.ident);
+            printf("IDENTIFICADOR  : %s \n",topo->pont.pident);
             printf("nEntradas %d  nSaidas %d \n", topo->pont.nEntradas,topo->pont.nSaidas);
             topo=topo->RB;
         }
@@ -205,15 +208,15 @@ FERROVIA* elimina_linha(FERROVIA* head){
 
 FERROVIA* ProcuraID(FERROVIA* ligaX,char IDE_X[]){
     FERROVIA* TempX = ligaX;
-    while( strcmp( TempX->pont.ident,IDE_X ) != 0){
+    while( strcmp( TempX->pont.pident,IDE_X ) != 0){
 
         if(TempX->RA != NULL){
             //printf("endereço :  %p \n",TempX);
-            printf("IDENTIFICADOR : %s \n",TempX->pont.ident);
+            printf("IDENTIFICADOR : %s \n",TempX->pont.pident);
             TempX=TempX->RA;
         }else{
             //printf("endereço :  %p \n",TempX);
-            printf("IDENTIFICADOR : %s \n",TempX->pont.ident);
+            printf("IDENTIFICADOR : %s \n",TempX->pont.pident);
             TempX=TempX->RB;
         }
         if(TempX==NULL){
@@ -221,7 +224,7 @@ FERROVIA* ProcuraID(FERROVIA* ligaX,char IDE_X[]){
             exit(0);
         }
     }
-    printf("MATCH : %s \n",TempX->pont.ident);
+    printf("MATCH : %s \n",TempX->pont.pident);
     printf(" AT Address : %p \n",(void*)TempX);
     return TempX;
  }

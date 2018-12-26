@@ -15,14 +15,7 @@
 /*-------------------*/
 #define coordX 0 //
 #define coordY 1
-/*----------------------------------------LER--------------------------------------*/
 
-int ler(char *argv[],COMBOIO* todos[],FERROVIA* todas[], int jancoord[]); // pus char aqui.
-void passarespacos(char **aux);
-void lerjanela(char *aux, int jancoord[]);
-void lercomboio(char *aux);
-void lerlinha(char *aux);
-void lerligar(char *aux);
 
 /*--------------------------------------------------------------------------------*/
 typedef struct pontoslinha {
@@ -88,6 +81,15 @@ FERROVIA* ProcuraID(FERROVIA* ligaX,char IDE_X[]);
 
 void mostracores(int cores[DIMCores][DIMrgb]);
 void trocaCarris(FERROVIA* PercursoA);
+
+/*----------------------------------------LER--------------------------------------*/
+
+int ler(char *argv[],COMBOIO* todos[],FERROVIA* todas[], int jancoord[]); // pus char aqui.
+void passarespacos(char **aux);
+void lerjanela(char *aux, int jancoord[]);
+COMBOIO* lercomboio(char *aux);// passamo
+FERROVIA* lerlinha(char *aux);
+void lerligar(char *aux);
 /*------------SDL---------------------*/
 void AbreJanela(int dimJanela[]);
 
