@@ -90,10 +90,13 @@ void lerligar(char *aux){
 	
 	passarespacos(&aux);
 	strncpy(lident, aux, strcspn(aux, " "));
+	
 	passarespacos(&aux);
 	strncpy(pident, aux, strcspn(aux, " "));
+	
 	passarespacos(&aux);
 	strncpy(lident1, aux, strcspn(aux, " "));
+	
 	passarespacos(&aux);
 	strcpy(pident1, aux);
 	
