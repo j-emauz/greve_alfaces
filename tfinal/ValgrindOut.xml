@@ -12,8 +12,8 @@
   <line>Command: /media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal configu.txt</line>
 </preamble>
 
-<pid>3867</pid>
-<ppid>2898</ppid>
+<pid>1934</pid>
+<ppid>1542</ppid>
 <tool>memcheck</tool>
 
 <args>
@@ -32,7 +32,7 @@
 
 <status>
   <state>RUNNING</state>
-  <time>00:00:00:00.254 </time>
+  <time>00:00:00:00.325 </time>
 </status>
 
 <error>
@@ -50,44 +50,44 @@
       <line>846</line>
     </frame>
     <frame>
-      <ip>0x1098E2</ip>
+      <ip>0x109962</ip>
       <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
       <fn>ProcuraID</fn>
       <dir>/media/sf_Prog/ProjetoFinal</dir>
       <file>comboios.c</file>
-      <line>231</line>
+      <line>238</line>
     </frame>
     <frame>
-      <ip>0x109510</ip>
+      <ip>0x109546</ip>
       <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
       <fn>KonnectLinhas</fn>
       <dir>/media/sf_Prog/ProjetoFinal</dir>
       <file>comboios.c</file>
-      <line>136</line>
+      <line>138</line>
     </frame>
     <frame>
-      <ip>0x10A5E3</ip>
+      <ip>0x10A742</ip>
       <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
       <fn>lerligar</fn>
       <dir>/media/sf_Prog/ProjetoFinal</dir>
       <file>ler.c</file>
-      <line>147</line>
+      <line>169</line>
     </frame>
     <frame>
-      <ip>0x10A987</ip>
+      <ip>0x10AB36</ip>
       <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
       <fn>ler</fn>
       <dir>/media/sf_Prog/ProjetoFinal</dir>
       <file>ler.c</file>
-      <line>209</line>
+      <line>236</line>
     </frame>
     <frame>
-      <ip>0x10AAEC</ip>
+      <ip>0x10AC9E</ip>
       <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
       <fn>main</fn>
       <dir>/media/sf_Prog/ProjetoFinal</dir>
       <file>main.c</file>
-      <line>24</line>
+      <line>25</line>
     </frame>
   </stack>
   <auxwhat>Address 0x0 is not stack'd, malloc'd or (recently) free'd</auxwhat>
@@ -110,44 +110,44 @@
       <line>846</line>
     </frame>
     <frame>
-      <ip>0x1098E2</ip>
+      <ip>0x109962</ip>
       <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
       <fn>ProcuraID</fn>
       <dir>/media/sf_Prog/ProjetoFinal</dir>
       <file>comboios.c</file>
-      <line>231</line>
+      <line>238</line>
     </frame>
     <frame>
-      <ip>0x109510</ip>
+      <ip>0x109546</ip>
       <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
       <fn>KonnectLinhas</fn>
       <dir>/media/sf_Prog/ProjetoFinal</dir>
       <file>comboios.c</file>
-      <line>136</line>
+      <line>138</line>
     </frame>
     <frame>
-      <ip>0x10A5E3</ip>
+      <ip>0x10A742</ip>
       <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
       <fn>lerligar</fn>
       <dir>/media/sf_Prog/ProjetoFinal</dir>
       <file>ler.c</file>
-      <line>147</line>
+      <line>169</line>
     </frame>
     <frame>
-      <ip>0x10A987</ip>
+      <ip>0x10AB36</ip>
       <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
       <fn>ler</fn>
       <dir>/media/sf_Prog/ProjetoFinal</dir>
       <file>ler.c</file>
-      <line>209</line>
+      <line>236</line>
     </frame>
     <frame>
-      <ip>0x10AAEC</ip>
+      <ip>0x10AC9E</ip>
       <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
       <fn>main</fn>
       <dir>/media/sf_Prog/ProjetoFinal</dir>
       <file>main.c</file>
-      <line>24</line>
+      <line>25</line>
     </frame>
   </stack>
 </fatal_signal>
@@ -155,7 +155,7 @@
 
 <status>
   <state>FINISHED</state>
-  <time>00:00:00:01.485 </time>
+  <time>00:00:00:01.831 </time>
 </status>
 
 <errorcounts>

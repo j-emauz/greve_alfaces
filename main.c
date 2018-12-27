@@ -2,6 +2,7 @@
 
 
 int main(int argc, char *argv[]){
+
 	int cores[DIMCores][DIMrgb]={ {255,0,0,255},/* vermelho*/
                                   {0,0,255,255},/* azul    */
                                   {255,255,0,255}/* AMARELO */};

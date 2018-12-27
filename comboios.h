@@ -7,7 +7,8 @@
 #include <SDL2/SDL2_gfxPrimitives.h>
 #include "cores.h"
 //-------------------
-#define MAX 100
+#define MAX 200
+
 /*---------defines para linhas----------*/
 #define dimEST 20
 #define dimVIA 10
@@ -78,6 +79,8 @@ void elimina_linha(FERROVIA* lista[], char lident[]);
 /*-------Funções de apoio\debug------*/
 int ConvCor(char corestr[]);
 FERROVIA* ProcuraID(FERROVIA* lista[],char lident[],char IDE_X[]);
+
+char debug;
 
 void mostracores(int cores[DIMCores][DIMrgb]);
 void trocaCarris(FERROVIA* PercursoA);

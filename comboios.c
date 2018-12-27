@@ -130,7 +130,7 @@ FERROVIA* addi_Linha(FERROVIA* head,PONTOS dados){
 void KonnectLinhas(FERROVIA* lista[], char lident_Sai[], char lident_Recebe[],char ID_Sai[],char ID_Entra[]) {
     // W-MUITO-IP
     /*FAZER VERIFICAÇAO DE NUMERO DE SAIDAS E ENTRADAS*/
-    printf("ID saida: %s , ID entrada:  %s \n", ID_Sai, ID_Entra);
+    printf("(connect linhas)ID saida: %s , ID entrada:  %s \n", ID_Sai, ID_Entra);
 
     FERROVIA* ligaEntrada = NULL;
     FERROVIA* ligaSaida = NULL;
@@ -226,20 +226,33 @@ void elimina_linha(FERROVIA* lista[], char lident []){
 /* funções de apoio e debug*/
 
 FERROVIA* ProcuraID(FERROVIA* lista[],char lident[],char IDE_X[]){
-    int i=0;
+    int i=0,k=0;
+
     FERROVIA* TempX=NULL;
+   // printf("AT Procura ID, lident lista is %s \n", lista[i]->lident);
+    //printf("AT Procura ID, lident is %s \n", lident);
 
 
     for(i=0;i<MAX;i++){
 
+        printf("AT Procura ID inside FOR, i = %d, lident lista is %s 222222222222 \n",i, lista[i]->lident);
+        printf("AT Procura ID inside FOR, lident is %s 2 \n", lident);
+         scanf("%c",&debug);
+         k = strcmp(lident,lista[i]->lident);
+         printf ("k = %d \n", k );
 
-        printf("\n %s \n %s \n fgfg", lident, lista[i]->lident);
-        fflush(stdout);
-        if(strcmp(lident,lista[i]->lident)==0){
+
+        if( k ==0 ) {
+            //printf (" %d \n",strcmp(lident,lista[i]->lident)==0 );
             TempX=lista[i];
-            break;
+            printf("match em TempX = %p de lista[%d] \n",TempX,i);
+            scanf("%c",&debug);
+            //break;
         }
     }
+
+
+
     if (TempX==NULL){
        printf("ERRO, ID de linha nao encontrado, verificar ficheiro de config!");
        exit(0);
@@ -281,7 +294,7 @@ void mostracores(int cores[DIMCores][DIMrgb]){
 }
 
 int ConvCor(char corestr[]){
-    printf("printei isto ::: === %s", corestr);
+    //printf("printei isto ::: === %s", corestr);
 
     if ( strcmp(corestr,"VERMELHO") == 0 ){
         return VERMELHO;
@@ -319,7 +332,6 @@ int ConvCor(char corestr[]){
         exit(0);
     }
 }
-
 
 
 /*------------------------------- */

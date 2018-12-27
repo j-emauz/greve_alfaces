@@ -1,20 +1,28 @@
 #include "comboios.h"
 
+
 void passarespacos(char **aux){
+/*
+    Passa o endereço de um vetor "string".
+    até encontrar um espaço vai avançando um char
+*/
+    printf("aux0 : %s \n",*aux);//OK
 	if(strstr(*aux, " ")!=NULL){
 		do{
+
 			if((*aux)[0] == '\0')
 				break;
 			*aux = (strstr(*aux, " ") + 1);
 
 		}while(((*aux)[0] == ' ')&&((*aux)[0]!='\n'));
+		printf("aux Passa espaços : %s \n",*aux);// OK
 	}
 }
 
 void lerjanela(char *aux, int jancoord[]){
 	passarespacos(&aux);
 	sscanf(aux, "%d %d", &jancoord[0], &jancoord[1]);
-	 printf("Jan(x,y)= %d %d\n", jancoord[0], jancoord[1]);//testar
+	 printf("Jan(x,y)= %d %d \n", jancoord[0], jancoord[1]);//OK
 }
 
 COMBOIO *lercomboio(char *aux){
@@ -54,11 +62,14 @@ COMBOIO *lercomboio(char *aux){
 	 printf("tempo = %d", nservico);
 
 	strcpy(dados.cident, cident);
+
 	dados.nCarruagens = 4;
 	dados.DimBOLAS = raio;
 	dados.cor = corn;
+
 	strcpy(dados.lident, lident);
 	strcpy(dados.pident, pident);
+
 	dados.nservico = nservico;
 
 	thomas = inic_Comboios();
@@ -68,32 +79,46 @@ COMBOIO *lercomboio(char *aux){
 }
 
 FERROVIA *lerlinha(char *aux, FERROVIA *head){
-	char pident[5];
-	int posx, posy;
+	char pident[5]={'\0'};
+	int posx =0, posy=0;
 	char cor[MAX]={'\0'};
-	int cornum;
-	char tipo[4];
+	int cornum;//
+	char tipo[4]={'\0'};//
 	PONTOS pontinho;
 
-	 printf("Haha yes\n");
+	// printf("Haha yes\n");
 	 fflush(stdout);
+    strncpy(pident, aux, strcspn(aux, " "));
+	//strncpy(pontinho.pident, aux, strcspn(aux, " ")); //porque nao logo assim?
 
-	strncpy(pident, aux, strcspn(aux, " "));
-    //printf(" %s ", pident);
+    strcpy(pontinho.pident, pident);
+
+	//printf(" PIDENT  1 %s \n", pident);//ESTÁ OK
+    printf(" PIDENT  3 %s \n", pontinho.pident);
+
+
 	passarespacos(&aux);
-	sscanf(aux, "%d %d", &posx, &posy);
-	 printf(" %d %d ", posx, posy);
+
+	sscanf(aux, "%d %d", &pontinho.coord[0]/*posx*/, &pontinho.coord[1]/*posy*/);
+
+
+	printf(" %d %d \n",pontinho.coord[0],pontinho.coord[1] /*posx, posy*/);
 	passarespacos(&aux);
+	//2 vezes?
 	passarespacos(&aux);
 	strncpy(cor, aux, strcspn(aux, " "));
-	 printf(" %s ", cor);
+	printf(" %s \n", cor);
 
-    cornum = ConvCor(cor);
-
+    pontinho.cor = ConvCor(cor);
+    //cornum = ConvCor(cor);
 	passarespacos(&aux);
-	strcpy(tipo, aux);
-	 printf(" %s \n", tipo);
-	 printf("%s \n", aux);
+
+	strcpy(pontinho.TipoDePonto, aux);// problematico
+
+
+printf(" PIDENT depois strncopy2 %s \n", pontinho.pident);
+	 printf("tipo %s \n", pontinho.TipoDePonto);
+	 printf("aux %s \n", aux);
 	//Adicionar failsafe para cor e tipo errado (igual para comboio)
 	//passar para linha
 	//-vestigios de quando a funcao tinha outro fgets dentro
@@ -101,11 +126,12 @@ FERROVIA *lerlinha(char *aux, FERROVIA *head){
 	//printf("%s", linha);*/
 
 
-	strcpy(pontinho.pident, pident);
+
+
 	pontinho.coord[0]=posx;
 	pontinho.coord[1]=posy;
-	pontinho.cor=cornum;
-	strcpy(pontinho.TipoDePonto, tipo);
+	//pontinho.cor=cornum;
+	//strcpy(pontinho.TipoDePonto, tipo);
 	pontinho.nEntradas = 0;
 	pontinho.nSaidas = 0;
 
@@ -131,17 +157,22 @@ void lerligar(char *aux, FERROVIA* todas[]){
 
 	passarespacos(&aux);
 	printf("%s \n", aux);
+
 	strncpy(lident1, aux, strcspn(aux, " "));
 	passarespacos(&aux);
 	printf("%s \n", aux);
+
 	strncpy(pident1, aux, strcspn(aux, " "));
 	passarespacos(&aux);
 	printf("%s \n", aux);
+
 	strncpy(lident2, aux, strcspn(aux, " "));
 	passarespacos(&aux);
 	printf("%s \n", aux);
+
 	strcpy(pident2, aux);
 	printf("%s \n", aux);
+
 	printf("%s %s %s %s", lident1, pident1, lident2, pident2);
 
     KonnectLinhas(todas,lident1,lident2,pident1,pident2);
@@ -150,9 +181,9 @@ void lerligar(char *aux, FERROVIA* todas[]){
 }
 
 int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
-	FILE *fp;
+	FILE *fp = NULL;
 	char linha[MAX];
-	char *aux;
+	char *aux = NULL;
 	char lident[5];
 	char fim_linha[MAX];
 	int i=0, j=0;
@@ -166,31 +197,45 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
 	}
 	else{
 		do{
-			fgets(linha, MAX, fp);
+			fgets(linha, MAX, fp);//lê e avança linha no ficheiro de config
+       /*     for(i=0;i<MAX;i++){
+                if (linha[i] == '\n')
+                    //linha[i] = '\0';
+            }*/
+
 			if((linha[0]!='%')&&(linha[0]!='\n')&&(linha[0]!='\0')){
-				aux = linha;
 
+				//printf("no aux = linha. linha = %s \n",linha); //OK
+				aux = linha;//aux aponta para o primeiro elemento de linha.
+                gets(&debug);
 				if(strspn(linha, "JANELA:")==strlen("JANELA:")){
-					lerjanela(aux, jancoord);
+					printf("no aux = janela. linha = %s \n",linha); //OK
+					lerjanela(aux, jancoord);//adquire dados da janela
 				}
-
 				if(strspn(linha, "COMBOIO:")==strlen("COMBOIO:")){
-					todos[i] = lercomboio(aux);
+					printf("no aux = comboio. linha = %s \n",linha); //OK
+					todos[i] = lercomboio(aux);//coloca um apontador para comboio no vetor de apontadores todos, posição i
 					i=i+1;
 
 					//funcao adicionar comboio
 				}
-				if((strspn(linha, "LINHA:") == strlen("LINHA:"))){
-
-					passarespacos(&aux);
-					strcpy(lident, aux);
-                    printf("%s \n", lident);//para testar
+				if(strspn(linha, "LINHA:") == strlen("LINHA:")){
+                printf("no aux = linha. linha = %s \n",linha); //OK
+					passarespacos(&aux);//avança aux até chegar a um char diff de " "
+                    printf(" && aux %s \n ", aux);//para testar
+					strncpy(lident, aux, strcspn(aux, "\0"));//mudei
+                    printf("Lident %s \n", lident);//para testar
+                    gets(&debug);
 
 					todas[j] = inic_Linha(lident);
 					strcpy(fim_linha, "FIM_DE_LINHA: ");
 					//strcat(fim_linha, lident);
 					printf("%s", fim_linha);
 					fgets(linha, MAX, fp);
+                    /*for(i=0;i<MAX;i++){
+                        if (linha[i] == '\n')
+                            linha[i] = '\0';
+                    }*/
 
 					while(strstr(linha, fim_linha)==NULL){
 
@@ -199,13 +244,21 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
 							todas[j] = lerlinha(aux, todas[j]);
 
 						}
+
 						fgets(linha, MAX, fp);
+				/*		for(i=0;i<MAX;i++){
+                            if (linha[i] == '\n')
+                          //      linha[i] = '\0';
+                        }
+*/
 					}
 					memset(lident,0,strlen(lident));
+					//gets(&debug);
 					mostraLinha(todas[j]);
 					j=j+1;
 				}
 				if(strspn(linha, "LIGAR:")==strlen("LIGAR:")){
+					printf("no aux = linhaligar . linha = %s \n",linha); //OK
 					lerligar(aux,todas);
 					//funcao ligar
 				}
@@ -217,4 +270,3 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
 	}
 
 }
-
