@@ -99,7 +99,7 @@ FERROVIA* inic_Linha(char lident[]){
      printf("Falha na aquisiçao de bloco de memória, função inic_Linha \n");
      exit(0);
     }
-    strcpy(lident, head->lident);
+    strcpy(head->lident, lident);
     head->RA=NULL;
     head->RB=NULL;
     return head;
