@@ -104,7 +104,6 @@ FERROVIA *lerlinha(char *aux, FERROVIA *head){
 
 	printf(" %d %d \n",pontinho.coord[0],pontinho.coord[1] /*posx, posy*/);
 	passarespacos(&aux);
-	//2 vezes?
 	passarespacos(&aux);
 	strncpy(cor, aux, strcspn(aux, " "));
 	printf(" %s \n", cor);
@@ -207,7 +206,7 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
 
 				//printf("no aux = linha. linha = %s \n",linha); //OK
 				aux = linha;//aux aponta para o primeiro elemento de linha.
-                gets(&debug);
+//                gets(&debug);
 				if(strspn(linha, "JANELA:")==strlen("JANELA:")){
 					printf("no aux = janela. linha = %s \n",linha); //OK
 					lerjanela(aux, jancoord);//adquire dados da janela
@@ -225,12 +224,12 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
                     printf(" && aux %s \n ", aux);//para testar
 					strncpy(lident, aux, strcspn(aux, "\0"));//mudei
                     printf("Lident %s \n", lident);//para testar
-                    gets(&debug);
+//                    gets(&debug);
 
 					todas[j] = inic_Linha(lident);
 					strcpy(fim_linha, "FIM_DE_LINHA: ");
 					//strcat(fim_linha, lident);
-					printf("%s", fim_linha);
+					printf("%s <-string fim de linha \n", fim_linha);
 					fgets(linha, MAX, fp);
                     /*for(i=0;i<MAX;i++){
                         if (linha[i] == '\n')

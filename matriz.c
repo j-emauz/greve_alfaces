@@ -12,26 +12,26 @@ int main(int argc, char *argv[]){
                                   {0,0,0,255},//Preto
                                   {128,128,128,255},//Cinzento
                                   {255,255,255,255}/*Branco*/};
-    /*CARRUAGEM carro1;
+    CARRUAGEM carro1;
         carro1.cor=VERMELHO;
         carro1.DimBOLAS = 10;
-        strcpy(carro1.ident,"PE");
+        strcpy(carro1.cident,"PE");
         carro1.nCarruagens = 2;
-        strcpy(carro1.PosInicial, "L1W1");
+        strcpy(carro1.pident, "L1W1");
         carro1.PosiNoGraf[coordX] = 100;
         carro1.PosiNoGraf[coordY] = 120;
 
     CARRUAGEM carro2;
         carro2.cor=AZUL;
         carro2.DimBOLAS = 10;
-        strcpy(carro2.ident,"PE");
+        strcpy(carro2.cident,"PE");
         carro2.nCarruagens = 2;
-        strcpy(carro2.PosInicial, "L1W1");
+        strcpy(carro2.pident, "LD");
         carro2.PosiNoGraf[coordX] = 120;
         carro2.PosiNoGraf[coordY] = 120;
 
     PONTOS start;
-        strcpy(start.ident, "A0");
+        strcpy(start.pident, "A0");
         start.coord[coordX]=100;
         start.coord[coordY]=100;
         start.cor=AZUL;
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]){
         start.nEntradas=0;
 
     PONTOS mid;
-        strcpy(mid.ident, "A1");
+        strcpy(mid.pident, "A1");
         mid.coord[coordX]=200;
         mid.coord[coordY]=100;
         mid.cor=PRETO;
@@ -51,7 +51,7 @@ int main(int argc, char *argv[]){
         mid.nEntradas=0;
 
     PONTOS end;
-        strcpy(end.ident, "A2");
+        strcpy(end.pident, "A2");
         end.coord[coordX]=300;
         end.coord[coordY]=100;
         end.cor=VERMELHO;
@@ -61,7 +61,7 @@ int main(int argc, char *argv[]){
         end.nEntradas=0;
 
     PONTOS start2;
-        strcpy(start2.ident, "B0");
+        strcpy(start2.pident, "B0");
         start2.coord[coordX]=200;
         start2.coord[coordY]=150;
         start2.cor=AMARELO;
@@ -71,7 +71,7 @@ int main(int argc, char *argv[]){
         start2.nEntradas=0;
 
     PONTOS end2;
-        strcpy(end2.ident, "B1");
+        strcpy(end2.pident, "B1");
         end2.coord[coordX]=100;
         end2.coord[coordY]=150;
         end2.cor=AMARELO;
@@ -81,7 +81,7 @@ int main(int argc, char *argv[]){
         end2.nEntradas=0;
 
     PONTOS start3;
-        strcpy(start3.ident, "C0");
+        strcpy(start3.pident, "C0");
         start3.coord[coordX]=200;
         start3.coord[coordY]=150;
         start3.cor=AMARELO;
@@ -91,7 +91,7 @@ int main(int argc, char *argv[]){
         start3.nEntradas=0;
 
     PONTOS end3;
-        strcpy(end3.ident, "C1");
+        strcpy(end3.pident, "C1");
         end3.coord[coordX]=100;
         end3.coord[coordY]=150;
         end3.cor=AMARELO;
@@ -99,66 +99,75 @@ int main(int argc, char *argv[]){
         end3.Dimensao=dimEST;
         end3.nSaidas=0;
         end3.nEntradas=0;
+    int i=0;
+    FERROVIA* linha[100];
+    COMBOIO* tchooBase[100];
+    for(i=0;i<MAX;i++){
+        linha[i]= NULL;
+        tchooBase[i]=NULL;
+    }
 
-    COMBOIO *tchooBase =  inic_Comboios();
 
-    addi_Comboio(tchooBase,carro1);
-    addi_Comboio(tchooBase,carro2);
+    tchooBase[0] =  inic_Comboios();
+
+    addi_Comboio(tchooBase[0],carro1);
+    addi_Comboio(tchooBase[0],carro2);
     //addi_Comboio(tchooBase,carro2);
     //addi_Comboio(tchooBase,carro1);
-    mostraComboio(tchooBase);
+    mostraComboio(tchooBase[0]);
+   // scanf("%c",&debug);
+    linha[0]= inic_Linha("LOL");
+
+    addi_Linha(linha[0],start);
+    addi_Linha(linha[0],mid);
+    addi_Linha(linha[0],end);
 
 
-    FERROVIA* linha1= inic_Linha();
-
-    addi_Linha(linha1,start);
-    addi_Linha(linha1,mid);
-    addi_Linha(linha1,end);
-
-    mostraLinha(linha1);
+    mostraLinha(linha[0]);
     printf("-------------------\n\n");
-    FERROVIA* linha2= inic_Linha();
+    linha[1]= inic_Linha("LOLA");
 
-    addi_Linha(linha2,start2);
-    addi_Linha(linha2,end2);
-    mostraLinha(linha2);
-    printf("-------------------\n\n");
-
-    KonnectLinhas(linha2, linha1, "B1", "A1");
-    printf("-------------------\n\n");
-    mostraLinha(linha1);
-    printf("-------------------\n\n");
-    mostraLinha(linha2);
+    addi_Linha(linha[1],start2);
+    addi_Linha(linha[1],end2);
+    mostraLinha(linha[1]);
     printf("-------------------\n\n");
 
-    FERROVIA* linha3= inic_Linha();
-
-    addi_Linha(linha3,start3);
-    addi_Linha(linha3,end3);
-    mostraLinha(linha3);
-
-    KonnectLinhas(linha3,linha1,"C0","A1");
-
-    mostraLinha(linha1);
+    KonnectLinhas(linha,"LOLA", "LOL", "B1", "A1");
     printf("-------------------\n\n");
-    mostraLinha(linha2);
+    mostraLinha(linha[0]);
     printf("-------------------\n\n");
-    mostraLinha(linha3);
+    mostraLinha(linha[1]);
     printf("-------------------\n\n");
 
-    linha1=elimina_linha(linha1);
-    linha2=elimina_linha(linha2);
-    linha3=elimina_linha(linha3);
-    tchooBase=elimina_comboio(tchooBase);
+    linha[2]= inic_Linha("PEPE");
 
-    mostraLinha(linha1);
+    addi_Linha(linha[2],start3);
+    addi_Linha(linha[2],end3);
+    mostraLinha(linha[2]);
+
+    KonnectLinhas(linha, "PEPE","LOL","C0","A1");
+
+    mostraLinha(linha[0]);
     printf("-------------------\n\n");
-    mostraLinha(linha2);
+    mostraLinha(linha[1]);
     printf("-------------------\n\n");
-    mostraLinha(linha3);
+    mostraLinha(linha[2]);
     printf("-------------------\n\n");
-    mostraComboio(tchooBase);
-*/
+
+    elimina_linha(linha,"LOL");
+    elimina_linha(linha,"PEPE");
+    elimina_linha(linha,"LOLA");
+
+    tchooBase[0]=elimina_comboio(tchooBase[0]);
+
+    mostraLinha(linha[0]);
+    printf("-------------------\n\n");
+    mostraLinha(linha[1]);
+    printf("-------------------\n\n");
+    mostraLinha(linha[2]);
+    printf("-------------------\n\n");
+    mostraComboio(tchooBase[0]);
+
 
     int dimJan[2]= {860,600};
     AbreJanela(dimJan);

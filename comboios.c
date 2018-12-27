@@ -195,14 +195,18 @@ void mostraLinha(FERROVIA* topo) {
 void elimina_linha(FERROVIA* lista[], char lident []){
     FERROVIA* temp = NULL;
     FERROVIA* head = NULL;
-    int i = 0, j=0;
-    for(i=0;i<MAX;i++){
-        if(strcmp(lident,lista[i]->lident)==0){
-            head=lista[i];
-            break;
-        }
-    }
+    int i,j;
 
+    for( i=0 ; i<MAX ; i++){
+        printf("i =%d \n",i);
+        if (lista[i]!=NULL){
+            printf("lident = %s \n",lista[i]->lident);
+            if(strcmp(lident,lista[i]->lident)==0){
+               head=lista[i];
+               break;
+           }
+        }
+     }
     if (head==NULL){
        printf("ERRO, ID de linha nao encontrado, verificar ficheiro de config!");
        exit(0);
@@ -215,7 +219,7 @@ void elimina_linha(FERROVIA* lista[], char lident []){
 
     lista[i]=lista[j-1];
     lista[j-1]=NULL;
-
+    /*para que apenas a linha com identificador passado seja eliminada*/
     while((head!=NULL)&&(strcmp(head->lident,lident)==0)){
         temp = head;
         head=head->RA;
@@ -229,30 +233,29 @@ FERROVIA* ProcuraID(FERROVIA* lista[],char lident[],char IDE_X[]){
     int i=0,k=0;
 
     FERROVIA* TempX=NULL;
-   // printf("AT Procura ID, lident lista is %s \n", lista[i]->lident);
+   // printf("AT Procura ID, lident lista is %s <- \n", lista[i+1]->lident);//quickfix
     //printf("AT Procura ID, lident is %s \n", lident);
 
 
     for(i=0;i<MAX;i++){
+        if (lista[i]!=NULL){
 
-        printf("AT Procura ID inside FOR, i = %d, lident lista is %s 222222222222 \n",i, lista[i]->lident);
-        printf("AT Procura ID inside FOR, lident is %s 2 \n", lident);
-         scanf("%c",&debug);
-         k = strcmp(lident,lista[i]->lident);
-         printf ("k = %d \n", k );
+           // printf("AT Procura ID inside FOR, i = %d, lident lista is %s <- \n",i, lista[i]->lident);
+            //printf("AT Procura ID inside FOR, lident is %s <-\n", lident);
+         //   scanf("%c",&debug);
+             k = strcmp(lident,lista[i]->lident);
+             printf ("k = %d \n", k );
 
 
-        if( k ==0 ) {
-            //printf (" %d \n",strcmp(lident,lista[i]->lident)==0 );
-            TempX=lista[i];
-            printf("match em TempX = %p de lista[%d] \n",TempX,i);
-            scanf("%c",&debug);
-            //break;
+            if( k == 0 ) {
+                //printf (" %d \n",strcmp(lident,lista[i]->lident)==0 );
+                TempX=lista[i];
+                printf("match em TempX = %p de lista[%d] \n",TempX,i);
+    //            scanf("%c",&debug);
+                break;
+            }
         }
     }
-
-
-
     if (TempX==NULL){
        printf("ERRO, ID de linha nao encontrado, verificar ficheiro de config!");
        exit(0);

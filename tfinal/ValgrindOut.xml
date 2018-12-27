@@ -12,7 +12,7 @@
   <line>Command: /media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal configu.txt</line>
 </preamble>
 
-<pid>1934</pid>
+<pid>2853</pid>
 <ppid>1542</ppid>
 <tool>memcheck</tool>
 
@@ -32,7 +32,7 @@
 
 <status>
   <state>RUNNING</state>
-  <time>00:00:00:00.325 </time>
+  <time>00:00:00:00.408 </time>
 </status>
 
 <error>
@@ -50,12 +50,12 @@
       <line>846</line>
     </frame>
     <frame>
-      <ip>0x109962</ip>
+      <ip>0x10999B</ip>
       <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
       <fn>ProcuraID</fn>
       <dir>/media/sf_Prog/ProjetoFinal</dir>
       <file>comboios.c</file>
-      <line>238</line>
+      <line>241</line>
     </frame>
     <frame>
       <ip>0x109546</ip>
@@ -66,23 +66,23 @@
       <line>138</line>
     </frame>
     <frame>
-      <ip>0x10A742</ip>
+      <ip>0x10A783</ip>
       <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
       <fn>lerligar</fn>
       <dir>/media/sf_Prog/ProjetoFinal</dir>
       <file>ler.c</file>
-      <line>169</line>
+      <line>177</line>
     </frame>
     <frame>
-      <ip>0x10AB36</ip>
+      <ip>0x10ABED</ip>
       <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
       <fn>ler</fn>
       <dir>/media/sf_Prog/ProjetoFinal</dir>
       <file>ler.c</file>
-      <line>236</line>
+      <line>261</line>
     </frame>
     <frame>
-      <ip>0x10AC9E</ip>
+      <ip>0x10AD55</ip>
       <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
       <fn>main</fn>
       <dir>/media/sf_Prog/ProjetoFinal</dir>
@@ -110,12 +110,12 @@
       <line>846</line>
     </frame>
     <frame>
-      <ip>0x109962</ip>
+      <ip>0x10999B</ip>
       <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
       <fn>ProcuraID</fn>
       <dir>/media/sf_Prog/ProjetoFinal</dir>
       <file>comboios.c</file>
-      <line>238</line>
+      <line>241</line>
     </frame>
     <frame>
       <ip>0x109546</ip>
@@ -126,23 +126,23 @@
       <line>138</line>
     </frame>
     <frame>
-      <ip>0x10A742</ip>
+      <ip>0x10A783</ip>
       <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
       <fn>lerligar</fn>
       <dir>/media/sf_Prog/ProjetoFinal</dir>
       <file>ler.c</file>
-      <line>169</line>
+      <line>177</line>
     </frame>
     <frame>
-      <ip>0x10AB36</ip>
+      <ip>0x10ABED</ip>
       <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
       <fn>ler</fn>
       <dir>/media/sf_Prog/ProjetoFinal</dir>
       <file>ler.c</file>
-      <line>236</line>
+      <line>261</line>
     </frame>
     <frame>
-      <ip>0x10AC9E</ip>
+      <ip>0x10AD55</ip>
       <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
       <fn>main</fn>
       <dir>/media/sf_Prog/ProjetoFinal</dir>
@@ -155,7 +155,7 @@
 
 <status>
   <state>FINISHED</state>
-  <time>00:00:00:01.831 </time>
+  <time>00:00:00:02.001 </time>
 </status>
 
 <errorcounts>
