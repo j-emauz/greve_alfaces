@@ -339,7 +339,7 @@ int ConvCor(char corestr[]){
 
 /*------------------------------- */
 /* JANELA GRAFICA */
-void AbreJanela(int dimJanela[]){
+/*void AbreJanela(int dimJanela[]){
 
     SDL_Init(SDL_INIT_EVERYTHING);
     if(SDL_Init(SDL_INIT_EVERYTHING) >= 0)
@@ -357,32 +357,32 @@ void AbreJanela(int dimJanela[]){
 
         //SDL_Error();
 
-        /* Select the color for drawing. It is set to red here. */
-        SDL_SetRenderDrawColor(g_pRenderer, 255, 0, 0, 255);
+         Select the color for drawing. It is set to red here. */
+        //SDL_SetRenderDrawColor(g_pRenderer, 255, 0, 0, 255);
 
         /* Clear the entire screen to our selected color. */
-        SDL_RenderClear(g_pRenderer);
+        //SDL_RenderClear(g_pRenderer);
 
         /* Up until now everything was drawn behind the scenes.
            This will show the new, red contents of the window. */
-        SDL_RenderPresent(g_pRenderer);
+        //SDL_RenderPresent(g_pRenderer);
 
         /* Give us time to see the window. */
-        SDL_Delay(5000);
+        //SDL_Delay(5000);
 
         /* Always be sure to clean up */
-        SDL_DestroyRenderer(g_pRenderer);
-        g_pRenderer=NULL;
+        //SDL_DestroyRenderer(g_pRenderer);
+        //g_pRenderer=NULL;
 
-        SDL_Quit();
+        //SDL_Quit();
 
 
-        return;
+    //    return;
 
 
 
 	// "limpa" a função de texto
 	//gfxPrimitivesSetFont(NULL, 0, 0);
-}
+//}
 
 

@@ -115,7 +115,7 @@ FERROVIA *lerlinha(char *aux, FERROVIA *head){
 	strcpy(pontinho.TipoDePonto, aux);// problematico
 
 
-printf(" PIDENT depois strncopy2 %s \n", pontinho.pident);
+	printf(" PIDENT depois strncopy2 %s \n", pontinho.pident);
 	 printf("tipo %s \n", pontinho.TipoDePonto);
 	 printf("aux %s \n", aux);
 	//Adicionar failsafe para cor e tipo errado (igual para comboio)
@@ -172,7 +172,8 @@ void lerligar(char *aux, FERROVIA* todas[]){
 	strcpy(pident2, aux);
 	printf("%s \n", aux);
 
-	printf("%s %s %s %s", lident1, pident1, lident2, pident2);
+	printf("pontos %s %s %s %s", lident1, pident1, lident2, pident2);
+	fflush(stdout);
 
     KonnectLinhas(todas,lident1,lident2,pident1,pident2);
 	//PASSAR PARA ESTRUTURAS
@@ -197,10 +198,13 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
 	else{
 		do{
 			fgets(linha, MAX, fp);//lê e avança linha no ficheiro de config
-       /*     for(i=0;i<MAX;i++){
-                if (linha[i] == '\n')
-                    //linha[i] = '\0';
-            }*/
+            for(i=0;i<MAX;i++){
+                if (linha[i] == '\n'){
+                    linha[i] = '\0';
+					break;
+				}
+            }
+            
 
 			if((linha[0]!='%')&&(linha[0]!='\n')&&(linha[0]!='\0')){
 
@@ -222,7 +226,7 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
                 printf("no aux = linha. linha = %s \n",linha); //OK
 					passarespacos(&aux);//avança aux até chegar a um char diff de " "
                     printf(" && aux %s \n ", aux);//para testar
-					strncpy(lident, aux, strcspn(aux, "\0"));//mudei
+					strcpy(lident, aux);//mudei de volta para ver
                     printf("Lident %s \n", lident);//para testar
 //                    gets(&debug);
 
@@ -232,8 +236,10 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
 					printf("%s <-string fim de linha \n", fim_linha);
 					fgets(linha, MAX, fp);
                     /*for(i=0;i<MAX;i++){
-                        if (linha[i] == '\n')
+                        if (linha[i] == '\n'){
                             linha[i] = '\0';
+							break;
+						}
                     }*/
 
 					while(strstr(linha, fim_linha)==NULL){
@@ -245,11 +251,13 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
 						}
 
 						fgets(linha, MAX, fp);
-				/*		for(i=0;i<MAX;i++){
-                            if (linha[i] == '\n')
-                          //      linha[i] = '\0';
+						for(i=0;i<MAX;i++){
+                            if (linha[i] == '\n'){
+                               linha[i] = '\0';
+								break;
+							}
                         }
-*/
+
 					}
 					memset(lident,0,strlen(lident));
 					//gets(&debug);
