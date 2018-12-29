@@ -30,13 +30,23 @@ void menu(char *opcao){
 
 /*-----------------COMBOIOS----------------------------*/
 
-COMBOIO* inic_Comboios(){
-    COMBOIO *head = (COMBOIO*)calloc(1,sizeof(COMBOIO));
+COMBOIO* inic_Comboios(CARRUAGEM dados){
+    int corcar;
+	int i=0;
+	
+	COMBOIO *head = (COMBOIO*)calloc(1,sizeof(COMBOIO));
     if (head==NULL){
      printf("Falha na aquisiçao de bloco de memória, função iniccomboio \n");
      exit(0);
     }
-    head->prox=NULL;
+    
+	head->prox=NULL;
+	head->cart=dados;
+    
+	for(i=0; i<3, ++i){
+		dados.cor = rand()%9;
+		head = addi_Comboio(head, dados);
+	}
     return head;
 }
 

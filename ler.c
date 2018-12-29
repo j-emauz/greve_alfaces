@@ -40,8 +40,8 @@ COMBOIO *lercomboio(char *aux){
 	/*printf ("esta aqui -->> %s %d %d %s %s %d", dados.cident, (dados.DimBOLAS), dados.cor, dados.lident, dados.pident, dados.nservico);
     scanf("%d",&debug);*/
 
-	thomas = inic_Comboios();
-	thomas = addi_Comboio(thomas, dados);
+	thomas = inic_Comboios(dados);
+	//thomas = addi_Comboio(thomas, dados);
 
 	return thomas;
 }

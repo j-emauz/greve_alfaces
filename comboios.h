@@ -67,7 +67,7 @@ FERROVIA* addi_Linha(FERROVIA* head,PONTOS dados);
 void KonnectLinhas(FERROVIA* Lista[], char lident_Sai[], char lident_Recebe[],char ID_Sai[],char ID_Entra[]);
 
 /*INITS*/
-COMBOIO* inic_Comboios();
+COMBOIO* inic_Comboios(CARRUAGEM dados);
 FERROVIA* inic_Linha(char lident[]);
 
 /*MOSTRAS*/
