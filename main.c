@@ -42,12 +42,19 @@ int main(int argc, char *argv[]){
 				printf("Suicidio é a resposta\n");
 				break;
 			case '5':
-				mostraComboio(todos[1]);
 
-				scanf("%c",&debug);
-				todos[1]=elimina_comboio(todos[1]);
+				mostraComboio(todos,todos[1]->cart.cident);
+                elimina_comboio(todos, todos[1]->cart.cident);
 				printf("Haha no\n");
-				mostraComboio(todos[1]);
+				mostraComboio(todos,"coo");
+
+
+			/*	mostraLinha(todas,todas[0]->lident);
+				elimina_linha(todas, todas[0]->lident);
+				mostraLinha(todas,"PUTA");
+				mostraLinha(todas,todas[0]->lident);
+				//scanf("%c",&debug);*/
+
 				break;
 			case '6':
 				printf("Simular");

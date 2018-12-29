@@ -46,7 +46,7 @@ COMBOIO *lercomboio(char *aux){
 	return thomas;
 }
 
-FERROVIA *lerlinha(char *aux, FERROVIA *head){
+FERROVIA *lerlinha(char *aux, FERROVIA *head, char lident[]){
 
 	char cor[MAX]={'\0'};
 
@@ -58,7 +58,12 @@ FERROVIA *lerlinha(char *aux, FERROVIA *head){
     pontinho.cor = ConvCor(cor);
 //	printf("pontinho pident em lerlinha depois da passagem : %s \n",pontinho.pident);
     //scanf("%d",debug);
-    head = addi_Linha(head,pontinho);
+    if(head==NULL){
+        head = inic_Linha(lident, pontinho);
+    }
+    else{
+        head = addi_Linha(head,pontinho);
+    }
 	memset(cor,0,strlen(cor));
 	return head;
 }
@@ -68,7 +73,7 @@ void lerligar(char *aux, FERROVIA* todas[]){
 	char pident1[5];
 	char lident2[5];
 	char pident2[5];
-	char ident[MAX];
+	//char ident[MAX];
 
 	passarespacos(&aux);
 
@@ -131,7 +136,7 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
                     //printf("Lident %s \n", lident);//para testar
 //                    gets(&debug);
 
-					todas[j] = inic_Linha(lident);
+
 					strcpy(fim_linha, "FIM_DE_LINHA: ");
 					//strcat(fim_linha, lident);
 					//printf("%s <-string fim de linha \n", fim_linha);
@@ -147,7 +152,7 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
 
 						if((linha[0]!='%')&&(linha[0]!='\n')&&(linha[0]!=' ')){
 							aux = linha;
-							todas[j] = lerlinha(aux, todas[j]);
+							todas[j] = lerlinha(aux, todas[j], lident);
 
 
 
@@ -161,7 +166,7 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
 						}
 					}
 					memset(lident,0,strlen(lident));
-                    mostraLinha(todas[j]);
+                    //mostraLinha(todas[j]);
 
 					j=j+1;
 					//gets(&debug);

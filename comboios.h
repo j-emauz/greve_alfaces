@@ -69,13 +69,13 @@ void KonnectLinhas(FERROVIA* Lista[], char lident_Sai[], char lident_Recebe[],ch
 
 /*INITS*/
 COMBOIO* inic_Comboios(CARRUAGEM dados);
-FERROVIA* inic_Linha(char lident[]);
+FERROVIA* inic_Linha(char lident[], PONTOS dados);
 
 /*MOSTRAS*/
-void mostraComboio(COMBOIO* topo);
-void mostraLinha(FERROVIA* topo);
+void mostraComboio(COMBOIO* lista[], char cident[]);
+void mostraLinha(FERROVIA* lista[], char lident[]);
 /*DELETES*/
-COMBOIO* elimina_comboio(COMBOIO* head);
+void elimina_comboio(COMBOIO* lista[],char cident[]);
 void elimina_linha(FERROVIA* lista[], char lident[]);
 /*-------Funções de apoio\debug------*/
 int ConvCor(char corestr[]);
@@ -90,7 +90,7 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]); // p
 void passarespacos(char **aux);
 void lerjanela(char *aux,int jancoor[]);
 COMBOIO* lercomboio(char *aux);
-FERROVIA* lerlinha(char *aux,FERROVIA *head);
+FERROVIA *lerlinha(char *aux, FERROVIA *head, char lident[]);
 void lerligar(char *aux, FERROVIA* todas[]);
 
 

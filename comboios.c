@@ -72,41 +72,75 @@ COMBOIO* addi_Comboio(COMBOIO* head,CARRUAGEM dados){
     return temp;
 }
 
-COMBOIO* elimina_comboio(COMBOIO* head){
+void elimina_comboio(COMBOIO* lista[],char cident[]){
     COMBOIO* temp;
+    COMBOIO* head;
 
+    int i,j;
+
+    for( i=0 ; i<MAX ; i++){
+        printf("i =%d \n",i);
+
+        if (lista[i]!=NULL){
+            printf("cident = %s \n",lista[i]->cart.cident);
+
+            if(strcmp(cident,lista[i]->cart.cident)==0){
+               head=lista[i];
+               break;
+           }
+        }
+     }
+     for(j=0;j<MAX;j++){
+        if(lista[j]==NULL)
+            break;
+    }
+    if(j!=0){
+         lista[i]=lista[j-1];
+         lista[j-1]=NULL;
+    }
     while(head!=NULL){
         temp = head;
         head=head->prox;
         free(temp);
     }
-    return head;//n deve ser preciso returnar nada
 }
 
-void mostraComboio(COMBOIO* topo) {
+void mostraComboio(COMBOIO* lista[], char cident[]) {
     //WIP
+   int i;
+   printf("cident : %s \n", cident);
+  COMBOIO* topo = NULL;
+
+   for (i=0;i<MAX;i++){
+        if (strcmp(cident,lista[i]->cart.cident)==0){
+            topo=lista[i];
+            break;
+        }
+   }
+
     if (topo==NULL){
         printf("Comboio inexistente ! \n \n");
         return;
     }
 
-    printf("\n Da locomotiva...\n\n");
+   // printf("\n Da locomotiva...\n\n");
 
     for(; topo!=NULL; topo=topo->prox)
     {
-        printf("ID : %s nCOR: %d Pos(=%d,%d) \n",topo->cart.cident, topo->cart.cor, topo->cart.PosiNoGraf[0],topo->cart.PosiNoGraf[1]);
+        //printfID : %s nCOR: %d Pos(=%d,%d) \n",topo->cart.cident, topo->cart.cor, topo->cart.PosiNoGraf[0],topo->cart.PosiNoGraf[1]);
+        printf("ID : %s nCOR: %d \n",topo->cart.cident, topo->cart.cor);
 
         //printf("%d %d \n",topo->cart.PosiNoGraf[0],topo->cart.PosiNoGraf[1]);
         //printf("%p \n",(void*)topo);
 
     }
-    printf("\n \n à ultima carruagem \n");
+    //printf("\n \n à ultima carruagem \n");
 
 }
 
 /*------------------LINHAS-------------------*/
 
-FERROVIA* inic_Linha(char lident[]){
+FERROVIA* inic_Linha(char lident[], PONTOS dados){
     FERROVIA*head = (FERROVIA*)calloc(1,sizeof(FERROVIA));
     if (head==NULL){
      printf("Falha na aquisiçao de bloco de memória, função inic_Linha \n");
@@ -115,6 +149,9 @@ FERROVIA* inic_Linha(char lident[]){
     strcpy(head->lident, lident);
     head->RA=NULL;
     head->RB=NULL;
+
+    head->pont = dados;
+
     return head;
 }
 
@@ -181,30 +218,37 @@ void KonnectLinhas(FERROVIA* lista[], char lident_Sai[], char lident_Recebe[],ch
     }
 }
 
-void mostraLinha(FERROVIA* topo) {
+void mostraLinha(FERROVIA* lista[], char lident[]) {
     //WIP
-    if (topo==NULL){
-        printf("Linha inexistente! \n\n");
-        return;
-    }
-    topo=topo->RA;
-    //printf("\n Da primeira estação.... \n\n");
-    while(topo!=NULL)
-    /* estou a usar uma espécie de "registo separado para a base",
-    em que o primeiro bloco pode ser usado para colocar dados temporariamente e aponta para a "locomotiva"*/
-    {
 
-        if(topo->RA != NULL){
-            printf("endereço :  %p \n",(void*)topo);
-            printf("IDENTIFICADOR : %s \n",topo->pont.pident);
-            printf("nEntradas %d  nSaidas %d \n", topo->pont.nEntradas,topo->pont.nSaidas);
-            topo=topo->RA;
-        }else{
-            printf("endereço :  %p \n",(void*)topo);
-            printf("IDENTIFICADOR  : %s \n",topo->pont.pident);
-            printf("nEntradas %d  nSaidas %d \n", topo->pont.nEntradas,topo->pont.nSaidas);
-            topo=topo->RB;
+    FERROVIA* head = NULL;
+    int i;
+    for( i=0 ; i<MAX ; i++){
+        printf("i =%d \n",i);
+
+        if (lista[i]!=NULL){
+            printf("lident = %s \n",lista[i]->lident);
+
+            if(strcmp(lident,lista[i]->lident)==0){
+               head=lista[i];
+               break;
+           }
         }
+     }
+    if (head==NULL){
+        // se nao existirem linhas, esta condição é sempre verificada.
+       printf("ERRO, ID de linha nao encontrado, verificar ficheiro de config!");
+       return;
+    }
+    //printf("\n Da primeira estação.... \n\n");
+    while(head!=NULL && strcmp(lident,head->lident) == 0 )
+
+    {
+       printf("endereço :  %p \n",(void*)head);
+       printf("IDENTIFICADOR : %s \n",head->pont.pident);
+       printf("nEntradas %d  nSaidas %d \n", head->pont.nEntradas,head->pont.nSaidas);
+       head=head->RA;
+
     }
     //printf("\n ....à ultima estação \n\n");
 

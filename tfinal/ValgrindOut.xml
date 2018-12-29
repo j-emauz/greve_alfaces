@@ -12,8 +12,8 @@
   <line>Command: /media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal configu.txt</line>
 </preamble>
 
-<pid>3425</pid>
-<ppid>2780</ppid>
+<pid>2849</pid>
+<ppid>2343</ppid>
 <tool>memcheck</tool>
 
 <args>
@@ -32,7 +32,7 @@
 
 <status>
   <state>RUNNING</state>
-  <time>00:00:00:00.326 </time>
+  <time>00:00:00:00.336 </time>
 </status>
 
 <error>
@@ -42,15 +42,15 @@
   <what>Conditional jump or move depends on uninitialised value(s)</what>
   <stack>
     <frame>
-      <ip>0x109DC7</ip>
+      <ip>0x10A18A</ip>
       <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
       <fn>ler</fn>
       <dir>/media/sf_Prog/ProjetoFinal</dir>
       <file>ler.c</file>
-      <line>106</line>
+      <line>111</line>
     </frame>
     <frame>
-      <ip>0x10A2B5</ip>
+      <ip>0x10A63E</ip>
       <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
       <fn>main</fn>
       <dir>/media/sf_Prog/ProjetoFinal</dir>
@@ -61,12 +61,12 @@
   <auxwhat>Uninitialised value was created by a stack allocation</auxwhat>
   <stack>
     <frame>
-      <ip>0x109CEE</ip>
+      <ip>0x10A0B1</ip>
       <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
       <fn>ler</fn>
       <dir>/media/sf_Prog/ProjetoFinal</dir>
       <file>ler.c</file>
-      <line>85</line>
+      <line>90</line>
     </frame>
   </stack>
 </error>
