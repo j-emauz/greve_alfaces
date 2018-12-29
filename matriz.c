@@ -170,7 +170,7 @@ int main(int argc, char *argv[]){
 
 
     int dimJan[2]= {860,600};
-    AbreJanela(dimJan);
+   // AbreJanela(dimJan);
 
 
  return 0;

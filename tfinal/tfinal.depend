@@ -36,7 +36,7 @@
 1545926635 source:/media/sf_Prog/ProjetoFinal/main.c
 	"comboios.h"
 
-1545934043 /media/sf_Prog/ProjetoFinal/comboios.h
+1546101102 /media/sf_Prog/ProjetoFinal/comboios.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -46,9 +46,9 @@
 
 1545926614 /media/sf_Prog/ProjetoFinal/cores.h
 
-1545941949 source:/media/sf_Prog/ProjetoFinal/comboios.c
+1546100078 source:/media/sf_Prog/ProjetoFinal/comboios.c
 	"comboios.h"
 
-1545942189 source:/media/sf_Prog/ProjetoFinal/ler.c
+1546100584 source:/media/sf_Prog/ProjetoFinal/ler.c
 	"comboios.h"
 

@@ -15,10 +15,12 @@ P1 200 200 VERDE EST
 P2 200 210 AMARELO  VIA
 P10 300 300 AMARELO  VIA
 FIM_DE_LINHA: LAM
+
 %LIGAR:  palavra-chave para ligar linhas
 %        (saída de uma linha -> entrada na outra linha)
 LIGAR: COA C20 LAM P1
 LIGAR: LAM P10 COA C1
+
 % COMBOIO: Palavra chave para identificar um comboio
 COMBOIO: C1 3 VERMELHO COA C1  10
-COMBOIO: C2 3 AZUL     LAM P1  5
+COMBOIO: C2 3 AZUL LAM P1  5

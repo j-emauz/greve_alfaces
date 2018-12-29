@@ -2,8 +2,6 @@
 SDL_Window* g_pWindow = NULL;
 SDL_Renderer* g_pRenderer = NULL;
 
-//funcao ler em ler.c
-
 void menu(char *opcao){
 	char linha[MAX];
 	char teste;
@@ -45,7 +43,9 @@ COMBOIO* inic_Comboios(){
 COMBOIO* addi_Comboio(COMBOIO* head,CARRUAGEM dados){
     COMBOIO* temp = head;
 
+
     COMBOIO* novo = (COMBOIO*) calloc(1,sizeof(COMBOIO) );
+
     if (novo == NULL){
         printf("Falha na aquisiçao de bloco de memória \n");
         return head;
@@ -62,7 +62,7 @@ COMBOIO* addi_Comboio(COMBOIO* head,CARRUAGEM dados){
 
 COMBOIO* elimina_comboio(COMBOIO* head){
     COMBOIO* temp;
-    head=head->prox;
+
     while(head!=NULL){
         temp = head;
         head=head->prox;
@@ -80,7 +80,7 @@ void mostraComboio(COMBOIO* topo) {
 
     printf("\n Da locomotiva...\n\n");
 
-    for(topo=topo->prox; topo!=NULL; topo=topo->prox)//aqui n e preciso inicializar topo... n deveria ser so for(;topo!=NULL;
+    for(; topo!=NULL; topo=topo->prox)
     {
         printf("%s \n",topo->cart.cident);
         printf("%d %d \n",topo->cart.PosiNoGraf[0],topo->cart.PosiNoGraf[1]);
@@ -106,6 +106,7 @@ FERROVIA* inic_Linha(char lident[]){
 }
 
 FERROVIA* addi_Linha(FERROVIA* head,PONTOS dados){
+
     FERROVIA* temp=head;
     FERROVIA* novo=(FERROVIA*)calloc(1,sizeof(FERROVIA));
     if (novo==NULL){

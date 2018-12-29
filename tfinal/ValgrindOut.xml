@@ -12,8 +12,8 @@
   <line>Command: /media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal configu.txt</line>
 </preamble>
 
-<pid>2853</pid>
-<ppid>1542</ppid>
+<pid>3425</pid>
+<ppid>2780</ppid>
 <tool>memcheck</tool>
 
 <args>
@@ -32,57 +32,25 @@
 
 <status>
   <state>RUNNING</state>
-  <time>00:00:00:00.408 </time>
+  <time>00:00:00:00.326 </time>
 </status>
 
 <error>
   <unique>0x0</unique>
   <tid>1</tid>
-  <kind>InvalidRead</kind>
-  <what>Invalid read of size 1</what>
+  <kind>UninitCondition</kind>
+  <what>Conditional jump or move depends on uninitialised value(s)</what>
   <stack>
     <frame>
-      <ip>0x4C33DA3</ip>
-      <obj>/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so</obj>
-      <fn>strcmp</fn>
-      <dir>./memcheck/../shared</dir>
-      <file>vg_replace_strmem.c</file>
-      <line>846</line>
-    </frame>
-    <frame>
-      <ip>0x10999B</ip>
-      <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
-      <fn>ProcuraID</fn>
-      <dir>/media/sf_Prog/ProjetoFinal</dir>
-      <file>comboios.c</file>
-      <line>241</line>
-    </frame>
-    <frame>
-      <ip>0x109546</ip>
-      <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
-      <fn>KonnectLinhas</fn>
-      <dir>/media/sf_Prog/ProjetoFinal</dir>
-      <file>comboios.c</file>
-      <line>138</line>
-    </frame>
-    <frame>
-      <ip>0x10A783</ip>
-      <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
-      <fn>lerligar</fn>
-      <dir>/media/sf_Prog/ProjetoFinal</dir>
-      <file>ler.c</file>
-      <line>177</line>
-    </frame>
-    <frame>
-      <ip>0x10ABED</ip>
+      <ip>0x109DC7</ip>
       <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
       <fn>ler</fn>
       <dir>/media/sf_Prog/ProjetoFinal</dir>
       <file>ler.c</file>
-      <line>261</line>
+      <line>106</line>
     </frame>
     <frame>
-      <ip>0x10AD55</ip>
+      <ip>0x10A2B5</ip>
       <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
       <fn>main</fn>
       <dir>/media/sf_Prog/ProjetoFinal</dir>
@@ -90,83 +58,16 @@
       <line>25</line>
     </frame>
   </stack>
-  <auxwhat>Address 0x0 is not stack'd, malloc'd or (recently) free'd</auxwhat>
+  <auxwhat>Uninitialised value was created by a stack allocation</auxwhat>
+  <stack>
+    <frame>
+      <ip>0x109CEE</ip>
+      <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
+      <fn>ler</fn>
+      <dir>/media/sf_Prog/ProjetoFinal</dir>
+      <file>ler.c</file>
+      <line>85</line>
+    </frame>
+  </stack>
 </error>
-
-<fatal_signal>
-  <tid>1</tid>
-  <signo>11</signo>
-  <signame>SIGSEGV</signame>
-  <sicode>1</sicode>
-  <event>Access not within mapped region</event>
-  <siaddr>0x0</siaddr>
-  <stack>
-    <frame>
-      <ip>0x4C33DA3</ip>
-      <obj>/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so</obj>
-      <fn>strcmp</fn>
-      <dir>./memcheck/../shared</dir>
-      <file>vg_replace_strmem.c</file>
-      <line>846</line>
-    </frame>
-    <frame>
-      <ip>0x10999B</ip>
-      <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
-      <fn>ProcuraID</fn>
-      <dir>/media/sf_Prog/ProjetoFinal</dir>
-      <file>comboios.c</file>
-      <line>241</line>
-    </frame>
-    <frame>
-      <ip>0x109546</ip>
-      <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
-      <fn>KonnectLinhas</fn>
-      <dir>/media/sf_Prog/ProjetoFinal</dir>
-      <file>comboios.c</file>
-      <line>138</line>
-    </frame>
-    <frame>
-      <ip>0x10A783</ip>
-      <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
-      <fn>lerligar</fn>
-      <dir>/media/sf_Prog/ProjetoFinal</dir>
-      <file>ler.c</file>
-      <line>177</line>
-    </frame>
-    <frame>
-      <ip>0x10ABED</ip>
-      <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
-      <fn>ler</fn>
-      <dir>/media/sf_Prog/ProjetoFinal</dir>
-      <file>ler.c</file>
-      <line>261</line>
-    </frame>
-    <frame>
-      <ip>0x10AD55</ip>
-      <obj>/media/sf_Prog/ProjetoFinal/tfinal/bin/Debug/tfinal</obj>
-      <fn>main</fn>
-      <dir>/media/sf_Prog/ProjetoFinal</dir>
-      <file>main.c</file>
-      <line>25</line>
-    </frame>
-  </stack>
-</fatal_signal>
-
-
-<status>
-  <state>FINISHED</state>
-  <time>00:00:00:02.001 </time>
-</status>
-
-<errorcounts>
-  <pair>
-    <count>1</count>
-    <unique>0x0</unique>
-  </pair>
-</errorcounts>
-
-<suppcounts>
-</suppcounts>
-
-</valgrindoutput>
 
