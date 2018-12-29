@@ -42,7 +42,12 @@ int main(int argc, char *argv[]){
 				printf("Suicidio é a resposta\n");
 				break;
 			case '5':
+				mostraComboio(todos[1]);
+
+				scanf("%c",&debug);
+				todos[1]=elimina_comboio(todos[1]);
 				printf("Haha no\n");
+				mostraComboio(todos[1]);
 				break;
 		}
 	}while(opcao!='0');

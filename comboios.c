@@ -121,10 +121,12 @@ FERROVIA* addi_Linha(FERROVIA* head,PONTOS dados){
 
     FERROVIA* temp=head;
     FERROVIA* novo=(FERROVIA*)calloc(1,sizeof(FERROVIA));
+
     if (novo==NULL){
         printf("Falha na alocação de memória, addi_linha \n");
         return 0;
     }
+
     novo->pont=dados;
     if (head->RA != NULL) // significa que a linha já existe.
         novo->pont.nEntradas = 1;
@@ -132,12 +134,14 @@ FERROVIA* addi_Linha(FERROVIA* head,PONTOS dados){
     novo->RA=NULL;
     novo->RB=NULL;
     strcpy(novo->lident, head->lident);
+
     while(head->RA != NULL){
         head=head->RA;
     }
     head->RA=novo;
     head->pont.nSaidas = 1;
     return temp;
+
 }
 
 void KonnectLinhas(FERROVIA* lista[], char lident_Sai[], char lident_Recebe[],char ID_Sai[],char ID_Entra[]) {
@@ -212,8 +216,10 @@ void elimina_linha(FERROVIA* lista[], char lident []){
 
     for( i=0 ; i<MAX ; i++){
         printf("i =%d \n",i);
+
         if (lista[i]!=NULL){
             printf("lident = %s \n",lista[i]->lident);
+
             if(strcmp(lident,lista[i]->lident)==0){
                head=lista[i];
                break;
@@ -221,17 +227,22 @@ void elimina_linha(FERROVIA* lista[], char lident []){
         }
      }
     if (head==NULL){
+        // se nao existirem linhas, esta condição é sempre verificada.
        printf("ERRO, ID de linha nao encontrado, verificar ficheiro de config!");
        exit(0);
     }
 
     for(j=0;j<MAX;j++){
+
         if(lista[j]==NULL)
             break;
     }
 
-    lista[i]=lista[j-1];
-    lista[j-1]=NULL;
+    if(j!=0){
+         lista[i]=lista[j-1];
+         lista[j-1]=NULL;
+    }
+
     /*para que apenas a linha com identificador passado seja eliminada*/
     while((head!=NULL)&&(strcmp(head->lident,lident)==0)){
         temp = head;

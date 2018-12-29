@@ -114,6 +114,7 @@ int main(int argc, char *argv[]){
     mostraComboio(tchooBase[0]);
     mostraComboio(tchooBase[1]);
     scanf("%c",&debug);
+
     linha[0]= inic_Linha("LOL");
 
     addi_Linha(linha[0],start);
@@ -152,8 +153,9 @@ int main(int argc, char *argv[]){
     mostraLinha(linha[2]);
     printf("-------------------\n\n");
 
-    elimina_linha(linha,"LOL");
     elimina_linha(linha,"PEPE");
+    elimina_linha(linha,"LOL");
+
     elimina_linha(linha,"LOLA");
 
     tchooBase[0]=elimina_comboio(tchooBase[0]);
