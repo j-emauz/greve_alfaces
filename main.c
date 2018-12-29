@@ -3,6 +3,7 @@
 
 int main(int argc, char *argv[]){
     srand(time(NULL));
+    char Indent[MAX];
 	int cores[DIMCores][DIMrgb]={ {255,0,0,255},/* vermelho*/
                                   {0,0,255,255},/* azul    */
                                   {255,255,0,255}/* AMARELO */};
@@ -33,23 +34,31 @@ int main(int argc, char *argv[]){
 				printf("Haha yes\n");
 				break;
 			case '2':
-				printf("hwqeqwjihjihe\n");
+				//print instruçoes
+				ListaFerrovias(todas);
+                printf("Escreva o ID da Ferrovia a eliminar sem espaços! \n");
+                scanf("%s", Indent);
+                elimina_linha(todas, Indent);
+                memset(Indent, 0, MAX);
 				break;
 			case '3':
 				printf("Subscribe to PewDiePie\n");
 				break;
 			case '4':
-				printf("Suicidio é a resposta\n");
+                ListaComboio(todos);
+                printf("Escreva o ID do Comboio a eliminar sem espaços! \n");
+                scanf("%s", Indent);
+                elimina_comboio(todos, Indent);
+                memset(Indent, 0, MAX);
+               // fflush(stdout);
 				break;
 			case '5':
 
 				mostraComboio(todos,todos[1]->cart.cident);
                 elimina_comboio(todos, todos[1]->cart.cident);
 				printf("Haha no\n");
-				mostraComboio(todos,"coo");
 
-
-			/*	mostraLinha(todas,todas[0]->lident);
+				mostraLinha(todas,todas[0]->lident);
 				elimina_linha(todas, todas[0]->lident);
 				mostraLinha(todas,"PUTA");
 				mostraLinha(todas,todas[0]->lident);

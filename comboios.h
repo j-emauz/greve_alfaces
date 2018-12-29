@@ -74,6 +74,8 @@ FERROVIA* inic_Linha(char lident[], PONTOS dados);
 /*MOSTRAS*/
 void mostraComboio(COMBOIO* lista[], char cident[]);
 void mostraLinha(FERROVIA* lista[], char lident[]);
+void ListaFerrovias(FERROVIA* lista[]);
+void ListaComboio(COMBOIO* lista[]);
 /*DELETES*/
 void elimina_comboio(COMBOIO* lista[],char cident[]);
 void elimina_linha(FERROVIA* lista[], char lident[]);

@@ -14,7 +14,7 @@ void menu(char *opcao){
 				"3 - Mostrar a informação de um comboio \n"
 				"4 – Eliminar um comboio \n"
 				"5 - Criar um comboio \n"
-				"5 - Simulação dos comboios \n"
+				"6 - Simulação dos comboios \n"
 				"Opção: ");
 	fgets(linha, MAX, stdin);
 	sscanf(linha, "%c%c", opcao, &teste);
@@ -90,6 +90,11 @@ void elimina_comboio(COMBOIO* lista[],char cident[]){
            }
         }
      }
+     if (head==NULL){
+        // se nao existirem linhas, esta condição é sempre verificada.
+       printf("ERRO, ID de linha nao encontrado, verificar ficheiro de config!");
+       return;
+    }
      for(j=0;j<MAX;j++){
         if(lista[j]==NULL)
             break;
@@ -103,16 +108,28 @@ void elimina_comboio(COMBOIO* lista[],char cident[]){
         head=head->prox;
         free(temp);
     }
+    printf("COMBOIO %s ELIMINADO EBIC STYLE B) \n", cident);
 }
+void ListaComboio(COMBOIO* lista[]){
+    int i;
+    printf("Lista de Comboios: ");
 
+    for (i=0;i<MAX&&lista[i]!=NULL;i++){
+        printf("%s ",lista[i]->cart.cident);
+    }
+    printf("\n");
+
+
+
+}
 void mostraComboio(COMBOIO* lista[], char cident[]) {
     //WIP
    int i;
    printf("cident : %s \n", cident);
-  COMBOIO* topo = NULL;
+   COMBOIO* topo = NULL;
 
-   for (i=0;i<MAX;i++){
-        if (strcmp(cident,lista[i]->cart.cident)==0){
+   for (i=0; i<MAX&&lista[i]!=NULL ;i++){
+        if ( strcmp (cident, lista[i]->cart.cident)==0 ){
             topo=lista[i];
             break;
         }
@@ -123,19 +140,10 @@ void mostraComboio(COMBOIO* lista[], char cident[]) {
         return;
     }
 
-   // printf("\n Da locomotiva...\n\n");
-
-    for(; topo!=NULL; topo=topo->prox)
+   for(; topo!=NULL; topo=topo->prox)
     {
-        //printfID : %s nCOR: %d Pos(=%d,%d) \n",topo->cart.cident, topo->cart.cor, topo->cart.PosiNoGraf[0],topo->cart.PosiNoGraf[1]);
-        printf("ID : %s nCOR: %d \n",topo->cart.cident, topo->cart.cor);
-
-        //printf("%d %d \n",topo->cart.PosiNoGraf[0],topo->cart.PosiNoGraf[1]);
-        //printf("%p \n",(void*)topo);
-
+       printf("ID : %s nCOR: %d \n",topo->cart.cident, topo->cart.cor);
     }
-    //printf("\n \n à ultima carruagem \n");
-
 }
 
 /*------------------LINHAS-------------------*/
@@ -149,6 +157,7 @@ FERROVIA* inic_Linha(char lident[], PONTOS dados){
     strcpy(head->lident, lident);
     head->RA=NULL;
     head->RB=NULL;
+
 
     head->pont = dados;
 
@@ -166,8 +175,8 @@ FERROVIA* addi_Linha(FERROVIA* head,PONTOS dados){
     }
 
     novo->pont=dados;
-    if (head->RA != NULL) // significa que a linha já existe.
-        novo->pont.nEntradas = 1;
+    // significa que a linha já existe.
+    novo->pont.nEntradas = 1;
 
     novo->RA=NULL;
     novo->RB=NULL;
@@ -217,6 +226,22 @@ void KonnectLinhas(FERROVIA* lista[], char lident_Sai[], char lident_Recebe[],ch
 
     }
 }
+
+void ListaFerrovias(FERROVIA* lista[]){
+    int i;
+    printf("Lista de Ferrovias: ");
+
+
+    for (i=0;i<MAX&&lista[i]!=NULL;i++){
+        printf("%s ",lista[i]->lident);
+
+    }
+    printf("\n");
+
+}
+
+
+
 
 void mostraLinha(FERROVIA* lista[], char lident[]) {
     //WIP
@@ -274,7 +299,7 @@ void elimina_linha(FERROVIA* lista[], char lident []){
     if (head==NULL){
         // se nao existirem linhas, esta condição é sempre verificada.
        printf("ERRO, ID de linha nao encontrado, verificar ficheiro de config!");
-       exit(0);
+       return;
     }
 
     for(j=0;j<MAX;j++){
@@ -295,6 +320,7 @@ void elimina_linha(FERROVIA* lista[], char lident []){
         free(temp);
         temp = NULL;
     }
+    printf("FERROVIA %s ELIMINADA EBIC STYLE B) \n", lident);
 }
 /* funções de apoio e debug*/
 
