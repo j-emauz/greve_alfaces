@@ -2,6 +2,7 @@
 /*ISTO É UM FICHEIRO PARA TESTES, SUBSTITUI A MAIN*/
 
 int main(int argc, char *argv[]){
+	srand(time(NULL));
 	int cores[DIMCores][DIMrgb]={ {255,0,0,255},// vermelho
                                   {0,0,255,255},// azul
                                   {255,255,0,255},// AMARELO
@@ -24,7 +25,7 @@ int main(int argc, char *argv[]){
     CARRUAGEM carro2;
         carro2.cor=AZUL;
         carro2.DimBOLAS = 10;
-        strcpy(carro2.cident,"PE");
+        strcpy(carro2.cident,"LE");
         carro2.nCarruagens = 2;
         strcpy(carro2.pident, "LD");
         carro2.PosiNoGraf[coordX] = 120;
@@ -108,14 +109,11 @@ int main(int argc, char *argv[]){
     }
 
 
-    tchooBase[0] =  inic_Comboios();
-
-    addi_Comboio(tchooBase[0],carro1);
-    addi_Comboio(tchooBase[0],carro2);
-    //addi_Comboio(tchooBase,carro2);
-    //addi_Comboio(tchooBase,carro1);
+    tchooBase[0] =  inic_Comboios(carro1);
+    tchooBase[1] =  inic_Comboios(carro2);
     mostraComboio(tchooBase[0]);
-   // scanf("%c",&debug);
+    mostraComboio(tchooBase[1]);
+    scanf("%c",&debug);
     linha[0]= inic_Linha("LOL");
 
     addi_Linha(linha[0],start);

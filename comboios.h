@@ -6,6 +6,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL2_gfxPrimitives.h>
 #include "cores.h"
+#include <time.h>
 //-------------------
 #define MAX 200
 

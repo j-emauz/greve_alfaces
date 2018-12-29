@@ -31,20 +31,22 @@ void menu(char *opcao){
 /*-----------------COMBOIOS----------------------------*/
 
 COMBOIO* inic_Comboios(CARRUAGEM dados){
-    int corcar;
 	int i=0;
-	
+
 	COMBOIO *head = (COMBOIO*)calloc(1,sizeof(COMBOIO));
     if (head==NULL){
-     printf("Falha na aquisiçao de bloco de memória, função iniccomboio \n");
+     printf("Falha na aquisiçao de bloco de memória, função inic comboio \n");
      exit(0);
     }
-    
+
 	head->prox=NULL;
 	head->cart=dados;
-    
-	for(i=0; i<3, ++i){
-		dados.cor = rand()%9;
+	printf("%d cor car \n",dados.cor);
+
+	for(i=0; i<3; ++i){
+
+		dados.cor = rand()%10;
+		printf("%d cor car \n",dados.cor);
 		head = addi_Comboio(head, dados);
 	}
     return head;
@@ -52,7 +54,6 @@ COMBOIO* inic_Comboios(CARRUAGEM dados){
 
 COMBOIO* addi_Comboio(COMBOIO* head,CARRUAGEM dados){
     COMBOIO* temp = head;
-
 
     COMBOIO* novo = (COMBOIO*) calloc(1,sizeof(COMBOIO) );
 
@@ -92,8 +93,9 @@ void mostraComboio(COMBOIO* topo) {
 
     for(; topo!=NULL; topo=topo->prox)
     {
-        printf("%s \n",topo->cart.cident);
-        printf("%d %d \n",topo->cart.PosiNoGraf[0],topo->cart.PosiNoGraf[1]);
+        printf("ID : %s nCOR: %d Pos(=%d,%d) \n",topo->cart.cident, topo->cart.cor, topo->cart.PosiNoGraf[0],topo->cart.PosiNoGraf[1]);
+
+        //printf("%d %d \n",topo->cart.PosiNoGraf[0],topo->cart.PosiNoGraf[1]);
         //printf("%p \n",(void*)topo);
 
     }
@@ -261,7 +263,7 @@ FERROVIA* ProcuraID(FERROVIA* lista[],char lident[],char IDE_X[]){
             if( k == 0 ) {
                 //printf (" %d \n",strcmp(lident,lista[i]->lident)==0 );
                 TempX=lista[i];
-                printf("match em TempX = %p de lista[%d] \n",TempX,i);
+                printf("match em TempX = %p de lista[%d] \n",(void*)TempX,i);
     //            scanf("%c",&debug);
                 break;
             }

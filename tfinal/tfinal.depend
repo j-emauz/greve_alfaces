@@ -2,41 +2,29 @@
 1544642075 source:c:\users\pedro\dropbox\aulas\greve_alfaces\comboios.c
 	"comboios.h"
 
-1545857352 h"
+1546100584 h"
 
 1544642207 c:\users\pedro\dropbox\aulas\greve_alfaces\comboios.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 
-1545857961 
+1546101102 
 
 1544633215 source:c:\users\pedro\dropbox\aulas\greve_alfaces\main.c
 	"comboios.h"
 
-1545852958 source:/media/sf_Prog/ProjetoFinal/main.c
+1545926635 source:/media/sf_Prog/ProjetoFinal/main.c
+	"comboios.h"
 	"comboios.h"
 
-1545857961 /media/sf_Prog/ProjetoFinal/comboios.h
+1546101102 /media/sf_Prog/ProjetoFinal/comboios.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<SDL2/SDL.h>
 	<SDL2/SDL2_gfxPrimitives.h>
 	"cores.h"
-
-1545834837 /media/sf_Prog/ProjetoFinal/cores.h
-
-1545857856 source:/media/sf_Prog/ProjetoFinal/comboios.c
-	"comboios.h"
-
-1545857352 source:/media/sf_Prog/ProjetoFinal/ler.c
-	"comboios.h"
-
-1545926635 source:/media/sf_Prog/ProjetoFinal/main.c
-	"comboios.h"
-
-1546101102 /media/sf_Prog/ProjetoFinal/comboios.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -48,7 +36,29 @@
 
 1546100078 source:/media/sf_Prog/ProjetoFinal/comboios.c
 	"comboios.h"
+	"comboios.h"
 
 1546100584 source:/media/sf_Prog/ProjetoFinal/ler.c
+	"comboios.h"
+	"comboios.h"
+
+1546106569 source:/media/sf_Prog/ProjetoFinal/main.c
+	"comboios.h"
+
+1546105734 /media/sf_Prog/ProjetoFinal/comboios.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL2_gfxPrimitives.h>
+	"cores.h"
+	<time.h>
+
+1545926614 /media/sf_Prog/ProjetoFinal/cores.h
+
+1546106072 source:/media/sf_Prog/ProjetoFinal/ler.c
+	"comboios.h"
+
+1546105769 source:/media/sf_Prog/ProjetoFinal/comboios.c
 	"comboios.h"
 
