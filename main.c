@@ -49,6 +49,9 @@ int main(int argc, char *argv[]){
 				printf("Haha no\n");
 				mostraComboio(todos[1]);
 				break;
+			case '6':
+				printf("Simular");
+				break;
 		}
 	}while(opcao!='0');
 	return 0;
