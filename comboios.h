@@ -5,8 +5,10 @@
 #include <string.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL2_gfxPrimitives.h>
-#include "cores.h"
 #include <time.h>
+#include <stdbool.h>
+#include "cores.h"
+
 /*-------------------*/
 #define MAX 200
 /*---------defines para linhas----------*/
@@ -15,6 +17,7 @@
 /*-------------------*/
 #define coordX 0 //
 #define coordY 1
+#define DISTSEG 20 // distancia de segurança entre comboios
 /*--------------------------------------------------------------------------------*/
 typedef struct pontoslinha {
 	//int nOrdem;
@@ -50,6 +53,7 @@ typedef struct carr {
 
 typedef struct comboio{
 	CARRUAGEM cart;
+	bool PARACOMBOIO;
 	struct comboio *prox; // aponta para a prox carruagem
 }COMBOIO;
 /* ----------------------------------------------------------------------------------- */
@@ -66,11 +70,12 @@ void mostraComboio(COMBOIO* lista[]);
 void mostraLinha(FERROVIA* lista[]);
 /*LISTAS*/
 int listaFerrovias(FERROVIA* lista[]);
-int listaComboio(COMBOIO* lista[]);
+int listaComboio(COMBOIO* lista[],int k);
 /*DELETES*/
 void eliminaComboio(COMBOIO* lista[]);
 void eliminaLinha(FERROVIA* lista[]);
 /*-------Funções de apoio\debug------*/
+void VerificaColisoes(COMBOIO* lista[]);
 void verificaAcessos(FERROVIA* head[],char ident[]);
 int convCor(char corestr[]);
 FERROVIA* ProcuraID(FERROVIA* lista[],char lident[],char IDE_X[]);

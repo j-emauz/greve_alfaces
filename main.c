@@ -24,7 +24,8 @@ int main(int argc, char *argv[]){
 
 	do{
 		menu(&opcao);
-		getchar();//limpa buffer de stdin
+
+		fflush(stdin);
 		switch(opcao)
 		{
 			case '1': // MOSTRA FERROVIA
@@ -51,6 +52,7 @@ int main(int argc, char *argv[]){
 				printf("Simular");
 				break;
 		}
+		fflush(stdin);
 	}while(opcao!='0');
 	return 0;
 }

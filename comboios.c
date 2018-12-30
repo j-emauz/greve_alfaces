@@ -38,7 +38,7 @@ COMBOIO* inicComboios(CARRUAGEM dados){
      printf("Falha na aquisiçao de bloco de memória, função inic comboio \n");
      exit(0);
     }
-
+    head->PARACOMBOIO = false;
 	head->prox=NULL;
 	head->cart=dados;
 	printf("%d cor car \n",dados.cor);
@@ -61,6 +61,7 @@ COMBOIO* addComboio(COMBOIO* head,CARRUAGEM dados){
         printf("Falha na aquisiçao de bloco de memória \n");
         return head;
     }
+    novo->PARACOMBOIO = false;
     novo->cart=dados;
     novo->prox=NULL;
 
@@ -76,7 +77,7 @@ void eliminaComboio(COMBOIO* lista[]/*,char cident[]*/){
     char cident[MAX];
     int i,j;
 
-    if (listaComboio(lista)==0){
+    if (listaComboio(lista,1)==0){
         return;
     }
     /*Procura de COMBOIO A ELIMINAR*/
@@ -118,23 +119,31 @@ void eliminaComboio(COMBOIO* lista[]/*,char cident[]*/){
     printf("COMBOIO %s ELIMINADO EBIC STYLE B) \n", cident);
     printf("No lugar deste ficou : %s \n",lista[i]->cart.cident);// debug
 }
-int listaComboio(COMBOIO* lista[]){
+int listaComboio(COMBOIO* lista[],int k){
+    // se K < 0 nao faz print, serve para funçoes que utilizem o lista mas nao precisem de printar a lista.
     int i;
     if (lista[0]==NULL){
-        printf("É dia de greve da CP sem serviços mínimos (TODOS os comboios suprimidos)! \n");
+        if(k>0)
+            printf("É dia de greve da CP sem serviços mínimos (TODOS os comboios suprimidos)! \n");
+
         return 0;
     }
-    printf("Lista de Comboios: ");
-    for (i=0;i<MAX&&lista[i]!=NULL;i++){
+    if (k>0)
+        printf("Lista de Comboios: ");
 
-        printf("%s %p ",lista[i]->cart.cident, (void*)lista[i]);
+    for (i=0;i<MAX&&lista[i]!=NULL;i++){
+        if(k>0)
+            printf("%s %p ",lista[i]->cart.cident, (void*)lista[i]);
+
     }
-    printf("\nTotal Comboios %d\n",i);
+    if(k>0)
+        printf("\nTotal Comboios %d\n",i);
+
     return 1;
 }
 void mostraComboio(COMBOIO* lista[]) {
     //WIP
-     if (listaComboio(lista)==0){
+     if (listaComboio(lista,1)==0){
         return;
     }
     int i;
@@ -256,7 +265,7 @@ int listaFerrovias(FERROVIA* lista[]){
         printf("%s ",lista[i]->lident);
     }
     printf("\nTotal de ferrovias: %d\n",i);
-    return 1;
+    return i;
 
 }
 
@@ -352,6 +361,8 @@ void eliminaLinha(FERROVIA* lista[]){
     printf("FERROVIA %s ELIMINADA EBIC STYLE B) \n", lident);
 }
 /* funções de apoio e debug*/
+
+
 void verificaAcessos(FERROVIA* lista[],char ident[]){
     //queremos que a todas as linhas com saída para a linha com ID "ident" seja reduzida 1 saída.
     //queremos que a todas as linhas com entradas provenientes da linha com ID "ident" seja reduzida 1 entrada.
@@ -519,7 +530,7 @@ void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 	FERROVIA* head = NULL;
 
 	printf("Comboios existentes: ");
-	listaComboio(todos);
+	listaComboio(todos,1);
 	printf("Escreva o identificador do novo comboio: ");
 	scanf("%3s", nova.cident);
 	if(nova.cident[0]==' '||nova.cident[0]=='\n'||nova.cident[0]=='\0'){
@@ -613,7 +624,26 @@ void mostraPontos(FERROVIA *todas[], char lident[]){
 }
 
 
+void VerificaColisoes(COMBOIO* lista[]){
+    int k,m,r;
+    double distancia=0;
+    int nComboios=listaComboio(lista,0);
 
+    if (nComboios > 1){
+        for (k=0;k<nComboios;k++){
+
+            for (m=k+1;m<nComboios;m++){
+                r = lista[k]->cart.DimBOLAS;
+                distancia = sqrt(  pow( lista[k]->cart.PosiNoGraf[coordX] - lista[m]->cart.PosiNoGraf[coordX],2) + pow(lista[k]->cart.PosiNoGraf[coordY] - lista[m]->cart.PosiNoGraf[coordY],2 ) );
+
+                if(distancia < (8*r+DISTSEG) ){
+                        lista[k]->PARACOMBOIO = true;
+                        lista[m]->PARACOMBOIO = true;
+                }
+            }
+        }
+    }
+}
 
 /*------------------------------- */
 /* JANELA GRAFICA */
