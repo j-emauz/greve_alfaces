@@ -36,6 +36,9 @@ COMBOIO *lercomboio(char *aux){
 
 	dados.nCarruagens = 4;
 	dados.cor = ConvCor(corc);
+	if (dados.cor == 100)//Desta forma Conv Cor pode ser reutilizada
+        exit(0);
+
 
 	/*printf ("esta aqui -->> %s %d %d %s %s %d", dados.cident, (dados.DimBOLAS), dados.cor, dados.lident, dados.pident, dados.nservico);
     scanf("%d",&debug);*/
@@ -56,6 +59,8 @@ FERROVIA *lerlinha(char *aux, FERROVIA *head, char lident[]){
 
 	sscanf(aux, "%s %d %d %s %s", pontinho.pident, &pontinho.coord[coordX], &pontinho.coord[coordY], cor, pontinho.TipoDePonto);
     pontinho.cor = ConvCor(cor);
+    if (pontinho.cor == 100)//Desta forma Conv Cor pode ser reutilizada
+        exit(0);
 //	printf("pontinho pident em lerlinha depois da passagem : %s \n",pontinho.pident);
     //scanf("%d",debug);
     if(head==NULL){

@@ -490,7 +490,7 @@ int ConvCor(char corestr[]){
     } else {
         printf("Erro na conversão de cores, atenção utilizar só as cores especificadas:\n"
                "VERMELHO, AZUL, AMARELO, CYAN, ROXO, VERDE, CASTANHO, PRETO, CINZENTO, BRANCO \n\n");
-        exit(0);
+        return 100;
     }
 }
 
