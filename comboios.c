@@ -3,7 +3,7 @@ SDL_Window* g_pWindow = NULL;
 SDL_Renderer* g_pRenderer = NULL;
 
 void menu(char *opcao){
-	char linha[MAX];
+	//char linha[MAX];
 	char teste;
 	printf ("\nEscolha uma das opções \n"
 				"0 - Terminar programa \n"
@@ -14,8 +14,9 @@ void menu(char *opcao){
 				"5 - Criar um comboio \n"
 				"6 - Simulação dos comboios \n"
 				"Opção: ");
-	fgets(linha, MAX, stdin);
-	sscanf(linha, "%c%c", opcao, &teste);
+	//fgets(linha, MAX, stdin);
+	//sscanf(linha, "%c%c", opcao, &teste);
+	if(scanf("%c", opcao)==1){
 	printf("\n");
 
 	if(teste!='\n' || *opcao>'6' || *opcao<'0' ){
@@ -26,6 +27,7 @@ void menu(char *opcao){
 		printf("Insira apenas 1 numero entre 0 e 6");
 		menu(opcao);
 	}*/
+	}
 }
 
 /*-----------------COMBOIOS----------------------------*/
