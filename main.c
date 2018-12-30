@@ -44,7 +44,7 @@ int main(int argc, char *argv[]){
                 elimina_comboio(todos);
  				break;
 			case '5':
-
+				CriarComboio(todos, todas);
 
 				break;
 			case '6':

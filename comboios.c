@@ -511,6 +511,109 @@ int nPontos(FERROVIA* lista){
     printf("ID:%s nPontos = %d\n", lista->lident, counter);
     return counter;
 }
+
+void *CriarComboio(COMBOIO *todos[], FERROVIA *todas[]){
+	CARRUAGEM nova;
+	char cor[MAX];
+	FERROVIA* head = NULL;
+	
+	printf("Comboios existentes: ");
+	ListaComboio(todos);
+	printf("Escreva o identificador do novo comboio: ");
+	scanf("%3s", nova.cident);
+	if(nova.cident[0]==' '||nova.cident[0]=='\n'||nova.cident[0]=='\0'){
+		printf("Insira um identificador correto para a proxima \n");
+		return;
+	}
+	for(i=0; i<MAX&&todos[i]!=NULL;++i){
+		if(strcmp(nova.cident, todos[i]->cart.cident)==0){
+			printf("Comboio ja existente! Erro na criacao de comboio.\n");
+			return;
+		}
+	}
+	
+	printf("Insira raio da carruagem (entre 1 e 5)");
+	scanf("%d",  nova.DimBOLAS);
+	while(nova.DimBOLAS>5||nova.DimBOLAS<1){
+		printf("Insira o valor entre 0 e 5");
+		scanf("%d",  nova.DimBOLAS);
+	}
+	
+	printf("Escreva a cor (SEM ESPAÇOS E EM MINUSCULAS) de entre a lista de cores: \n"
+	"VERMELHO, AZUL, AMARELO, CYAN, ROXO, \nVERDE, CASTANHO, PRETO, CINZENTO, BRANCO \n");
+	
+	do{
+		scanf("%100s", cor);
+		nova.cor = ConvCor(cor);
+	}while(nova.cor==100);
+	
+	printf("Escolha a linha para a posição inicial diante das existentes(SEM ESPAÇOS)\n:");
+	if(ListaFerrovias(todas)==0)
+		return;
+	
+	scanf("%4s", nova.lident);
+	for(i=0; i<MAX&&todas[i]!=NULL;++i){
+		if(strcmp(nova.lident, todas[i]->lident)==0){
+			head=todas[i];
+			break;
+		}
+	}
+	if(head==NULL){
+		printf("Linha não encontrada, escreva bem para a próxima!\n")
+		return;
+	}
+	
+	printf("Escolha o ponto de entre os existentes nessa linha: \n");
+	mostraPontos(todas, nova.lident);
+	scanf("%4s", nova.pident);
+	
+	ProcuraID(todas, nova.lident, nova.pident);
+	
+	printf("Insira o numero de serviços \n");
+	scanf("&d", nova.nservicos);
+	
+	i=0;
+	while(todos[i]!NULL){
+		i=i+1;
+	}
+	
+	todos[i] = InicComboios(nova);
+	printf("Comboio CRIADO \n");
+}
+	
+void mostraPontos(FERROVIA *todas[], char lident[]){
+    FERROVIA* head = NULL;
+    int i;
+    for( i=0 ; i<MAX ; i++){
+        printf("i =%d \n",i);
+
+        if (lista[i]!=NULL){
+            printf("lident = %s \n",lista[i]->lident);
+
+            if(strcmp(lident,lista[i]->lident)==0){
+               head=lista[i];
+               break;
+           }
+        }
+     }
+    if (head==NULL){
+        // se nao existirem linhas, esta condição é sempre verificada.
+       printf("ERRO, ID de linha nao encontrado! Verificar se o ID foi introduzido correctamente\n");
+       return;
+    }
+
+    while(head!=NULL && strcmp(lident,head->lident) == 0 ){
+       printf("IDENTIFICADOR : %s \n",head->pont.pident);
+       head=head->RA;
+
+    }
+
+
+}
+	
+	
+	
+	
 /*------------------------------- */
 /* JANELA GRAFICA */
 

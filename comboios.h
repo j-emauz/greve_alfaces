@@ -85,6 +85,10 @@ void lerjanela(char *aux,int jancoor[]);
 COMBOIO* lercomboio(char *aux);
 FERROVIA *lerlinha(char *aux, FERROVIA *head, char lident[]);
 void lerligar(char *aux, FERROVIA* todas[]);
+/*CRIAR COMBOIO*/
+void *CriarComboio(COMBOIO *todos[], FERROVIA *todas[]);
+void mostraPontos(FERROVIA *todas[], char lident[]);
+
 /*SDL*/
 void AbreJanela(int dimJanela[]);
 /*-----*/
