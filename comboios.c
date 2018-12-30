@@ -15,7 +15,7 @@ void menu(char *opcao){
 				"6 - Simulação dos comboios \n"
 				"Opção: ");
 	fgets(linha, MAX, stdin);
-	if(sscanf(linha, "%c", opcao)==1){
+	sscanf(linha, "%c%c", opcao, &teste);
 	printf("\n");
 
 	if(teste!='\n' || *opcao>'6' || *opcao<'0' ){
@@ -26,7 +26,6 @@ void menu(char *opcao){
 		printf("Insira apenas 1 numero entre 0 e 6");
 		menu(opcao);
 	}*/
-	}
 }
 
 /*-----------------COMBOIOS----------------------------*/
