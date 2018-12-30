@@ -55,41 +55,41 @@ typedef struct comboio{
 /* ----------------------------------------------------------------------------------- */
 void menu(char *opcao);
 /*ADDS*/
-COMBOIO* addi_Comboio(COMBOIO* head,CARRUAGEM dados); // no fim da lista
-FERROVIA* addi_Linha(FERROVIA* head,PONTOS dados);
-void KonnectLinhas(FERROVIA* Lista[], char lident_Sai[], char lident_Recebe[],char ID_Sai[],char ID_Entra[]);
+COMBOIO* addComboio(COMBOIO* head,CARRUAGEM dados); // no fim da lista
+FERROVIA* addLinha(FERROVIA* head,PONTOS dados);
+void ligaLinhas(FERROVIA* Lista[], char lident_Sai[], char lident_Recebe[],char ID_Sai[],char ID_Entra[]);
 /*INITS*/
-COMBOIO* inic_Comboios(CARRUAGEM dados);
-FERROVIA* inic_Linha(char lident[], PONTOS dados);
+COMBOIO* inicComboios(CARRUAGEM dados);
+FERROVIA* inicLinha(char lident[], PONTOS dados);
 /*MOSTRAS*/
 void mostraComboio(COMBOIO* lista[]);
 void mostraLinha(FERROVIA* lista[]);
 /*LISTAS*/
-int ListaFerrovias(FERROVIA* lista[]);
-int ListaComboio(COMBOIO* lista[]);
+int listaFerrovias(FERROVIA* lista[]);
+int listaComboio(COMBOIO* lista[]);
 /*DELETES*/
-void elimina_comboio(COMBOIO* lista[]);
-void elimina_linha(FERROVIA* lista[]);
+void eliminaComboio(COMBOIO* lista[]);
+void eliminaLinha(FERROVIA* lista[]);
 /*-------Funções de apoio\debug------*/
 void verificaAcessos(FERROVIA* head[],char ident[]);
-int ConvCor(char corestr[]);
+int convCor(char corestr[]);
 FERROVIA* ProcuraID(FERROVIA* lista[],char lident[],char IDE_X[]);
 char debug;//Isto tem de ser apagado antes de entregar.
-void mostracores(int cores[DIMCores][DIMrgb]);
+void mostraCores(int cores[DIMCores][DIMrgb]);
 void trocaCarris(FERROVIA* PercursoA);
 int nPontos(FERROVIA* lista);
 /*LER*/
 int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]); // pus char aqui.
-void passarespacos(char **aux);
-void lerjanela(char *aux,int jancoor[]);
-COMBOIO* lercomboio(char *aux);
-FERROVIA *lerlinha(char *aux, FERROVIA *head, char lident[]);
-void lerligar(char *aux, FERROVIA* todas[]);
+void passarEspacos(char **aux);
+void lerJanela(char *aux,int jancoor[]);
+COMBOIO* lerComboio(char *aux);
+FERROVIA* lerLinha(char *aux, FERROVIA *head, char lident[]);
+void lerLigar(char *aux, FERROVIA* todas[]);
 /*CRIAR COMBOIO*/
-void CriarComboio(COMBOIO *todos[], FERROVIA *todas[]);
+void criarComboio(COMBOIO *todos[], FERROVIA *todas[]);
 void mostraPontos(FERROVIA *todas[], char lident[]);
 
 /*SDL*/
-void AbreJanela(int dimJanela[]);
+void abreJanela(int dimJanela[]);
 /*-----*/
 #endif

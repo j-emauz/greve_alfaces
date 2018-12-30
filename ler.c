@@ -1,7 +1,7 @@
 #include "comboios.h"
 
 
-void passarespacos(char **aux){
+void passarEspacos(char **aux){
 /*
     Passa o endereço de um vetor "string".
     até encontrar um espaço vai avançando um char
@@ -19,23 +19,23 @@ void passarespacos(char **aux){
 	}
 }
 
-void lerjanela(char *aux, int jancoord[]){
+void lerJanela(char *aux, int jancoord[]){
 	char ident[MAX];
 
 	sscanf(aux, "%s %d %d", ident ,&jancoord[0], &jancoord[1]);
 	//printf("Jan(x,y)= %d %d \n", jancoord[0], jancoord[1]);
 }
 
-COMBOIO *lercomboio(char *aux){
+COMBOIO *lerComboio(char *aux){
 	char corc[MAX]={'\0'};
 	CARRUAGEM dados;
 	COMBOIO *thomas;
 
-	passarespacos(&aux);
+	passarEspacos(&aux);
 	sscanf(aux, "%s %d %s %s %s %d", dados.cident, &(dados.DimBOLAS), corc, dados.lident, dados.pident, &dados.nservico);
 
 	dados.nCarruagens = 4;
-	dados.cor = ConvCor(corc);
+	dados.cor = convCor(corc);
 	if (dados.cor == 100)//Desta forma Conv Cor pode ser reutilizada
         exit(0);
 
@@ -43,13 +43,13 @@ COMBOIO *lercomboio(char *aux){
 	/*printf ("esta aqui -->> %s %d %d %s %s %d", dados.cident, (dados.DimBOLAS), dados.cor, dados.lident, dados.pident, dados.nservico);
     scanf("%d",&debug);*/
 
-	thomas = inic_Comboios(dados);
-	//thomas = addi_Comboio(thomas, dados);
+	thomas = inicComboios(dados);
+	//thomas = addComboio(thomas, dados);
 
 	return thomas;
 }
 
-FERROVIA *lerlinha(char *aux, FERROVIA *head, char lident[]){
+FERROVIA *lerLinha(char *aux, FERROVIA *head, char lident[]){
 
 	char cor[MAX]={'\0'};
 
@@ -58,36 +58,36 @@ FERROVIA *lerlinha(char *aux, FERROVIA *head, char lident[]){
 	pontinho.nSaidas=0;
 
 	sscanf(aux, "%s %d %d %s %s", pontinho.pident, &pontinho.coord[coordX], &pontinho.coord[coordY], cor, pontinho.TipoDePonto);
-    pontinho.cor = ConvCor(cor);
+    pontinho.cor = convCor(cor);
     if (pontinho.cor == 100)//Desta forma Conv Cor pode ser reutilizada
         exit(0);
-//	printf("pontinho pident em lerlinha depois da passagem : %s \n",pontinho.pident);
+//	printf("pontinho pident em lerLinha depois da passagem : %s \n",pontinho.pident);
     //scanf("%d",debug);
     if(head==NULL){
-        head = inic_Linha(lident, pontinho);
+        head = inicLinha(lident, pontinho);
     }
     else{
-        head = addi_Linha(head,pontinho);
+        head = addLinha(head, pontinho);
     }
 	memset(cor,0,strlen(cor));
 	return head;
 }
 
-void lerligar(char *aux, FERROVIA* todas[]){
+void lerLigar(char *aux, FERROVIA* todas[]){
 	char lident1[5];
 	char pident1[5];
 	char lident2[5];
 	char pident2[5];
 	//char ident[MAX];
 
-	passarespacos(&aux);
+	passarEspacos(&aux);
 
 	sscanf(aux, "%s %s %s %s", lident1, pident1, lident2, pident2);
 
 	printf("pontos %s %s %s %s", lident1, pident1, lident2, pident2);
 	fflush(stdout);
 
-    KonnectLinhas(todas,lident1,lident2,pident1,pident2);
+    ligaLinhas(todas,lident1,lident2,pident1,pident2);
 	//PASSAR PARA ESTRUTURAS
 
 }
@@ -122,11 +122,11 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
 				aux = linha;//aux aponta para o primeiro elemento de linha.
 
 				if(strspn(linha, "JANELA:")==strlen("JANELA:")){
-					lerjanela(aux, jancoord);//adquire dados da janela
+					lerJanela(aux, jancoord);//adquire dados da janela
 				}
 				if(strspn(linha, "COMBOIO:")==strlen("COMBOIO:")){
 					//printf("no aux = comboio. linha = %s \n",linha); //OK
-					todos[i] = lercomboio(aux);//coloca um apontador para comboio no vetor de apontadores todos, posição i
+					todos[i] = lerComboio(aux);//coloca um apontador para comboio no vetor de apontadores todos, posição i
 					i=i+1;
 					//funcao adicionar comboio
 				}
@@ -150,7 +150,7 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
 
 						if((linha[0]!='%')&&(linha[0]!='\n')&&(linha[0]!=' ')){
 							aux = linha;
-							todas[j] = lerlinha(aux, todas[j], lident);
+							todas[j] = lerLinha(aux, todas[j], lident);
         			}
 						fgets(linha, MAX, fp);
 						for(n=0;n<MAX;n++){
@@ -169,7 +169,7 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
 				}
 				if(strspn(linha, "LIGAR:")==strlen("LIGAR:")){
 					printf("no aux = linhaligar . linha = %s \n",linha); //OK
-					lerligar(aux,todas);
+					lerLigar(aux,todas);
 
 					//funcao ligar
 				}

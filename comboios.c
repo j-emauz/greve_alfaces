@@ -30,7 +30,7 @@ void menu(char *opcao){
 
 /*-----------------COMBOIOS----------------------------*/
 
-COMBOIO* inic_Comboios(CARRUAGEM dados){
+COMBOIO* inicComboios(CARRUAGEM dados){
 	int i;
 
 	COMBOIO *head = (COMBOIO*)calloc(1,sizeof(COMBOIO));
@@ -47,12 +47,12 @@ COMBOIO* inic_Comboios(CARRUAGEM dados){
 
 		dados.cor = rand()%10;
 		printf("%d cor car \n",dados.cor);
-		head = addi_Comboio(head, dados);
+		head = addComboio(head, dados);
 	}
     return head;
 }
 
-COMBOIO* addi_Comboio(COMBOIO* head,CARRUAGEM dados){
+COMBOIO* addComboio(COMBOIO* head,CARRUAGEM dados){
     COMBOIO* temp = head;
 
     COMBOIO* novo = (COMBOIO*) calloc(1,sizeof(COMBOIO) );
@@ -70,13 +70,13 @@ COMBOIO* addi_Comboio(COMBOIO* head,CARRUAGEM dados){
 
     return temp;
 }
-void elimina_comboio(COMBOIO* lista[]/*,char cident[]*/){
+void eliminaComboio(COMBOIO* lista[]/*,char cident[]*/){
     COMBOIO* temp;
     COMBOIO* head;
     char cident[MAX];
     int i,j;
 
-    if (ListaComboio(lista)==0){
+    if (listaComboio(lista)==0){
         return;
     }
     /*Procura de COMBOIO A ELIMINAR*/
@@ -118,7 +118,7 @@ void elimina_comboio(COMBOIO* lista[]/*,char cident[]*/){
     printf("COMBOIO %s ELIMINADO EBIC STYLE B) \n", cident);
     printf("No lugar deste ficou : %s \n",lista[i]->cart.cident);// debug
 }
-int ListaComboio(COMBOIO* lista[]){
+int listaComboio(COMBOIO* lista[]){
     int i;
     if (lista[0]==NULL){
         printf("É dia de greve da CP sem serviços mínimos (TODOS os comboios suprimidos)! \n");
@@ -134,7 +134,7 @@ int ListaComboio(COMBOIO* lista[]){
 }
 void mostraComboio(COMBOIO* lista[]) {
     //WIP
-     if (ListaComboio(lista)==0){
+     if (listaComboio(lista)==0){
         return;
     }
     int i;
@@ -164,10 +164,10 @@ void mostraComboio(COMBOIO* lista[]) {
     }
 }
 /*------------------LINHAS-------------------*/
-FERROVIA* inic_Linha(char lident[], PONTOS dados){
+FERROVIA* inicLinha(char lident[], PONTOS dados){
     FERROVIA*head = (FERROVIA*)calloc(1,sizeof(FERROVIA));
     if (head==NULL){
-     printf("Falha na aquisiçao de bloco de memória, função inic_Linha \n");
+     printf("Falha na aquisiçao de bloco de memória, função inicLinha \n");
      exit(0);
     }
     strcpy(head->lident, lident);
@@ -180,7 +180,7 @@ FERROVIA* inic_Linha(char lident[], PONTOS dados){
     return head;
 }
 
-FERROVIA* addi_Linha(FERROVIA* head,PONTOS dados){
+FERROVIA* addLinha(FERROVIA* head,PONTOS dados){
 
     FERROVIA* temp=head;
     FERROVIA* novo=(FERROVIA*)calloc(1,sizeof(FERROVIA));
@@ -207,7 +207,7 @@ FERROVIA* addi_Linha(FERROVIA* head,PONTOS dados){
 
 }
 
-void KonnectLinhas(FERROVIA* lista[], char lident_Sai[], char lident_Recebe[],char ID_Sai[],char ID_Entra[]) {
+void ligaLinhas(FERROVIA* lista[], char lident_Sai[], char lident_Recebe[],char ID_Sai[],char ID_Entra[]) {
     // W-MUITO-IP
     /*FAZER VERIFICAÇAO DE NUMERO DE SAIDAS E ENTRADAS*/
     printf("(connect linhas)ID saida: %s , ID entrada:  %s \n", ID_Sai, ID_Entra);
@@ -243,7 +243,7 @@ void KonnectLinhas(FERROVIA* lista[], char lident_Sai[], char lident_Recebe[],ch
     }
 }
 
-int ListaFerrovias(FERROVIA* lista[]){
+int listaFerrovias(FERROVIA* lista[]){
     int i;
     printf("Lista de Ferrovias: ");
 
@@ -262,7 +262,7 @@ int ListaFerrovias(FERROVIA* lista[]){
 
 void mostraLinha(FERROVIA* lista[]) {
     //WIP
-    if(ListaFerrovias(lista)==0){
+    if(listaFerrovias(lista)==0){
         return;
     }
     char lident[MAX];
@@ -300,13 +300,13 @@ void mostraLinha(FERROVIA* lista[]) {
 
 
 }
-void elimina_linha(FERROVIA* lista[]){
+void eliminaLinha(FERROVIA* lista[]){
     FERROVIA* temp = NULL;
     FERROVIA* head = NULL;
     char lident[MAX];
     int i,j;
 
-    if (ListaFerrovias(lista)==0){
+    if (listaFerrovias(lista)==0){
         return;
     };// Lista as ferrovias por ID
 
@@ -444,7 +444,7 @@ void trocaCarris(FERROVIA* PercursoA){
 
  }
 
-void mostracores(int cores[DIMCores][DIMrgb]){
+void mostraCores(int cores[DIMCores][DIMrgb]){
     int i,j;
     for(i=0;i<DIMCores;i++){
         for(j=0;j<DIMrgb;j++)
@@ -454,7 +454,7 @@ void mostracores(int cores[DIMCores][DIMrgb]){
     };
 }
 
-int ConvCor(char corestr[]){
+int convCor(char corestr[]){
     //printf("printei isto ::: === %s", corestr);
 
     if ( strcmp(corestr,"VERMELHO") == 0 ){
@@ -512,14 +512,14 @@ int nPontos(FERROVIA* lista){
     return counter;
 }
 
-void CriarComboio(COMBOIO *todos[], FERROVIA *todas[]){
+void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 	CARRUAGEM nova;
 	char cor[MAX];
 	int i;
 	FERROVIA* head = NULL;
 
 	printf("Comboios existentes: ");
-	ListaComboio(todos);
+	listaComboio(todos);
 	printf("Escreva o identificador do novo comboio: ");
 	scanf("%3s", nova.cident);
 	if(nova.cident[0]==' '||nova.cident[0]=='\n'||nova.cident[0]=='\0'){
@@ -545,11 +545,11 @@ void CriarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 
 	do{
 		scanf("%100s", cor);
-		nova.cor = ConvCor(cor);
+		nova.cor = convCor(cor);
 	}while(nova.cor==100);
 
 	printf("Escolha a linha para a posição inicial diante das existentes(SEM ESPAÇOS)\n:");
-	if(ListaFerrovias(todas)==0)
+	if(listaFerrovias(todas)==0)
 		return;
 
 	scanf("%4s", nova.lident);
@@ -578,7 +578,7 @@ void CriarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 		i=i+1;
 	}
 
-	todos[i] = inic_Comboios(nova);
+	todos[i] = inicComboios(nova);
 	printf("Comboio CRIADO \n");
 }
 
@@ -619,7 +619,7 @@ void mostraPontos(FERROVIA *todas[], char lident[]){
 /* JANELA GRAFICA */
 
 
-/*void AbreJanela(int dimJanela[]){
+/*void abreJanela(int dimJanela[]){
 
     SDL_Init(SDL_INIT_EVERYTHING);
     if(SDL_Init(SDL_INIT_EVERYTHING) >= 0)

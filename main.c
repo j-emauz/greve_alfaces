@@ -33,7 +33,7 @@ int main(int argc, char *argv[]){
 			case '2': // ELIMINA FERROVIA
 				//print instruçoes
                 //scanf("%s", Indent);
-                elimina_linha(todas);
+                eliminaLinha(todas);
                 //memset(Indent, 0, MAX);
 				break;
 			case '3': // MOSTRA COMBOIOS
@@ -41,10 +41,10 @@ int main(int argc, char *argv[]){
 				break;
 			case '4': // ELIMINA COMBOIOS
                 // Lista para depois eliminar por ID
-                elimina_comboio(todos);
+                eliminaComboio(todos);
  				break;
 			case '5':
-				CriarComboio(todos, todas);
+				criarComboio(todos, todas);
 
 				break;
 			case '6':
