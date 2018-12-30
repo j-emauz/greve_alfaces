@@ -5,6 +5,7 @@ SDL_Renderer* g_pRenderer = NULL;
 void menu(char *opcao){
 	char linha[MAX];
 	char teste;
+	getchar();
 	printf ("\nEscolha uma das opções \n"
 				"0 - Terminar programa \n"
 				"1 - Mostrar a informação de uma ferrovia \n"
@@ -22,10 +23,7 @@ void menu(char *opcao){
 		printf("Insira apenas 1 numero entre 0 e 6");
 		menu(opcao);
 	}
-	/*if(*opcao>'6' || *opcao<'0'){
-		printf("Insira apenas 1 numero entre 0 e 6");
-		menu(opcao);
-	}*/
+
 }
 
 /*-----------------COMBOIOS----------------------------*/
@@ -407,20 +405,18 @@ void verificaAcessos(FERROVIA* lista[],char ident[]){
 }
 
 FERROVIA* ProcuraID(FERROVIA* lista[],char lident[],char IDE_X[]){
-    int i=0,k=0;
-
+    int i=0,p;
+    printf("lista -> lident: %s lident %s e IDE %s \n",lista[0]->lident, lident, IDE_X);
     FERROVIA* TempX=NULL;
+    //scanf("%c",&debug);
 
     for(i=0;i<MAX;i++){
         if (lista[i]!=NULL){
-             k = strcmp(lident,lista[i]->lident);
-//             printf ("k = %d \n", k );
-
-            if( k == 0 ) {
-                //printf (" %d \n",strcmp(lident,lista[i]->lident)==0 );
+            if( strcmp(lident,lista[i]->lident) == 0 ) {
+                printf (" %d \n",strcmp(lident,lista[i]->lident) );
                 TempX=lista[i];
                 printf("match em TempX = %p de lista[%d] \n",(void*)TempX,i);
-    //          scanf("%c",&debug);
+              //scanf("%c",&debug);
                 break;
             }
         }
@@ -429,20 +425,35 @@ FERROVIA* ProcuraID(FERROVIA* lista[],char lident[],char IDE_X[]){
        printf("ERRO, ID de linha nao encontrado, verificar ficheiro de config!");
        exit(0);
     }
-    while( (strcmp(TempX->lident,lident)==0) && (strcmp( TempX->pont.pident,IDE_X ) != 0 ) ){
 
-        if(TempX->RA != NULL){
+    p = nPontos(TempX);
+
+    for (i=0; i<p; i++) {
+            printf("IDENTIFICADOR : %s \n",TempX->pont.pident);
+
+            if(strcmp(TempX->pont.pident,IDE_X)==0){
+                printf("MATCH : %s \n",TempX->pont.pident);
+                printf("AT Address : %p \n",(void*)TempX);
+                return TempX;
+            }
+            TempX=TempX->RA;
+    }
+
+    printf("ERRO, ID de ponto nao encontrado, verificar ficheiro de config!");
+    exit(0);
+    /*while( (strcmp(TempX->lident,lident)==0) && (strcmp( TempX->pont.pident,IDE_X ) != 0 ) ){
+
+        if(TempX->RA != NULL && strcmp(TempX->RA->lident, lident)==0 ){
             printf("IDENTIFICADOR : %s \n",TempX->pont.pident);
             TempX=TempX->RA;
+
         }else{
             printf("ERRO, ID de ponto nao encontrado, verificar ficheiro de config!");
             exit(0);
         }
     }
-    printf("MATCH : %s \n",TempX->pont.pident);
-    printf(" AT Address : %p \n",(void*)TempX);
-    return TempX;
- }
+    */
+}
 
 void trocaCarris(FERROVIA* PercursoA){
     /*WIP*/
@@ -514,25 +525,38 @@ void InputRefinado(char cident[]){
 }
 
 int nPontos(FERROVIA* lista){
-    int counter=1;
+    if (lista == NULL)
+        return 0;
+
+    int numero=1;
     while (lista!=NULL&&strcmp(lista->lident,lista->RA->lident)==0){
-        counter++;
+        numero++;
         lista=lista->RA;
     }
-    printf("ID:%s nPontos = %d\n", lista->lident, counter);
-    return counter;
+    printf("ID:%s nPontos = %d\n", lista->lident, numero);
+    return numero;
 }
 
 void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 	CARRUAGEM nova;
 	char cor[MAX];
 	int i;
+	char ident[MAX];
 	FERROVIA* head = NULL;
+    memset(nova.cident,0,3);
+    memset(nova.lident,0,5);
+    memset(nova.pident,0,5);
 
 	printf("Comboios existentes: ");
 	listaComboio(todos,1);
 	printf("Escreva o identificador do novo comboio: ");
-	scanf("%3s", nova.cident);
+
+
+    scanf("%s", ident);
+    strncpy(nova.cident,ident,2);
+    printf("%s", nova.cident);
+
+    scanf("%c",&debug);
 	if(nova.cident[0]==' '||nova.cident[0]=='\n'||nova.cident[0]=='\0'){
 		printf("Insira um identificador correto para a proxima \n");
 		return;
@@ -563,7 +587,10 @@ void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 	if(listaFerrovias(todas)==0)
 		return;
 
-	scanf("%4s", nova.lident);
+    memset(ident,0,MAX);
+	scanf("%s", ident);
+    strncpy(nova.lident,ident,4);
+
 	for(i=0; i<MAX&&todas[i]!=NULL;++i){
 		if(strcmp(nova.lident, todas[i]->lident)==0){
 			head=todas[i];
@@ -577,7 +604,12 @@ void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 
 	printf("Escolha o ponto de entre os existentes nessa linha: \n");
 	mostraPontos(todas, nova.lident);
-	scanf("%4s", nova.pident);
+
+    memset(ident,0,MAX);
+	scanf("%s",ident);
+
+    strncpy(nova.pident,ident,4);
+    printf("PIdent : %s \n", nova.pident);
 
 	ProcuraID(todas, nova.lident, nova.pident);
 
@@ -622,7 +654,6 @@ void mostraPontos(FERROVIA *todas[], char lident[]){
 
 
 }
-
 
 void VerificaColisoes(COMBOIO* lista[]){
     int k,m,r;

@@ -7,7 +7,7 @@ int main(int argc, char *argv[]){
     int i=0;
     int jancoord[2];
     char opcao='0';
-
+   // char buff[MAX];
     COMBOIO* todos[MAX];
     FERROVIA* todas[MAX];
     for (i=0;i<MAX;i++){
@@ -21,10 +21,10 @@ int main(int argc, char *argv[]){
 	}
 	if(ler(argv,todos,todas,jancoord) == 0)
 		exit(0);
-
+    printf("PRESSIONE ENTER! \n");// ver nos LABS
 	do{
 		menu(&opcao);
-
+        //getchar();
 		fflush(stdin);
 		switch(opcao)
 		{
@@ -52,7 +52,8 @@ int main(int argc, char *argv[]){
 				printf("Simular");
 				break;
 		}
-		fflush(stdin);
+
+
 	}while(opcao!='0');
 	return 0;
 }
