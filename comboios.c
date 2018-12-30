@@ -5,28 +5,27 @@ SDL_Renderer* g_pRenderer = NULL;
 void menu(char *opcao){
 	char linha[MAX];
 	char teste;
-
-
 	printf ("\nEscolha uma das opções \n"
 				"0 - Terminar programa \n"
 				"1 - Mostrar a informação de uma ferrovia \n"
 				"2 - Eliminar uma ferrovia \n"
 				"3 - Mostrar a informação de um comboio \n"
-				"4 – Eliminar um comboio \n"
+				"4 - Eliminar um comboio \n"
 				"5 - Criar um comboio \n"
 				"6 - Simulação dos comboios \n"
 				"Opção: ");
 	fgets(linha, MAX, stdin);
 	sscanf(linha, "%c%c", opcao, &teste);
 	printf("\n");
-	if(teste!='\n'){
+
+	if(teste!='\n' || *opcao>'6' || *opcao<'0' ){
 		printf("Insira apenas 1 numero entre 0 e 6");
 		menu(opcao);
 	}
-	if(*opcao>'6' || *opcao<'0'){
+	/*if(*opcao>'6' || *opcao<'0'){
 		printf("Insira apenas 1 numero entre 0 e 6");
 		menu(opcao);
-	}
+	}*/
 }
 
 /*-----------------COMBOIOS----------------------------*/
@@ -71,31 +70,35 @@ COMBOIO* addi_Comboio(COMBOIO* head,CARRUAGEM dados){
 
     return temp;
 }
-
-void elimina_comboio(COMBOIO* lista[],char cident[]){
+void elimina_comboio(COMBOIO* lista[]/*,char cident[]*/){
     COMBOIO* temp;
     COMBOIO* head;
-
+    char cident[MAX];
     int i,j;
 
-    for( i=0 ; i<MAX ; i++){
-        printf("i =%d \n",i);
-
-        if (lista[i]!=NULL){
-            printf("cident = %s \n",lista[i]->cart.cident);
-
-            if(strcmp(cident,lista[i]->cart.cident)==0){
-               head=lista[i];
-               break;
-           }
-        }
-     }
-     if (head==NULL){
-        // se nao existirem linhas, esta condição é sempre verificada.
-       printf("ERRO, ID de linha nao encontrado, verificar ficheiro de config!");
-       return;
+    if (ListaComboio(lista)==0){
+        return;
     }
-     for(j=0;j<MAX;j++){
+    /*Procura de COMBOIO A ELIMINAR*/
+    printf("Inserir ID do comboio a eliminar \n");
+    scanf("%s", cident);
+
+    for(i=0 ; i<MAX; i++){
+
+        if(lista[i]==NULL){
+           // se nao existirem linhas, esta condição é sempre verificada.
+           printf("ERRO, ID de linha nao encontrado, verificar ficheiro de config!");
+           return;
+        }else if(strcmp(cident,lista[i]->cart.cident)==0){
+           head=lista[i];
+           printf("MATCH \n");
+           break;
+        }
+        printf("i = %d -> cident = %s \n",i,lista[i]->cart.cident);
+      }
+    /*REORDENAÇÃO*/
+    printf("Reordenação \n");
+    for(j=0;j<MAX;j++){
         if(lista[j]==NULL)
             break;
     }
@@ -103,51 +106,64 @@ void elimina_comboio(COMBOIO* lista[],char cident[]){
          lista[i]=lista[j-1];
          lista[j-1]=NULL;
     }
+    /*-----------------*/
+
+    printf("Libertação \n");
+
     while(head!=NULL){
         temp = head;
         head=head->prox;
         free(temp);
     }
     printf("COMBOIO %s ELIMINADO EBIC STYLE B) \n", cident);
+    printf("No lugar deste ficou : %s \n",lista[i]->cart.cident);// debug
 }
-void ListaComboio(COMBOIO* lista[]){
+int ListaComboio(COMBOIO* lista[]){
     int i;
-    printf("Lista de Comboios: ");
-
-    for (i=0;i<MAX&&lista[i]!=NULL;i++){
-        printf("%s ",lista[i]->cart.cident);
+    if (lista[0]==NULL){
+        printf("É dia de greve da CP sem serviços mínimos (TODOS os comboios suprimidos)! \n");
+        return 0;
     }
-    printf("\n");
+    printf("Lista de Comboios: ");
+    for (i=0;i<MAX&&lista[i]!=NULL;i++){
 
-
-
+        printf("%s %p ",lista[i]->cart.cident, lista[i]);
+    }
+    printf("\nTotal Comboios %d\n",i);
+    return 1;
 }
-void mostraComboio(COMBOIO* lista[], char cident[]) {
+void mostraComboio(COMBOIO* lista[]) {
     //WIP
-   int i;
-   printf("cident : %s \n", cident);
-   COMBOIO* topo = NULL;
+     if (ListaComboio(lista)==0){
+        return;
+    }
+    int i;
+    char cident[MAX];
+    COMBOIO* topo = NULL;
 
-   for (i=0; i<MAX&&lista[i]!=NULL ;i++){
-        if ( strcmp (cident, lista[i]->cart.cident)==0 ){
-            topo=lista[i];
-            break;
-        }
-   }
+    printf("Inserir ID do Comboio a mostrar \n");
+    scanf("%s",cident);
+    printf("cident : %s \n", cident);
+
+    for (i=0; i<MAX&&lista[i]!=NULL ;i++){
+         if ( strcmp (cident, lista[i]->cart.cident)==0 ){
+             topo=lista[i];
+             break;
+         }
+    }
 
     if (topo==NULL){
-        printf("Comboio inexistente ! \n \n");
+        printf("Comboio inexistente ! Verificar ID \n \n");
         return;
     }
 
    for(; topo!=NULL; topo=topo->prox)
     {
+       //Poderao ser adicionadas outras coisas
        printf("ID : %s nCOR: %d \n",topo->cart.cident, topo->cart.cor);
     }
 }
-
 /*------------------LINHAS-------------------*/
-
 FERROVIA* inic_Linha(char lident[], PONTOS dados){
     FERROVIA*head = (FERROVIA*)calloc(1,sizeof(FERROVIA));
     if (head==NULL){
@@ -227,25 +243,31 @@ void KonnectLinhas(FERROVIA* lista[], char lident_Sai[], char lident_Recebe[],ch
     }
 }
 
-void ListaFerrovias(FERROVIA* lista[]){
+int ListaFerrovias(FERROVIA* lista[]){
     int i;
     printf("Lista de Ferrovias: ");
 
+    if (lista[0]==NULL){
+        printf("Não existem linhas! \n");
+        return 0;
+    }
 
     for (i=0;i<MAX&&lista[i]!=NULL;i++){
         printf("%s ",lista[i]->lident);
-
     }
-    printf("\n");
+    printf("\nTotal de ferrovias: %d\n",i);
+    return 1;
 
 }
 
-
-
-
-void mostraLinha(FERROVIA* lista[], char lident[]) {
+void mostraLinha(FERROVIA* lista[]) {
     //WIP
-
+    if(ListaFerrovias(lista)==0){
+        return;
+    }
+    char lident[MAX];
+    printf("Escreva o ID da Ferrovia a apresentar sem espaços! \n");
+    scanf("%100s",lident);//fazer isto em todos os scanf
     FERROVIA* head = NULL;
     int i;
     for( i=0 ; i<MAX ; i++){
@@ -262,7 +284,7 @@ void mostraLinha(FERROVIA* lista[], char lident[]) {
      }
     if (head==NULL){
         // se nao existirem linhas, esta condição é sempre verificada.
-       printf("ERRO, ID de linha nao encontrado, verificar ficheiro de config!");
+       printf("ERRO, ID de linha nao encontrado! Verificar se o ID foi introduzido correctamente\n");
        return;
     }
     //printf("\n Da primeira estação.... \n\n");
@@ -271,20 +293,27 @@ void mostraLinha(FERROVIA* lista[], char lident[]) {
     {
        printf("endereço :  %p \n",(void*)head);
        printf("IDENTIFICADOR : %s \n",head->pont.pident);
-       printf("nEntradas %d  nSaidas %d \n", head->pont.nEntradas,head->pont.nSaidas);
+       printf("nEntradas %d  nSaidas %d \n\n", head->pont.nEntradas,head->pont.nSaidas);
        head=head->RA;
 
     }
     //printf("\n ....à ultima estação \n\n");
 
 }
-
-void elimina_linha(FERROVIA* lista[], char lident []){
+void elimina_linha(FERROVIA* lista[]){
     FERROVIA* temp = NULL;
     FERROVIA* head = NULL;
+    char lident[MAX];
     int i,j;
 
-    for( i=0 ; i<MAX ; i++){
+    if (ListaFerrovias(lista)==0){
+        return;
+    };// Lista as ferrovias por ID
+
+    printf("Escreva o ID da Ferrovia a eliminar sem espaços! \n");
+    scanf("%s",lident);
+
+    for( i=0 ; i<MAX ; i++){ //Procura da linha com ID = lident
         printf("i =%d \n",i);
 
         if (lista[i]!=NULL){
@@ -295,26 +324,26 @@ void elimina_linha(FERROVIA* lista[], char lident []){
                break;
            }
         }
-     }
+    }
     if (head==NULL){
         // se nao existirem linhas, esta condição é sempre verificada.
        printf("ERRO, ID de linha nao encontrado, verificar ficheiro de config!");
        return;
     }
-
+    verificaAcessos(lista,lident);//ajusta o nEntradas e nSaidas
+    printf("Reordenação \n");
     for(j=0;j<MAX;j++){
 
         if(lista[j]==NULL)
             break;
     }
-
     if(j!=0){
-         lista[i]=lista[j-1];
-         lista[j-1]=NULL;
+         lista[i]=lista[j-1]; // colocamos o ultimo elemento da lista no lugar do elemento a ser eliminado.
+         lista[j-1]=NULL; // limpamos a anterior última célula com dados úteis.
     }
+    printf("Libertação \n");//free no bloco de memória
 
-    /*para que apenas a linha com identificador passado seja eliminada*/
-    while((head!=NULL)&&(strcmp(head->lident,lident)==0)){
+    while((head!=NULL)&&(strcmp(head->lident,lident)==0)){/*para que apenas a linha com o ID passado seja eliminada*/
         temp = head;
         head=head->RA;
         free(temp);
@@ -323,30 +352,60 @@ void elimina_linha(FERROVIA* lista[], char lident []){
     printf("FERROVIA %s ELIMINADA EBIC STYLE B) \n", lident);
 }
 /* funções de apoio e debug*/
+void verificaAcessos(FERROVIA* lista[],char ident[]){
+    //queremos que a todas as linhas com saída para a linha com ID "ident" seja reduzida 1 saída.
+    //queremos que a todas as linhas com entradas provenientes da linha com ID "ident" seja reduzida 1 entrada.
+    int k;
+    FERROVIA* temp;
+
+    for(k=0, temp=lista[k];lista[k] != NULL && k<MAX ;k++) {
+        // percorremos todas as linhas existentes.
+        printf("OK \n");
+        fflush(stdout);
+        while (temp->RA != lista[k] && temp->RA != NULL){
+
+            printf("OK + %d + %p \n",k, (void*)temp->RA);
+
+            if ( strcmp(temp->RA->lident,ident) == 0 && strcmp(temp->lident,ident)!=0 ){//se a proximo ponto(RA) pertencer à estação a eliminar e não estivermos sobre ela
+                printf("Retirando saída %s, %s \n", temp->lident, temp->pont.pident);
+                temp->pont.nSaidas--;
+
+                printf("DEPOIS : S:%d",temp->pont.nSaidas);
+            }else if(strcmp(temp->lident,ident)==0 && strcmp(temp->RA->lident,ident) != 0) {//estamos sobre a estaçao a eliminar mas o prox ponto nao pertence a ela
+                printf("Retirando entrada %s, %s \n", temp->lident, temp->pont.pident);
+                temp->RA->pont.nEntradas--;
+            }
+
+            if (temp->RB != NULL){//nem sempre existe
+                if ( strcmp(temp->RB->lident,ident) == 0 && strcmp(temp->lident,ident) != 0){//se a proximo ponto(RB) pertencer à estação a eliminar e não estivermos sobre ela
+                    printf("Retirando saída %s, %s \n", temp->lident, temp->pont.pident);
+                    temp ->pont.nSaidas --;
+
+                }else if(strcmp(temp->lident,ident)== 0 && strcmp(temp->RB->lident,ident) != 0) {//estamos sobre a estaçao a eliminar mas o prox ponto nao pertence a ela
+                    printf("Retirando entrada %s, %s \n", temp->lident, temp->pont.pident);
+                    temp->RB->pont.nEntradas--;
+                }
+            }
+            temp=temp->RA;
+        }
+    }
+}
 
 FERROVIA* ProcuraID(FERROVIA* lista[],char lident[],char IDE_X[]){
     int i=0,k=0;
 
     FERROVIA* TempX=NULL;
-   // printf("AT Procura ID, lident lista is %s <- \n", lista[i+1]->lident);//quickfix
-    //printf("AT Procura ID, lident is %s \n", lident);
-
 
     for(i=0;i<MAX;i++){
         if (lista[i]!=NULL){
-
-           // printf("AT Procura ID inside FOR, i = %d, lident lista is %s <- \n",i, lista[i]->lident);
-            //printf("AT Procura ID inside FOR, lident is %s <-\n", lident);
-         //   scanf("%c",&debug);
              k = strcmp(lident,lista[i]->lident);
-             printf ("k = %d \n", k );
-
+//             printf ("k = %d \n", k );
 
             if( k == 0 ) {
                 //printf (" %d \n",strcmp(lident,lista[i]->lident)==0 );
                 TempX=lista[i];
                 printf("match em TempX = %p de lista[%d] \n",(void*)TempX,i);
-    //            scanf("%c",&debug);
+    //          scanf("%c",&debug);
                 break;
             }
         }
@@ -431,9 +490,18 @@ int ConvCor(char corestr[]){
     }
 }
 
+void InputRefinado(char cident[]){
+
+//possivelmente desnecessário
+   scanf("%s",cident);
+//introduzir condiçoes necessárias
+
+}
 
 /*------------------------------- */
 /* JANELA GRAFICA */
+
+
 /*void AbreJanela(int dimJanela[]){
 
     SDL_Init(SDL_INIT_EVERYTHING);

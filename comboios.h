@@ -7,16 +7,14 @@
 #include <SDL2/SDL2_gfxPrimitives.h>
 #include "cores.h"
 #include <time.h>
-//-------------------
+/*-------------------*/
 #define MAX 200
-
 /*---------defines para linhas----------*/
 #define dimEST 20
 #define dimVIA 10
 /*-------------------*/
 #define coordX 0 //
 #define coordY 1
-
 /*--------------------------------------------------------------------------------*/
 typedef struct pontoslinha {
 	//int nOrdem;
@@ -54,54 +52,39 @@ typedef struct comboio{
 	CARRUAGEM cart;
 	struct comboio *prox; // aponta para a prox carruagem
 }COMBOIO;
-
-
-// talvez verificar colisao em pontos
-
 /* ----------------------------------------------------------------------------------- */
 void menu(char *opcao);
-
 /*ADDS*/
 COMBOIO* addi_Comboio(COMBOIO* head,CARRUAGEM dados); // no fim da lista
 FERROVIA* addi_Linha(FERROVIA* head,PONTOS dados);
-
 void KonnectLinhas(FERROVIA* Lista[], char lident_Sai[], char lident_Recebe[],char ID_Sai[],char ID_Entra[]);
-
 /*INITS*/
 COMBOIO* inic_Comboios(CARRUAGEM dados);
 FERROVIA* inic_Linha(char lident[], PONTOS dados);
-
 /*MOSTRAS*/
-void mostraComboio(COMBOIO* lista[], char cident[]);
-void mostraLinha(FERROVIA* lista[], char lident[]);
-void ListaFerrovias(FERROVIA* lista[]);
-void ListaComboio(COMBOIO* lista[]);
+void mostraComboio(COMBOIO* lista[]);
+void mostraLinha(FERROVIA* lista[]);
+/*LISTAS*/
+int ListaFerrovias(FERROVIA* lista[]);
+int ListaComboio(COMBOIO* lista[]);
 /*DELETES*/
-void elimina_comboio(COMBOIO* lista[],char cident[]);
-void elimina_linha(FERROVIA* lista[], char lident[]);
+void elimina_comboio(COMBOIO* lista[]);
+void elimina_linha(FERROVIA* lista[]);
 /*-------Funções de apoio\debug------*/
+void verificaAcessos(FERROVIA* head[],char ident[]);
 int ConvCor(char corestr[]);
 FERROVIA* ProcuraID(FERROVIA* lista[],char lident[],char IDE_X[]);
-
-char debug;
-
+char debug;//Isto tem de ser apagado antes de entregar.
 void mostracores(int cores[DIMCores][DIMrgb]);
 void trocaCarris(FERROVIA* PercursoA);
-/*----------------------------------------LER--------------------------------------*/
+/*LER*/
 int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]); // pus char aqui.
 void passarespacos(char **aux);
 void lerjanela(char *aux,int jancoor[]);
 COMBOIO* lercomboio(char *aux);
 FERROVIA *lerlinha(char *aux, FERROVIA *head, char lident[]);
 void lerligar(char *aux, FERROVIA* todas[]);
-
-
-
-/*------------SDL---------------------*/
+/*SDL*/
 void AbreJanela(int dimJanela[]);
-
-/*-----------------------------------*/
+/*-----*/
 #endif
-
-
-

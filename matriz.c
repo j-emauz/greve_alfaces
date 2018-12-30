@@ -108,68 +108,6 @@ int main(int argc, char *argv[]){
         tchooBase[i]=NULL;
     }
 
-
-    tchooBase[0] =  inic_Comboios(carro1);
-    tchooBase[1] =  inic_Comboios(carro2);
-    mostraComboio(tchooBase[0]);
-    mostraComboio(tchooBase[1]);
-    scanf("%c",&debug);
-
-    linha[0]= inic_Linha("LOL");
-
-    addi_Linha(linha[0],start);
-    addi_Linha(linha[0],mid);
-    addi_Linha(linha[0],end);
-
-
-    mostraLinha(linha[0]);
-    printf("-------------------\n\n");
-    linha[1]= inic_Linha("LOLA");
-
-    addi_Linha(linha[1],start2);
-    addi_Linha(linha[1],end2);
-    mostraLinha(linha[1]);
-    printf("-------------------\n\n");
-
-    KonnectLinhas(linha,"LOLA", "LOL", "B1", "A1");
-    printf("-------------------\n\n");
-    mostraLinha(linha[0]);
-    printf("-------------------\n\n");
-    mostraLinha(linha[1]);
-    printf("-------------------\n\n");
-
-    linha[2]= inic_Linha("PEPE");
-
-    addi_Linha(linha[2],start3);
-    addi_Linha(linha[2],end3);
-    mostraLinha(linha[2]);
-
-    KonnectLinhas(linha, "PEPE","LOL","C0","A1");
-
-    mostraLinha(linha[0]);
-    printf("-------------------\n\n");
-    mostraLinha(linha[1]);
-    printf("-------------------\n\n");
-    mostraLinha(linha[2]);
-    printf("-------------------\n\n");
-
-    elimina_linha(linha,"PEPE");
-    elimina_linha(linha,"LOL");
-
-    elimina_linha(linha,"LOLA");
-
-    tchooBase[0]=elimina_comboio(tchooBase[0]);
-
-    mostraLinha(linha[0]);
-    printf("-------------------\n\n");
-    mostraLinha(linha[1]);
-    printf("-------------------\n\n");
-    mostraLinha(linha[2]);
-    printf("-------------------\n\n");
-    mostraComboio(tchooBase[0]);
-
-
-    int dimJan[2]= {860,600};
    // AbreJanela(dimJan);
 
 
