@@ -222,8 +222,8 @@ void ligaLinhas(FERROVIA* lista[], char lident_Sai[], char lident_Recebe[],char 
     FERROVIA* ligaEntrada = NULL;
     FERROVIA* ligaSaida = NULL;
     //printf("ID saida: %p , ID entrada:  %p \n", (void*)ligaSaida, (void*)ligaEntrada);
-    ligaEntrada = ProcuraID(lista,lident_Recebe,ID_Entra);
-    ligaSaida = ProcuraID(lista,lident_Sai,ID_Sai);
+    ligaEntrada = procuraID(lista,lident_Recebe,ID_Entra);
+    ligaSaida = procuraID(lista,lident_Sai,ID_Sai);
 
     if ( ligaSaida->pont.nSaidas == 2){
         printf("ERRO, Capacidade de saídas do ponto %s excedido \n",ID_Sai);
@@ -404,8 +404,8 @@ void verificaAcessos(FERROVIA* lista[],char ident[]){
     }
 }
 
-FERROVIA* ProcuraID(FERROVIA* lista[],char lident[],char IDE_X[]){
-    int i=0,p;
+FERROVIA* procuraID(FERROVIA* lista[],char lident[],char IDE_X[]){
+    int i,p;
     printf("lista -> lident: %s lident %s e IDE %s \n",lista[0]->lident, lident, IDE_X);
     FERROVIA* TempX=NULL;
     //scanf("%c",&debug);
@@ -425,7 +425,6 @@ FERROVIA* ProcuraID(FERROVIA* lista[],char lident[],char IDE_X[]){
        printf("ERRO, ID de linha nao encontrado, verificar ficheiro de config!");
        exit(0);
     }
-
     p = nPontos(TempX);
 
     for (i=0; i<p; i++) {
@@ -438,21 +437,8 @@ FERROVIA* ProcuraID(FERROVIA* lista[],char lident[],char IDE_X[]){
             }
             TempX=TempX->RA;
     }
-
     printf("ERRO, ID de ponto nao encontrado, verificar ficheiro de config!");
     exit(0);
-    /*while( (strcmp(TempX->lident,lident)==0) && (strcmp( TempX->pont.pident,IDE_X ) != 0 ) ){
-
-        if(TempX->RA != NULL && strcmp(TempX->RA->lident, lident)==0 ){
-            printf("IDENTIFICADOR : %s \n",TempX->pont.pident);
-            TempX=TempX->RA;
-
-        }else{
-            printf("ERRO, ID de ponto nao encontrado, verificar ficheiro de config!");
-            exit(0);
-        }
-    }
-    */
 }
 
 void trocaCarris(FERROVIA* PercursoA){
@@ -527,9 +513,8 @@ void InputRefinado(char cident[]){
 int nPontos(FERROVIA* lista){
     if (lista == NULL)
         return 0;
-
     int numero=1;
-    while (lista!=NULL&&strcmp(lista->lident,lista->RA->lident)==0){
+    while (lista->RA!=NULL && strcmp(lista->lident,lista->RA->lident)==0){//
         numero++;
         lista=lista->RA;
     }
@@ -551,12 +536,11 @@ void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 	listaComboio(todos,1);
 	printf("Escreva o identificador do novo comboio: ");
 
-
     scanf("%s", ident);
     strncpy(nova.cident,ident,2);
     printf("%s", nova.cident);
 
-    scanf("%c",&debug);
+    //scanf("%c",&debug);
 	if(nova.cident[0]==' '||nova.cident[0]=='\n'||nova.cident[0]=='\0'){
 		printf("Insira um identificador correto para a proxima \n");
 		return;
@@ -611,7 +595,7 @@ void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
     strncpy(nova.pident,ident,4);
     printf("PIdent : %s \n", nova.pident);
 
-	ProcuraID(todas, nova.lident, nova.pident);
+	procuraID(todas, nova.lident, nova.pident);
 
 	printf("Insira o numero de serviços \n");
 	scanf("%d", &nova.nservico);
@@ -655,7 +639,7 @@ void mostraPontos(FERROVIA *todas[], char lident[]){
 
 }
 
-void VerificaColisoes(COMBOIO* lista[]){
+void verificaColisoes(COMBOIO* lista[]){
     int k,m,r;
     double distancia=0;
     int nComboios=listaComboio(lista,0);

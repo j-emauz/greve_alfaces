@@ -77,10 +77,10 @@ int listaComboio(COMBOIO* lista[],int k);
 void eliminaComboio(COMBOIO* lista[]);
 void eliminaLinha(FERROVIA* lista[]);
 /*-------Funções de apoio\debug------*/
-void VerificaColisoes(COMBOIO* lista[]);
+void verificaColisoes(COMBOIO* lista[]);
 void verificaAcessos(FERROVIA* head[],char ident[]);
 int convCor(char corestr[]);
-FERROVIA* ProcuraID(FERROVIA* lista[],char lident[],char IDE_X[]);
+FERROVIA* procuraID(FERROVIA* lista[],char lident[],char IDE_X[]);
 char debug;//Isto tem de ser apagado antes de entregar.
 void mostraCores(int cores[DIMCores][DIMrgb]);
 void trocaCarris(FERROVIA* PercursoA);
