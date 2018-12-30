@@ -512,7 +512,7 @@ int nPontos(FERROVIA* lista){
     return counter;
 }
 
-void *CriarComboio(COMBOIO *todos[], FERROVIA *todas[]){
+void CriarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 	CARRUAGEM nova;
 	char cor[MAX];
 	FERROVIA* head = NULL;
