@@ -77,6 +77,7 @@ FERROVIA* ProcuraID(FERROVIA* lista[],char lident[],char IDE_X[]);
 char debug;//Isto tem de ser apagado antes de entregar.
 void mostracores(int cores[DIMCores][DIMrgb]);
 void trocaCarris(FERROVIA* PercursoA);
+int nPontos(FERROVIA* lista);
 /*LER*/
 int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]); // pus char aqui.
 void passarespacos(char **aux);

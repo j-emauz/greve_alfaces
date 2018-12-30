@@ -31,7 +31,7 @@ void menu(char *opcao){
 /*-----------------COMBOIOS----------------------------*/
 
 COMBOIO* inic_Comboios(CARRUAGEM dados){
-	int i=0;
+	int i;
 
 	COMBOIO *head = (COMBOIO*)calloc(1,sizeof(COMBOIO));
     if (head==NULL){
@@ -127,7 +127,7 @@ int ListaComboio(COMBOIO* lista[]){
     printf("Lista de Comboios: ");
     for (i=0;i<MAX&&lista[i]!=NULL;i++){
 
-        printf("%s %p ",lista[i]->cart.cident, lista[i]);
+        printf("%s %p ",lista[i]->cart.cident, (void*)lista[i]);
     }
     printf("\nTotal Comboios %d\n",i);
     return 1;
@@ -287,7 +287,7 @@ void mostraLinha(FERROVIA* lista[]) {
        printf("ERRO, ID de linha nao encontrado! Verificar se o ID foi introduzido correctamente\n");
        return;
     }
-    //printf("\n Da primeira estação.... \n\n");
+
     while(head!=NULL && strcmp(lident,head->lident) == 0 )
 
     {
@@ -297,7 +297,7 @@ void mostraLinha(FERROVIA* lista[]) {
        head=head->RA;
 
     }
-    //printf("\n ....à ultima estação \n\n");
+
 
 }
 void elimina_linha(FERROVIA* lista[]){
@@ -327,7 +327,7 @@ void elimina_linha(FERROVIA* lista[]){
     }
     if (head==NULL){
         // se nao existirem linhas, esta condição é sempre verificada.
-       printf("ERRO, ID de linha nao encontrado, verificar ficheiro de config!");
+       printf("ERRO, ID de linha nao encontrado");
        return;
     }
     verificaAcessos(lista,lident);//ajusta o nEntradas e nSaidas
@@ -355,22 +355,26 @@ void elimina_linha(FERROVIA* lista[]){
 void verificaAcessos(FERROVIA* lista[],char ident[]){
     //queremos que a todas as linhas com saída para a linha com ID "ident" seja reduzida 1 saída.
     //queremos que a todas as linhas com entradas provenientes da linha com ID "ident" seja reduzida 1 entrada.
-    int k;
+    int k,p,l;
     FERROVIA* temp;
+    //É preciso só verificar um numero p de pontos que será o numero total de pontos da linha K.
 
-    for(k=0, temp=lista[k];lista[k] != NULL && k<MAX ;k++) {
+    for(k=0, temp=lista[k]; lista[k] != NULL && k<MAX ; k++,temp=lista[k]) {
         // percorremos todas as linhas existentes.
         printf("OK \n");
         fflush(stdout);
-        while (temp->RA != lista[k] && temp->RA != NULL){
 
-            printf("OK + %d + %p \n",k, (void*)temp->RA);
+        l=nPontos(lista[k]);// aqui para só correr uma vez e não ~p vezes no while
 
+        for(p=0; p < l;p++) {
+
+           // printf("%p =?= %p", temp->RA, lista[k]);
+            printf("OK i= %d ID : %s \n", k, temp->RA->lident);
+            printf("OK i= %d ID RB : %s \n", k, temp->RB->lident);
             if ( strcmp(temp->RA->lident,ident) == 0 && strcmp(temp->lident,ident)!=0 ){//se a proximo ponto(RA) pertencer à estação a eliminar e não estivermos sobre ela
                 printf("Retirando saída %s, %s \n", temp->lident, temp->pont.pident);
                 temp->pont.nSaidas--;
 
-                printf("DEPOIS : S:%d",temp->pont.nSaidas);
             }else if(strcmp(temp->lident,ident)==0 && strcmp(temp->RA->lident,ident) != 0) {//estamos sobre a estaçao a eliminar mas o prox ponto nao pertence a ela
                 printf("Retirando entrada %s, %s \n", temp->lident, temp->pont.pident);
                 temp->RA->pont.nEntradas--;
@@ -378,11 +382,11 @@ void verificaAcessos(FERROVIA* lista[],char ident[]){
 
             if (temp->RB != NULL){//nem sempre existe
                 if ( strcmp(temp->RB->lident,ident) == 0 && strcmp(temp->lident,ident) != 0){//se a proximo ponto(RB) pertencer à estação a eliminar e não estivermos sobre ela
-                    printf("Retirando saída %s, %s \n", temp->lident, temp->pont.pident);
+                    printf("Retirando saída RB %s, %s \n", temp->lident, temp->pont.pident);
                     temp ->pont.nSaidas --;
 
                 }else if(strcmp(temp->lident,ident)== 0 && strcmp(temp->RB->lident,ident) != 0) {//estamos sobre a estaçao a eliminar mas o prox ponto nao pertence a ela
-                    printf("Retirando entrada %s, %s \n", temp->lident, temp->pont.pident);
+                    printf("Retirando entrada RB %s, %s \n", temp->lident, temp->pont.pident);
                     temp->RB->pont.nEntradas--;
                 }
             }
@@ -498,6 +502,15 @@ void InputRefinado(char cident[]){
 
 }
 
+int nPontos(FERROVIA* lista){
+    int counter=1;
+    while (lista!=NULL&&strcmp(lista->lident,lista->RA->lident)==0){
+        counter++;
+        lista=lista->RA;
+    }
+    printf("ID:%s nPontos = %d\n", lista->lident, counter);
+    return counter;
+}
 /*------------------------------- */
 /* JANELA GRAFICA */
 

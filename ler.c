@@ -102,7 +102,6 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
 	if (fp == NULL){
 		printf("Erro na abertura do ficheiro! Verifique se está no sitio certo ou se o nome ta correto\n");
 		return 0;
-
 	}
 	else{
 		do{
@@ -113,10 +112,7 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
 					break;
 				}
             }
-
-
 			if((linha[0]!='%')&&(linha[0]!='\n')&&(linha[0]!='\0')){
-
 				//printf("no aux = linha. linha = %s \n",linha); //OK
 				aux = linha;//aux aponta para o primeiro elemento de linha.
 
@@ -127,19 +123,16 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
 					//printf("no aux = comboio. linha = %s \n",linha); //OK
 					todos[i] = lercomboio(aux);//coloca um apontador para comboio no vetor de apontadores todos, posição i
 					i=i+1;
-
 					//funcao adicionar comboio
 				}
 				if(strspn(linha, "LINHA:") == strlen("LINHA:")){
 					sscanf(linha, "%s %s", ident, lident);
-
                     //printf("Lident %s \n", lident);//para testar
-//                    gets(&debug);
-
-
+                    //gets(&debug);
 					strcpy(fim_linha, "FIM_DE_LINHA: ");
 					//strcat(fim_linha, lident);
 					//printf("%s <-string fim de linha \n", fim_linha);
+
 					fgets(linha,MAX,fp);
 					for(n=0;n<MAX;n++){//fazer funçao
 							if (linha[n] == '\n'){
@@ -153,10 +146,7 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
 						if((linha[0]!='%')&&(linha[0]!='\n')&&(linha[0]!=' ')){
 							aux = linha;
 							todas[j] = lerlinha(aux, todas[j], lident);
-
-
-
-            			}
+        			}
 						fgets(linha, MAX, fp);
 						for(n=0;n<MAX;n++){
 							if (linha[n] == '\n'){
