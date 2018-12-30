@@ -24,6 +24,7 @@ int main(int argc, char *argv[]){
 
 	do{
 		menu(&opcao);
+		getchar();//limpa buffer de stdin
 		switch(opcao)
 		{
 			case '1': // MOSTRA FERROVIA
