@@ -56,6 +56,7 @@ FERROVIA *lerLinha(char *aux, FERROVIA *head, char lident[]){
 	PONTOS pontinho;
 	pontinho.nEntradas=0;
 	pontinho.nSaidas=0;
+	pontinho.Dimensao = 0;
 
 	sscanf(aux, "%s %d %d %s %s", pontinho.pident, &pontinho.coord[coordX], &pontinho.coord[coordY], cor, pontinho.TipoDePonto);
     pontinho.cor = convCor(cor);
@@ -63,6 +64,12 @@ FERROVIA *lerLinha(char *aux, FERROVIA *head, char lident[]){
         exit(0);
 //	printf("pontinho pident em lerLinha depois da passagem : %s \n",pontinho.pident);
     //scanf("%d",debug);
+	if(strcmp(pontinho.TipoDePonto, "EST") == 0){
+		pontinho.Dimensao = dimEST;
+	}else if(strcmp(pontinho.TipoDePonto, "VIA") == 0){
+		pontinho.Dimensao = dimVIA;
+	}
+	
     if(head==NULL){
         head = inicLinha(lident, pontinho);
     }

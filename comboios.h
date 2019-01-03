@@ -14,8 +14,8 @@
 /*-------------------*/
 #define MAX 200
 /*---------defines para linhas----------*/
-#define dimEST 20
-#define dimVIA 10
+#define dimEST 7
+#define dimVIA 3
 /*-------------------*/
 #define coordX 0 //
 #define coordY 1
