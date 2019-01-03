@@ -8,7 +8,7 @@ int main(int argc, char *argv[]){
                                   {255,255,0,255},// AMARELO
                                   {0,255,255,255},//Cyan
                                   {153,0,153,255}, //Roxo
-                                  {0,230,0,0}, // Verde
+                                  {0,230,0,255}, // Verde
                                   {153,76,0,255}, //Castanho
                                   {0,0,0,255},//Preto
                                   {128,128,128,255},//Cinzento

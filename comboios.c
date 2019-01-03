@@ -404,16 +404,16 @@ void verificaAcessos(FERROVIA* lista[],char ident[]){
 
 FERROVIA* procuraID(FERROVIA* lista[],char lident[],char IDE_X[]){
     int i,p;
-    printf("lista -> lident: %s lident %s e IDE %s \n",lista[0]->lident, lident, IDE_X);
+    //printf("lista -> lident: %s lident %s e IDE %s \n",lista[0]->lident, lident, IDE_X);
     FERROVIA* TempX=NULL;
     //scanf("%c",&debug);
 
     for(i=0;i<MAX;i++){
         if (lista[i]!=NULL){
             if( strcmp(lident,lista[i]->lident) == 0 ) {
-                printf (" %d \n",strcmp(lident,lista[i]->lident) );
+                //printf (" %d \n",strcmp(lident,lista[i]->lident) );
                 TempX=lista[i];
-                printf("match em TempX = %p de lista[%d] \n",(void*)TempX,i);
+              //  printf("match em TempX = %p de lista[%d] \n",(void*)TempX,i);
               //scanf("%c",&debug);
                 break;
             }
@@ -426,11 +426,11 @@ FERROVIA* procuraID(FERROVIA* lista[],char lident[],char IDE_X[]){
     p = nPontos(TempX);
 
     for (i=0; i<p; i++) {
-            printf("IDENTIFICADOR : %s \n",TempX->pont.pident);
+           // printf("IDENTIFICADOR : %s \n",TempX->pont.pident);
 
             if(strcmp(TempX->pont.pident,IDE_X)==0){
-                printf("MATCH : %s \n",TempX->pont.pident);
-                printf("AT Address : %p \n",(void*)TempX);
+             //   printf("MATCH : %s \n",TempX->pont.pident);
+               // printf("AT Address : %p \n",(void*)TempX);
                 return TempX;
             }
             TempX=TempX->RA;

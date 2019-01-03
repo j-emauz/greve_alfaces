@@ -3,11 +3,20 @@ JANELA: 800 600
 % LINHA: – palavra-chave seguido do identificador
 LINHA: COA
 % Informacao dos pontos, ordem implica sentido de ligação
-C1 20 30 AZUL VIA
-C2 60 80 AZUL EST
-C3 90 90 AZUL VIA
-C19 100 120 VERMELHO EST
-C20 100 130 AZUL VIA
+C1 20 30 AZUL EST
+C2 60 30 AZUL VIA
+C3 90 30 AZUL VIA
+C4 120 30 AZUL VIA
+C5 150 30 AZUL VIA
+C6 180 30 AZUL EST
+C7 230 30 AZUL VIA
+C8 250 30 AZUL VIA
+C9 280 30 AZUL VIA
+C10 300 30 AZUL EST
+C11 330 30 AZUL VIA
+C12 360 30 AZUL VIA
+C13 390 30 AZUL VIA
+C14 420 30 AZUL EST
 FIM_DE_LINHA: COA
 
 % LINHA: – palavra-chave seguido do identificador
@@ -26,7 +35,7 @@ FIM_DE_LINHA: LAC
 
 %LIGAR:  palavra-chave para ligar linhas
 %        (saída de uma linha -> entrada na outra linha)
-LIGAR: COA C20 LAM P1
+LIGAR: COA C10 LAM P1
 LIGAR: LAM P10 COA C1
 LIGAR: LAM P10 LAC L2
 LIGAR: LAC L2 COA C3

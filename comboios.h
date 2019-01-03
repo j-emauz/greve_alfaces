@@ -14,7 +14,7 @@
 /*-------------------*/
 #define MAX 200
 /*---------defines para linhas----------*/
-#define dimEST 7
+#define dimEST 5
 #define dimVIA 3
 /*-------------------*/
 #define coordX 0 //
@@ -98,7 +98,13 @@ void mostraPontos(FERROVIA *todas[], char lident[]);
 
 /*SDL*/
 void abreJanela(int dimJanela[],COMBOIO* todos[], FERROVIA* todas[], int cores[][DIMrgb]);
-void SDL_escreve_linhas(FERROVIA *todas[],int cores[][DIMrgb]) ;
+void SDL_escrevePontos(FERROVIA *todas[],int cores[][DIMrgb]) ;
+void SDL_unepontos(FERROVIA *todas[]);
+
+
+
+
+
 /*-----*/
 
 
