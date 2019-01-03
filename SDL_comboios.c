@@ -106,7 +106,7 @@ void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[
 void SDL_unepontos(FERROVIA *todas[]){
 	int i;
 	FERROVIA *head1,*head2;
-	FERROVIA *head3;
+	FERROVIA *head3, *headtemp;
 	char lident[MAX];
 
 	for(i=0; todas[i]!=NULL && i<MAX; ++i){
@@ -118,6 +118,13 @@ void SDL_unepontos(FERROVIA *todas[]){
 				head3 = head1->RB;
 				SDL_SetRenderDrawColor( g_pRenderer, 255, 0, 0, 255 );
 				SDL_RenderDrawLine(g_pRenderer, head1->pont.coord[coordX], head1->pont.coord[coordY], head3->pont.coord[coordX], head3->pont.coord[coordY]);
+                if(strcmp(head1->lident,head3->lident)==0){
+                    headtemp = head1;
+                    for(; head1!=NULL && head3!=NULL && (strcmp(head1->lident, lident) == 0); head1 = head1->RA, head3 = head3->RA){
+                        SDL_SetRenderDrawColor( g_pRenderer, 0, 0, 0, 255 );
+                        SDL_RenderDrawLine(g_pRenderer, head1->pont.coord[coordX], head1->pont.coord[coordY], head3->pont.coord[coordX], head3->pont.coord[coordY]);
+                    }//fazer isto numa funcao recursiva
+                }
 			}
 
 			SDL_RenderPresent(g_pRenderer);
