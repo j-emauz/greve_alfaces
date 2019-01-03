@@ -33,7 +33,7 @@ COMBOIO *lerComboio(char *aux){
 
 	passarEspacos(&aux);
 	sscanf(aux, "%s %d %s %s %s %d", dados.cident, &(dados.DimBOLAS), corc, dados.lident, dados.pident, &dados.nservico);
-
+    dados.linha_actual = NULL;
 	dados.nCarruagens = 4;
 	dados.cor = convCor(corc);
 	if (dados.cor == 100)//Desta forma Conv Cor pode ser reutilizada
@@ -69,7 +69,7 @@ FERROVIA *lerLinha(char *aux, FERROVIA *head, char lident[]){
 	}else if(strcmp(pontinho.TipoDePonto, "VIA") == 0){
 		pontinho.Dimensao = dimVIA;
 	}
-	
+
     if(head==NULL){
         head = inicLinha(lident, pontinho);
     }

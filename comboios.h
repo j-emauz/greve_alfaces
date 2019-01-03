@@ -51,6 +51,7 @@ typedef struct carr {
 	char pident[5];
     int PosiNoGraf[2];//posição atual da carruagem\locomotiva
     int nservico;
+    FERROVIA* linha_actual;
 }CARRUAGEM;
 
 typedef struct comboio{
@@ -100,7 +101,7 @@ void mostraPontos(FERROVIA *todas[], char lident[]);
 void abreJanela(int dimJanela[],COMBOIO* todos[], FERROVIA* todas[], int cores[][DIMrgb]);
 void SDL_escrevePontos(FERROVIA *todas[],int cores[][DIMrgb]) ;
 void SDL_unepontos(FERROVIA *todas[]);
-
+void for_pontos(FERROVIA *head1, FERROVIA* head2);
 
 
 
