@@ -351,7 +351,10 @@ void eliminaLinha(FERROVIA* lista[]){
 
     while((head!=NULL)&&(strcmp(head->lident,lident)==0)){/*para que apenas a linha com o ID passado seja eliminada*/
         temp = head;
-        head=head->RA;
+		if(head->RB!=NULL && strcmp(head->lident, head->RB->lident)==0)
+			head = head->RB;
+		else
+			head=head->RA;
         free(temp);
         temp = NULL;
     }
