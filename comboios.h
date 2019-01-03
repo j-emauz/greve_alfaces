@@ -98,5 +98,9 @@ void mostraPontos(FERROVIA *todas[], char lident[]);
 
 /*SDL*/
 void abreJanela(int dimJanela[],COMBOIO* todos[], FERROVIA* todas[], int cores[][DIMrgb]);
+void SDL_escreve_linhas(FERROVIA *todas[],int cores[][DIMrgb]) ;
 /*-----*/
+
+
+
 #endif
