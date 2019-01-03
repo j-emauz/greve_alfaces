@@ -1,18 +1,20 @@
-void SDL_escreve_linhas(FERROVIA *todas[], cores[][DIMrgb]){
+
+void SDL_unepontos(FERROVIA *todas[]){
 	int i;
+	FERROVIA* head1,head2;
+	FERROVIA *head3;
 	char lident[MAX];
-	FERROVIA *head;
 	
-	
-	for(i=0; i<MAX&&todas[i]!=NULL; ++i){
-		strcpy(lident, todas[i]->lident);
-		head = todas[i];
-		for(;head!=NULL && strcmp(lident, head->lident); head=head->RA){
-			
-			/*SDL_SetRenderColor(g_pRenderer, cores[head->pont.cor][R], cores[head->pont.cor][G], cores[head->pont.cor][B], cores[head->pont.cor][ALPA]);
-			SDL_RenderDrawPoint(g_pRenderer, head->pont.coord[coordX], head->pont.coord[coordY];*/
-			filledCircleRGBA(g_pRenderer, head->pont.coord[coordX], head->pont.coord[coordY], ,head->pont.Dimensao, cores[head->pont.cor][R], cores[head->pont.cor][G], cores[head->pont.cor][B], cores[head->pont.cor][ALPA]);
+	for(i=0; todas[i]!=NULL && i<MAX; ++i){
+		for(head1=(todas[i]), head2=(todas[i]->RA); head1!=NULL && head2!=NULL && (strcmp(head->lident, lident) == 0); head1 = head1->RA, head2 = head2->RA){
+			SDL_SetRenderDrawColor( g_pRenderer, 0, 0, 0, 255 );
+			SDL_RenderDrawLine(g_pRenderer, head1->pont.coord[coordX], head1->pont.coord[coordY], head2->pont.coord[coordX], head2->pont.coord[coordY]);
+			if(head1->RB!=NULL){
+				head3 = head1->RB;
+				SDL_SetRenderDrawColor( g_pRenderer, 255, 0, 0, 255 );
+				SDL_RenderDrawLine(g_pRenderer, head1->pont.coord[coordX], head1->pont.coord[coordY], head3->pont.coord[coordX], head3->pont.coord[coordY]);
+			}
+			SDL_RenderPresent(g_pRenderer);
 		}
 	}
-	
 }
