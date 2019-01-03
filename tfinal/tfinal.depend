@@ -2,50 +2,36 @@
 1544642075 source:c:\users\pedro\dropbox\aulas\greve_alfaces\comboios.c
 	"comboios.h"
 
-1546100584 h"
+1546141520 h"
 
 1544642207 c:\users\pedro\dropbox\aulas\greve_alfaces\comboios.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 
-1546101102 
+1546145238 
 
 1544633215 source:c:\users\pedro\dropbox\aulas\greve_alfaces\main.c
 	"comboios.h"
 
-1545926635 source:/media/sf_Prog/ProjetoFinal/main.c
-	"comboios.h"
-	"comboios.h"
-
-1546101102 /media/sf_Prog/ProjetoFinal/comboios.h
-	<stdio.h>
-	<stdlib.h>
-	<string.h>
-	<SDL2/SDL.h>
-	<SDL2/SDL2_gfxPrimitives.h>
-	"cores.h"
-	<stdio.h>
-	<stdlib.h>
-	<string.h>
-	<SDL2/SDL.h>
-	<SDL2/SDL2_gfxPrimitives.h>
-	"cores.h"
-
-1545926614 /media/sf_Prog/ProjetoFinal/cores.h
-
-1546100078 source:/media/sf_Prog/ProjetoFinal/comboios.c
-	"comboios.h"
-	"comboios.h"
-
-1546100584 source:/media/sf_Prog/ProjetoFinal/ler.c
-	"comboios.h"
-	"comboios.h"
-
 1546138374 source:/media/sf_Prog/ProjetoFinal/main.c
+	"comboios.h"
+	"comboios.h"
 	"comboios.h"
 
 1546145238 /media/sf_Prog/ProjetoFinal/comboios.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL2_gfxPrimitives.h>
+	"cores.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL2_gfxPrimitives.h>
+	"cores.h"
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -56,9 +42,38 @@
 
 1545926614 /media/sf_Prog/ProjetoFinal/cores.h
 
-1546141905 source:/media/sf_Prog/ProjetoFinal/ler.c
+1546141520 source:/media/sf_Prog/ProjetoFinal/comboios.c
+	"comboios.h"
+	"comboios.h"
 	"comboios.h"
 
-1546141520 source:/media/sf_Prog/ProjetoFinal/comboios.c
+1546141905 source:/media/sf_Prog/ProjetoFinal/ler.c
+	"comboios.h"
+	"comboios.h"
+	"comboios.h"
+
+1546194957 source:/media/sf_Prog/ProjetoFinal/ler.c
+	"comboios.h"
+
+1546527564 /media/sf_Prog/ProjetoFinal/comboios.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL2_gfxPrimitives.h>
+	<time.h>
+	<stdbool.h>
+	<math.h>
+	"cores.h"
+
+1545926614 /media/sf_Prog/ProjetoFinal/cores.h
+
+1546527579 source:/media/sf_Prog/ProjetoFinal/main.c
+	"comboios.h"
+
+1546526882 source:/media/sf_Prog/ProjetoFinal/comboios.c
+	"comboios.h"
+
+1546527312 source:/media/sf_Prog/ProjetoFinal/SDL_comboios.c
 	"comboios.h"
 

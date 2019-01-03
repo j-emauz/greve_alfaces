@@ -359,7 +359,6 @@ void eliminaLinha(FERROVIA* lista[]){
 }
 /* funções de apoio e debug*/
 
-
 void verificaAcessos(FERROVIA* lista[],char ident[]){
     //queremos que a todas as linhas com saída para a linha com ID "ident" seja reduzida 1 saída.
     //queremos que a todas as linhas com entradas provenientes da linha com ID "ident" seja reduzida 1 entrada.
@@ -658,4 +657,3 @@ void verificaColisoes(COMBOIO* lista[]){
         }
     }
 }
-

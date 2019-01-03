@@ -97,6 +97,6 @@ void criarComboio(COMBOIO *todos[], FERROVIA *todas[]);
 void mostraPontos(FERROVIA *todas[], char lident[]);
 
 /*SDL*/
-void abreJanela(int dimJanela[]);
+void abreJanela(int dimJanela[],COMBOIO* todos[], FERROVIA* todas[], int cores[][DIMrgb]);
 /*-----*/
 #endif

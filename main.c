@@ -3,7 +3,16 @@
 
 int main(int argc, char *argv[]){
     srand(time(NULL));
-
+    int cores[DIMCores][DIMrgb]={ {255,0,0,255},// vermelho
+                                  {0,0,255,255},// azul
+                                  {255,255,0,255},// AMARELO
+                                  {0,255,255,255},//Cyan
+                                  {153,0,153,255}, //Roxo
+                                  {0,230,0,0}, // Verde
+                                  {153,76,0,255}, //Castanho
+                                  {0,0,0,255},//Preto
+                                  {128,128,128,255},//Cinzento
+                                  {255,255,255,255}/*Branco*/};
     int i=0;
     int jancoord[2];
     char opcao='0';
@@ -49,6 +58,7 @@ int main(int argc, char *argv[]){
 
 				break;
 			case '6':
+				abreJanela(jancoord,todos,todas,cores);
 				printf("Simular");
 				break;
 		}

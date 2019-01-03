@@ -7,12 +7,13 @@ SDL_Renderer* g_pRenderer = NULL;
 /* JANELA GRAFICA */
 
 
-void abreJanela(int dimJanela[], COMBOIO *todos, FERROVIA *todas){
+void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[][DIMrgb]){
 
     SDL_Init(SDL_INIT_EVERYTHING);
-	
-	int coords[2];
-	
+
+	coords[2];
+	//SDL_Point CheckPontos[]
+
     if(SDL_Init(SDL_INIT_EVERYTHING) >= 0)
     {
 
@@ -26,25 +27,26 @@ void abreJanela(int dimJanela[], COMBOIO *todos, FERROVIA *todas){
 		exit(0);
 	}
 
-        SDL_Error();
+// eliminar        SDL_Error();
 
-         /*Select the color for drawing. It is set to branco here. */
-        SDL_SetRenderDrawColor(g_pRenderer, 255, 255, 255, 255);
+         /*Select the color for drawing. It is set to white here. */
+        SDL_SetRenderDrawColor(g_pRenderer, cores[BRANCO][R], cores[BRANCO][G], cores[BRANCO][B], cores[BRANCO][ALPA] );
+
 
         /* Clear the entire screen to our selected color. */
         SDL_RenderClear(g_pRenderer);
 
         /* Up until now everything was drawn behind the scenes.
-           This will show the new, red contents of the window. */
+           This will show the new contents of the window. */
         SDL_RenderPresent(g_pRenderer);
-		
+
 		SDL_SetRenderDrawColor(g_pRenderer, 0, 0, 0, 255);
-		
+
 		//funcao ir buscar pontos as ferrovias para fazer draw line de cada linha e render dos pontos entre essas posicoes, isto deve estar dentro dum for
-		
+
 		//outra funcao para passar ponto inicial de comboio em coordenadas, se estiver no primeiro ponto da linha este deve somar a dim do comboio a posicao inicial
-		
-		
+
+
 		//outra funcao para por os comboios a andar ate detetar
 
         /* Give us time to see the window. */
