@@ -5,13 +5,18 @@ SDL_Renderer* g_pRenderer = NULL;
 
 /*------------------------------- */
 /* JANELA GRAFICA */
+void PosInicial(COMBOIO *temp){
+	temp->cart.linha_actual = procuraID(todas,temp->cart.lident,temp->cart.pident);
+    temp->cart.PosiNoGraf[coordX] = temp->cart.linha_actual->pont.coord[coordX];
+    temp->cart.PosiNoGraf[coordY] = temp->cart.linha_actual->pont.coord[coordY];
+}
 /*void SDL_inicComboios(COMBOIO *todos[], int cores[][DIMrgb], FERROVIA *todas[]){
     int i,j,l=1, z=0;
     float X1, X2, Y1, Y2, m;
     COMBOIO *temp, *bora;
 
     for(i=0; i<MAX && todos[i]!=NULL; ++i){
-        for(temp=todos[i];temp!=NULL;temp=temp->prox){
+        for(temp=todos[i];temp!=NULL;temp=temp->prox){//isto tem de ser propria funcao
             temp->cart.linha_actual = procuraID(todas,temp->cart.lident,temp->cart.pident);
             temp->cart.PosiNoGraf[coordX] = temp->cart.linha_actual->pont.coord[coordX];
             temp->cart.PosiNoGraf[coordY] = temp->cart.linha_actual->pont.coord[coordY];
@@ -78,47 +83,70 @@ SDL_Renderer* g_pRenderer = NULL;
         }
 
 }*/
+void InicComboios(COMBOIO *todos[], cores[][DIMrgb]){
+	int i, d, z;
+	COMBOIO *temp;
+	
+	for(i=0;i<MAX&&todos[i]!=NULL;++i){
+		d=4;
+		for(temp=todos[i];temp!=NULL; temp=temp->prox, d--){
+			PosInicial(COMBOIO *temp);
+			for(z=d; z>0; z--){
+				moveCarr(temp);
+			}
+			filledCircleRGBA(g_pRenderer,temp->cart.PosiNoGraf[coordX],temp->cart.PosiNoGraf[coordY],temp->cart.DimBOLAS,cores[temp->cart.cor][R],cores[temp->cart.cor][G],cores[temp->cart.cor][B],cores[temp->cart.cor][ALPA]);
+		}
+	}
+}
+void moveCarr(COMBOIO *temp){
+	float X1, X2, Y1, Y2, m;
+	
+	if(temp->cart.linha_actual->RA != NULL){
+		X1=temp->cart.linha_actual->pont.coord[coordX];
+		Y1=temp->cart.linha_actual->pont.coord[coordY];
+		X2=temp->cart.linha_actual->RA->pont.coord[coordX];
+		Y2=temp->cart.linha_actual->RA->pont.coord[coordY];
 
+		if (X2-X1 != 0) {
+			m=(Y1-Y2)/(X2-X1);
+	
+			if(X2>X1)
+				(temp->cart.PosiNoGraf[coordX])++;
+			else
+				(temp->cart.PosiNoGraf[coordX])--;			
+			temp->cart.PosiNoGraf[coordY]=m+temp->cart.PosiNoGraf[coordY];
+			if(temp->cart.PosiNoGraf[coordX] == temp->cart.linha_actual->RA->pont.coord[coordX]){
+				temp->cart.linha_actual = temp->cart.linha_actual->RA;
+			}
+		}else{
+			if(Y2>Y1)
+				(temp->cart.PosiNoGraf[coordY])++;
+			else 
+				(temp->cart.PosiNoGraf[coordY])--;
+			if(temp->cart.PosiNoGraf[coordY] == temp->cart.linha_actual->RA->pont.coord[coordY]){
+				temp->cart.linha_actual = temp->cart.linha_actual->RA;
+			}
+        }
+                
+    }else{
+		PosInicial(temp);
+		temp->carr.nservico--;
+    }
+	
+	
+}
 
 void trajectoriaComb(COMBOIO* todo, int cores[][DIMrgb]) { //mudei para ser so de um comboio
     //int i;
     float m,Y1,Y2,X2,X1;
     COMBOIO* temp;
 
-   
-        for(temp=todo; temp!=NULL; temp=temp->prox){
-            if(temp->cart.linha_actual->RA != NULL){//a partir daqui pode ser função própria (avança carruagem)
-                X1=temp->cart.linha_actual->pont.coord[coordX];
-                Y1=temp->cart.linha_actual->pont.coord[coordY];
-                X2=temp->cart.linha_actual->RA->pont.coord[coordX];
-                Y2=temp->cart.linha_actual->RA->pont.coord[coordY];
-
-                if (X2-X1 != 0) {
-                     m=(Y1-Y2)/(X2-X1);
-					 if(X2>X1)
-						(temp->cart.PosiNoGraf[coordX])++;
-					else (temp->cart.PosiNoGraf[coordX])--;
-                     temp->cart.PosiNoGraf[coordY]=m+temp->cart.PosiNoGraf[coordY];
-					 if(temp->cart.PosiNoGraf[coordX] == temp->cart.linha_actual->RA->pont.coord[coordX]){
-						 temp->cart.linha_actual = temp->cart.linha_actual->RA;
-					 }
-                }else{
-					if(Y2>Y1)
-						(temp->cart.PosiNoGraf[coordY])++;
-					else (temp->cart.PosiNoGraf[coordY])--;
-					if(temp->cart.PosiNoGraf[coordY] == temp->cart.linha_actual->RA->pont.coord[coordY]){
-						 temp->cart.linha_actual = temp->cart.linha_actual->RA;
-					 }
-                }
-                filledCircleRGBA(g_pRenderer,temp->cart.PosiNoGraf[coordX],temp->cart.PosiNoGraf[coordY],temp->cart.DimBOLAS,cores[temp->cart.cor][R],cores[temp->cart.cor][G],cores[temp->cart.cor][B],cores[temp->cart.cor][ALPA]);
-            }else{
-                //desenhaComboios(todo) desenhar na posicao inicial
-            }
-        }
-
-    
-
-//SDL_RenderPresent(g_pRenderer); fora da funcao
+	for(temp=todo; temp!=NULL; temp=temp->prox){
+		moveCarr(temp);
+		if(temp->carr.nservico>0){
+				filledCircleRGBA(g_pRenderer,temp->cart.PosiNoGraf[coordX],temp->cart.PosiNoGraf[coordY],temp->cart.DimBOLAS,cores[temp->cart.cor][R],cores[temp->cart.cor][G],cores[temp->cart.cor][B],cores[temp->cart.cor][ALPA]);
+		}
+    }
 }
 
 /*void desenhaComboios1(COMBOIO* todos[],FERROVIA* todas[], int cores[][DIMrgb]){
@@ -181,6 +209,7 @@ void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[
 
 
     int end_game = 1;
+	int i;
 	int coords[2];
 	//SDL_Point CheckPontos[]
 
@@ -196,28 +225,38 @@ void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[
 	}else {
 		exit(0);
 	}
-
-    do{
-
-         /*Select the color for drawing. It is set to white here. */
-        SDL_SetRenderDrawColor(g_pRenderer, cores[BRANCO][R], cores[BRANCO][G], cores[BRANCO][B], cores[BRANCO][ALPA] );
+	 SDL_SetRenderDrawColor(g_pRenderer, cores[BRANCO][R], cores[BRANCO][G], cores[BRANCO][B], cores[BRANCO][ALPA] );
 
 
         /* Clear the entire screen to our selected color. */
+    SDL_RenderClear(g_pRenderer);
+	
+	SDL_unepontos(todas);
+	SDL_escrevePontos(todas,cores);
+	InicComboios(todos, cores);
+	SDL_RenderPresent(g_pRenderer);
+	
+	SDL_Delay(6000);
+	
+	
+    do{
+
+
+        SDL_SetRenderDrawColor(g_pRenderer, cores[BRANCO][R], cores[BRANCO][G], cores[BRANCO][B], cores[BRANCO][ALPA] );
+
         SDL_RenderClear(g_pRenderer);
 
-        /* Up until now everything was drawn behind the scenes.
-           This will show the new contents of the window. */
-
-
         SDL_escrevePontos(todas,cores);
-        //trocaCarris(todas[1])
         SDL_unepontos(todas);
         //filledCircleRGBA(g_pRenderer,100,100,10,255,200,100,255);
         SDL_RenderPresent(g_pRenderer);
-        SDL_inicComboios(todos, cores, todas);
+		for(i=0;i<MAX&&todos[i]!=NULL;i++){
+			if(todos[i]->PARACOMBOIO==false){
+				trajectoriaComb(todos[i], cores);
+			}
+		}
 
-		SDL_SetRenderDrawColor(g_pRenderer, 0, 0, 0, 255);
+		SDL_RenderPresent(g_pRenderer);
 
 		//funcao ir buscar pontos as ferrovias para fazer draw line de cada linha e render dos pontos entre essas posicoes, isto deve estar dentro dum for
 
