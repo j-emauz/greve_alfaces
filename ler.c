@@ -36,6 +36,7 @@ COMBOIO *lerComboio(char *aux){
     dados.linha_actual = NULL;
 	dados.nCarruagens = 4;
 	dados.cor = convCor(corc);
+	dados.locomotiva = 1;
 	if (dados.cor == 100)//Desta forma Conv Cor pode ser reutilizada
         exit(0);
 

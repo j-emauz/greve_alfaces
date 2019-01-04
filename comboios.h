@@ -51,6 +51,7 @@ typedef struct carr {
 	char pident[5];
     int PosiNoGraf[2];//posição atual da carruagem\locomotiva
     int nservico;
+    int locomotiva;
     FERROVIA* linha_actual;
 }CARRUAGEM;
 
@@ -102,9 +103,10 @@ void abreJanela(int dimJanela[],COMBOIO* todos[], FERROVIA* todas[], int cores[]
 void SDL_escrevePontos(FERROVIA *todas[],int cores[][DIMrgb]) ;
 void SDL_unepontos(FERROVIA *todas[]);
 void for_pontos(FERROVIA *head1, FERROVIA* head2);
-
-
-
+void moveCarr(COMBOIO *temp, FERROVIA* todas[]);
+void PosInicial(COMBOIO *temp, FERROVIA* todas[]);
+void InicComboios(COMBOIO *todos[],int cores[][DIMrgb], FERROVIA* todas[]);
+void trajectoriaComb(COMBOIO* todo, int cores[][DIMrgb], FERROVIA* todas[]);
 
 /*-----*/
 

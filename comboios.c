@@ -38,10 +38,11 @@ COMBOIO* inicComboios(CARRUAGEM dados){
     head->PARACOMBOIO = false;
 	head->prox=NULL;
 	head->cart=dados;
+
 	printf("%d cor car \n",dados.cor);
+	dados.locomotiva = 0;
 
-	for(i=0; i<3; ++i){
-
+	for(i=1; i<dados.nCarruagens; ++i){
 		dados.cor = rand()%10;
 		printf("%d cor car \n",dados.cor);
 		head = addComboio(head, dados);
