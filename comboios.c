@@ -137,7 +137,7 @@ int listaComboio(COMBOIO* lista[],int k){
     if(k>0)
         printf("\nTotal Comboios %d\n",i);
 
-    return 1;
+    return i;
 }
 void mostraComboio(COMBOIO* lista[]) {
     //WIP
@@ -520,7 +520,7 @@ int nPontos(FERROVIA* lista){
         numero++;
         lista=lista->RA;
     }
-    printf("ID:%s nPontos = %d\n", lista->lident, numero);
+    //printf("ID:%s nPontos = %d\n", lista->lident, numero);
     return numero;
 }
 
@@ -540,28 +540,27 @@ void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 
     scanf("%s", ident);
     strncpy(nova.cident,ident,2);
-    printf("%s", nova.cident);
 
     //scanf("%c",&debug);
 	if(nova.cident[0]==' '||nova.cident[0]=='\n'||nova.cident[0]=='\0'){
-		printf("Insira um identificador correto para a proxima \n");
+		printf("\nInsira um identificador correto para a proxima \n");
 		return;
 	}
 	for(i=0; i<MAX&&todos[i]!=NULL;++i){
 		if(strcmp(nova.cident, todos[i]->cart.cident)==0){
-			printf("Comboio ja existente! Erro na criacao de comboio.\n");
+			printf("\nComboio ja existente! Erro na criacao de comboio.\n");
 			return;
 		}
 	}
 
-	printf("Insira raio da carruagem (entre 1 e 5)");
+	printf("Insira raio da carruagem (entre 1 e 5): ");
 	scanf("%d",  &nova.DimBOLAS);
 	while(nova.DimBOLAS>5||nova.DimBOLAS<1){
-		printf("Insira o valor entre 0 e 5");
+		printf("\nInsira o valor entre 0 e 5");
 		scanf("%d",  &nova.DimBOLAS);
 	}
 
-	printf("Escreva a cor (SEM ESPAÇOS E EM MINUSCULAS) de entre a lista de cores: \n"
+	printf("\nEscreva a cor (SEM ESPAÇOS E EM MINUSCULAS) de entre a lista de cores: \n"
 	"VERMELHO, AZUL, AMARELO, CYAN, ROXO, \nVERDE, CASTANHO, PRETO, CINZENTO, BRANCO \n");
 
 	do{
@@ -584,28 +583,29 @@ void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 		}
 	}
 	if(head==NULL){
-		printf("Linha não encontrada, escreva bem para a próxima!\n");
+		printf("\nLinha não encontrada, escreva bem para a próxima!\n");
 		return;
 	}
 
-	printf("Escolha o ponto de entre os existentes nessa linha: \n");
+	printf("\nEscolha o ponto de entre os existentes nessa linha: \n");
 	mostraPontos(todas, nova.lident);
 
     memset(ident,0,MAX);
 	scanf("%s",ident);
 
     strncpy(nova.pident,ident,4);
-    printf("PIdent : %s \n", nova.pident);
+
 
 	procuraID(todas, nova.lident, nova.pident);
 
-	printf("Insira o numero de serviços \n");
+	printf("\nInsira o numero de serviços \n");
 	scanf("%d", &nova.nservico);
 
 	i=0;
 	while(todos[i]!=NULL){
 		i=i+1;
 	}
+	nova.nCarruagens = 4;
 
 	todos[i] = inicComboios(nova);
 	printf("Comboio CRIADO \n");
@@ -641,23 +641,32 @@ void mostraPontos(FERROVIA *todas[], char lident[]){
 
 }
 
-void verificaColisoes(COMBOIO* lista[]){
-    int k,m,r;
+int verificaColisoes(COMBOIO* lista[]){
+    COMBOIO *temp;
+    int k,m,r, ret = 0;
     double distancia=0;
     int nComboios=listaComboio(lista,0);
-
     if (nComboios > 1){
+
         for (k=0;k<nComboios;k++){
 
             for (m=k+1;m<nComboios;m++){
-                r = lista[k]->cart.DimBOLAS;
-                distancia = sqrt(  pow( lista[k]->cart.PosiNoGraf[coordX] - lista[m]->cart.PosiNoGraf[coordX],2) + pow(lista[k]->cart.PosiNoGraf[coordY] - lista[m]->cart.PosiNoGraf[coordY],2 ) );
 
-                if(distancia < (8*r+DISTSEG) ){
-                        lista[k]->PARACOMBOIO = true;
-                        lista[m]->PARACOMBOIO = true;
+                if(strcmp(lista[k]->cart.linha_actual->lident,lista[m]->cart.linha_actual->lident)==0){
+                    r = lista[k]->cart.DimBOLAS;
+                    distancia = sqrt(  pow( lista[k]->cart.PosiNoGraf[coordX] - lista[m]->cart.PosiNoGraf[coordX],2) + pow(lista[k]->cart.PosiNoGraf[coordY] - lista[m]->cart.PosiNoGraf[coordY],2 ) );
+
+                    if(distancia < (8*r+DISTSEG) ){
+                        ret = 1;
+                        for(temp=lista[k];temp!=NULL;temp=temp->prox)
+                            temp->PARACOMBOIO = true;
+                        for(temp=lista[m];temp!=NULL;temp=temp->prox)
+                            temp->PARACOMBOIO = true;
+
+                    }
                 }
             }
         }
     }
+    return ret;
 }

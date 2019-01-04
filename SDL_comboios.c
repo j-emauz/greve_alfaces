@@ -10,13 +10,14 @@ void PosInicial(COMBOIO *temp, FERROVIA* todas[]){
     temp->cart.PosiNoGraf[coordX] = temp->cart.linha_actual->pont.coord[coordX];
     temp->cart.PosiNoGraf[coordY] = temp->cart.linha_actual->pont.coord[coordY];
 }
-void InicComboios(COMBOIO *todos[],int cores[][DIMrgb], FERROVIA* todas[]){
+int InicComboios(COMBOIO *todos[],int cores[][DIMrgb], FERROVIA* todas[]){
 	int i, d, z;
 	COMBOIO *temp;
 
 	for(i=0;i<MAX&&todos[i]!=NULL;++i){
 		d=4;
 		for(temp=todos[i];temp!=NULL; temp=temp->prox, d--){
+            temp->PARACOMBOIO = false;
 			PosInicial(temp, todas);
 			for(z= d * 2 * (temp->cart.DimBOLAS); z>0; z--){
 				moveCarr(temp, todas);
@@ -24,6 +25,13 @@ void InicComboios(COMBOIO *todos[],int cores[][DIMrgb], FERROVIA* todas[]){
 			filledCircleRGBA(g_pRenderer,temp->cart.PosiNoGraf[coordX],temp->cart.PosiNoGraf[coordY],temp->cart.DimBOLAS,cores[temp->cart.cor][R],cores[temp->cart.cor][G],cores[temp->cart.cor][B],cores[temp->cart.cor][ALPA]);
 		}
 	}
+	if(verificaColisoes(todos)==1){
+        return 1;
+	}
+	else
+        return 0;
+
+
 }
 void moveCarr(COMBOIO *temp, FERROVIA* todas[]){
 	float X1, X2, Y1, Y2, m, b;
@@ -70,16 +78,34 @@ void moveCarr(COMBOIO *temp, FERROVIA* todas[]){
 
 }
 void trajectoriaComb(COMBOIO* todo, int cores[][DIMrgb], FERROVIA* todas[]) { //mudei para ser so de um comboio
-    //int i;
+    int corTemp, randoma;
    // float m,Y1,Y2,X2,X1;
     COMBOIO* temp;
 
 	for(temp=todo; temp!=NULL; temp=temp->prox){
+        corTemp=temp->cart.cor;
 
-		moveCarr(temp, todas);
+        if(temp->PARACOMBOIO==false){
+            moveCarr(temp, todas);
+
+        }else if (temp->cart.locomotiva==1){
+            randoma = rand()%2;
+
+            if(randoma==1)
+                temp->cart.cor=BRANCO;
+
+        }
 		if(temp->cart.nservico>0){
 				filledCircleRGBA(g_pRenderer,temp->cart.PosiNoGraf[coordX],temp->cart.PosiNoGraf[coordY],temp->cart.DimBOLAS,cores[temp->cart.cor][R],cores[temp->cart.cor][G],cores[temp->cart.cor][B],cores[temp->cart.cor][ALPA]);
 		}
+		else{
+            //limpar a posição do comboio quando desaparece, para que nao haja uma colisão "fantasma" no seu ultimo ponto.
+            temp->cart.PosiNoGraf[coordX] = 50000; //valor muito maior do que ecra com resolucao 16K
+            temp->cart.PosiNoGraf[coordY] = 50000;
+
+
+		}
+		temp->cart.cor = corTemp;
     }
 }
 void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[][DIMrgb]){
@@ -105,14 +131,23 @@ void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[
 		exit(0);
 	}
 	SDL_SetRenderDrawColor(g_pRenderer, cores[BRANCO][R], cores[BRANCO][G], cores[BRANCO][B], cores[BRANCO][ALPA] );
-
-
-        /* Clear the entire screen to our selected color. */
+    /* Clear the entire screen to our selected color. */
     SDL_RenderClear(g_pRenderer);
 
 	SDL_unepontos(todas);
 	SDL_escrevePontos(todas,cores);
-	InicComboios(todos, cores, todas);
+	if(InicComboios(todos, cores, todas)==1){
+        printf("ERRO, COMBOIOS INICIADOS PARA ALÉM DA DISTÂNCIA DE SEGURANÇA \n");
+
+        SDL_DestroyRenderer(g_pRenderer);
+        g_pRenderer=NULL;
+
+        SDL_Quit();
+
+
+        return;
+
+	}
 	SDL_RenderPresent(g_pRenderer);
 
 	SDL_Delay(1000);
@@ -124,16 +159,21 @@ void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[
 		SDL_unepontos(todas);
         SDL_escrevePontos(todas,cores);
         //filledCircleRGBA(g_pRenderer,100,100,10,255,200,100,255);
-
+        verificaColisoes(todos);
 		for(i=0;i<MAX&&todos[i]!=NULL;i++){
-			if(todos[i]->PARACOMBOIO==false){
+
+			//if(todos[i]->PARACOMBOIO==false){
 				trajectoriaComb(todos[i], cores, todas);
-			}
+			/*}else{
+
+                todos[i]->cart.cor=BRANCO;
+
+			}*/
 		}
 
 		SDL_RenderPresent(g_pRenderer);
 
-		SDL_Delay(15);
+		//SDL_Delay(15);
 
 		//funcao ir buscar pontos as ferrovias para fazer draw line de cada linha e render dos pontos entre essas posicoes, isto deve estar dentro dum for
 

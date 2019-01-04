@@ -79,7 +79,7 @@ int listaComboio(COMBOIO* lista[],int k);
 void eliminaComboio(COMBOIO* lista[]);
 void eliminaLinha(FERROVIA* lista[]);
 /*-------Funções de apoio\debug------*/
-void verificaColisoes(COMBOIO* lista[]);
+int verificaColisoes(COMBOIO* lista[]);
 void verificaAcessos(FERROVIA* head[],char ident[]);
 int convCor(char corestr[]);
 FERROVIA* procuraID(FERROVIA* lista[],char lident[],char IDE_X[]);
@@ -105,7 +105,7 @@ void SDL_unepontos(FERROVIA *todas[]);
 void for_pontos(FERROVIA *head1, FERROVIA* head2);
 void moveCarr(COMBOIO *temp, FERROVIA* todas[]);
 void PosInicial(COMBOIO *temp, FERROVIA* todas[]);
-void InicComboios(COMBOIO *todos[],int cores[][DIMrgb], FERROVIA* todas[]);
+int InicComboios(COMBOIO *todos[],int cores[][DIMrgb], FERROVIA* todas[]);
 void trajectoriaComb(COMBOIO* todo, int cores[][DIMrgb], FERROVIA* todas[]);
 
 /*-----*/
