@@ -18,3 +18,4 @@ int RegistoDeEventos(FERROVIA *todas, COMBOIOS *todos){
 	}
 	//se calhar vai ser preciso usar case e switch
 }
+
