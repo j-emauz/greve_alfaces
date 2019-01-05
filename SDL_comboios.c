@@ -153,9 +153,14 @@ void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[
 
     do{
         SDL_SetRenderDrawColor(g_pRenderer, cores[BRANCO][R], cores[BRANCO][G], cores[BRANCO][B], cores[BRANCO][ALPA] );
+
         SDL_RenderClear(g_pRenderer);// pinta o ecra da cor acima
+
+		SDL_desenhaButoesHUD(dimJanela);
 		SDL_unepontos(todas);
         SDL_escrevePontos(todas,cores);
+
+      //  SDL_SetRenderDrawColor(g_pRenderer, cores[BRANCO][R], cores[BRANCO][G], cores[BRANCO][B], cores[BRANCO][ALPA] );
         //filledCircleRGBA(g_pRenderer,100,100,10,255,200,100,255);
         verificaColisoes(todos);
 		for(i=0;i<MAX&&todos[i]!=NULL;i++){
@@ -189,6 +194,7 @@ void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[
 
         SDL_Quit();
 
+        gfxPrimitivesSetFont(NULL, 0, 0);
 
         return;
 
@@ -259,5 +265,40 @@ void for_pontos(FERROVIA *head1, FERROVIA* head2){
 			}
 
 			//SDL_RenderPresent(g_pRenderer);
+
+}
+void SDL_desenhaButoesHUD(int dimJanela[]){
+    SDL_Rect r1;
+		//declara as 4 variáveis do retangulo
+		r1.x = dimJanela[coordX] - 100;
+		r1.y = dimJanela[coordY] - 45;
+		r1.w = 80;
+		r1.h = 20;
+    SDL_Rect r2;
+		//declara as 4 variáveis do retangulo
+		r2.x = dimJanela[coordX] - 100;
+		r2.y = dimJanela[coordY] - 75;
+		r2.w = 80;
+		r2.h = 20;
+	SDL_Rect r3;
+		//declara as 4 variáveis do retangulo
+		r3.x = dimJanela[coordX] - 100;
+		r3.y = dimJanela[coordY] - 105;
+		r3.w = 80;
+		r3.h = 20;
+
+    SDL_SetRenderDrawColor( g_pRenderer, 200, 255, 100, 255 );
+    SDL_RenderFillRect( g_pRenderer, &r1 );
+    SDL_RenderFillRect( g_pRenderer, &r2 );
+    SDL_RenderFillRect( g_pRenderer, &r3 );
+
+    SDL_SetRenderDrawColor( g_pRenderer, 0, 0, 0, 255 );
+	SDL_RenderDrawRect( g_pRenderer, &r1 );
+    SDL_RenderDrawRect( g_pRenderer, &r2 );
+    SDL_RenderDrawRect( g_pRenderer, &r3 );
+
+    stringRGBA( g_pRenderer, r3.x, r3.y+r3.h/2,"CONTINUAR",0,0,0,255 );
+    stringRGBA( g_pRenderer, r2.x, r2.y+r2.h/2,"SUSPENDER",0,0,0,255 );
+    stringRGBA( g_pRenderer, r1.x, r1.y+r1.h/2,"MENU",0,0,0,255 );
 
 }

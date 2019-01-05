@@ -109,6 +109,6 @@ void moveCarr(COMBOIO *temp, FERROVIA* todas[]);
 void PosInicial(COMBOIO *temp, FERROVIA* todas[]);
 int InicComboios(COMBOIO *todos[],int cores[][DIMrgb], FERROVIA* todas[]);
 void trajectoriaComb(COMBOIO* todo, int cores[][DIMrgb], FERROVIA* todas[]);
-
+void SDL_desenhaButoesHUD(int dimJanela[]);
 /*-----*/
 #endif
