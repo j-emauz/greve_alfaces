@@ -134,7 +134,7 @@ void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[
     /* Clear the entire screen to our selected color. */
     SDL_RenderClear(g_pRenderer);
 	SDL_Event event;
-	
+
 	SDL_unepontos(todas);
 	SDL_escrevePontos(todas,cores);
 	if(InicComboios(todos, cores, todas)==1){
@@ -190,8 +190,7 @@ void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[
 		}
 		//outra funcao para por os comboios a andar ate detetar
      } while(end_game);
-        /* Give us time to see the window. */
-        SDL_Delay(6000);
+
 
         /* Always be sure to clean up */
         SDL_DestroyRenderer(g_pRenderer);
@@ -227,24 +226,19 @@ void SDL_escrevePontos(FERROVIA *todas[],int cores[][DIMrgb]){
 	int i;
 	char lident[MAX];
 	FERROVIA *head;
-
-
 	for(i=0; i<MAX&&todas[i]!=NULL; ++i){
 		strcpy(lident, todas[i]->lident);
+        for(head = todas[i];head!=NULL && strcmp(lident, head->lident)==0; head=head->RA){
+            filledCircleRGBA(g_pRenderer, head->pont.coord[coordX], head->pont.coord[coordY], head->pont.Dimensao, cores[head->pont.cor][R], cores[head->pont.cor][G], cores[head->pont.cor][B], cores[head->pont.cor][ALPA]);
+            circleRGBA(g_pRenderer, head->pont.coord[coordX], head->pont.coord[coordY], head->pont.Dimensao,0,0,0,255);// contorno dos pontos, fica bonito
 
-		for(head = todas[i];head!=NULL && strcmp(lident, head->lident)==0; head=head->RA){
-
-
-			/*SDL_RenderDrawPoint(g_pRenderer, head->pont.coord[coordX], head->pont.coord[coordY];*/
-			filledCircleRGBA(g_pRenderer, head->pont.coord[coordX], head->pont.coord[coordY], head->pont.Dimensao, cores[head->pont.cor][R], cores[head->pont.cor][G], cores[head->pont.cor][B], cores[head->pont.cor][ALPA]);
-            circleRGBA(g_pRenderer, head->pont.coord[coordX], head->pont.coord[coordY], head->pont.Dimensao,0,0,0,255);// contorno dos pontos, fica bonito.
-            //SDL_RenderPresent(g_pRenderer);
-
-
-		}
-
-	}
-
+            if(head->RB!=NULL && strcmp(lident, head->RB->lident)==0){
+                head = head->RB;
+                filledCircleRGBA(g_pRenderer, head->pont.coord[coordX], head->pont.coord[coordY], head->pont.Dimensao, cores[head->pont.cor][R], cores[head->pont.cor][G], cores[head->pont.cor][B], cores[head->pont.cor][ALPA]);
+                circleRGBA(g_pRenderer, head->pont.coord[coordX], head->pont.coord[coordY], head->pont.Dimensao,0,0,0,255);
+            }
+        }
+    }
 }
 void for_pontos(FERROVIA *head1, FERROVIA* head2){
 		FERROVIA *head3, *headtemp;
@@ -309,9 +303,9 @@ void SDL_desenhaButoesHUD(int dimJanela[]){
 }
 
 int RegistoDeEventos(FERROVIA *todas[], COMBOIO *todos[], SDL_Event *event, int dimJanela[], int cores[][DIMrgb]){
-	
+
 	int i, x, y;
-	
+
 	switch(event->type)
 	{
 		case SDL_MOUSEBUTTONDOWN:
@@ -321,10 +315,10 @@ int RegistoDeEventos(FERROVIA *todas[], COMBOIO *todos[], SDL_Event *event, int 
 					return 0;
 				}
 				else if(y>dimJanela[coordY]-75 && y<dimJanela[coordY]-55){//suspender
-					
+
 				}
 				/*else if(y>dimJanela[coordY]-105 && y<dimJanela[coordY]-85){//continuar
-					
+
 				}*/
 			}
 			for(i=0;i<MAX && todos[i]!=NULL; ++i){
@@ -334,10 +328,10 @@ int RegistoDeEventos(FERROVIA *todas[], COMBOIO *todos[], SDL_Event *event, int 
 				}
 			}
 			for(i=0;i<MAX && todas[i]!=NULL; ++i){
-				clicaPonto(todas[i], x, y);
-				
+				clicaPonto(todas[i], x, y,todos);
+
 			}
-				
+
 				//funcao para procurar coordenadas, ver se nos pontos, ver se no comboio
 				//if(x<coord+10,x>coord-10&&y<coord+10,y>coord-10);
 	}
@@ -347,7 +341,7 @@ int RegistoDeEventos(FERROVIA *todas[], COMBOIO *todos[], SDL_Event *event, int 
 void clicaParaAnda(FERROVIA *todas[], COMBOIO *todo, int cores[][DIMrgb]){
 	COMBOIO* temp;
 	int i;
-	
+
 	if(todo->PARACOMBOIO==false){
 		for(temp=todo;temp!=NULL;temp=temp->prox){
 			temp->PARACOMBOIO = true;
@@ -363,28 +357,28 @@ void clicaParaAnda(FERROVIA *todas[], COMBOIO *todo, int cores[][DIMrgb]){
 	}
 }
 
-void clicaPonto(FERROVIA *toda, int x, int y){
+void clicaPonto(FERROVIA *toda, int x, int y, COMBOIO *todos[]){
 	for(;toda!=NULL && toda->RA!=NULL && strcmp(toda->lident, toda->RA->lident)==0;toda = toda->RA){
 		if(toda->pont.nSaidas == 2){
 			if(x<=(toda->pont.coord[coordX] + toda->pont.Dimensao) && x>=(toda->pont.coord[coordX] - toda->pont.Dimensao)
 			&& y<=(toda->pont.coord[coordY] + toda->pont.Dimensao) && y>=(toda->pont.coord[coordY] - toda->pont.Dimensao)){
-				printf("haha yes \n");
-				trocaCarris(toda);
+
+				trocaCarris(toda, todos);
 			}
-			
+
 		}
-		
+
 	}
 	for(;toda!=NULL && toda->RB!=NULL && strcmp(toda->lident, toda->RB->lident)==0;toda = toda->RB){
 		if(toda->pont.nSaidas == 2){
 			if(x<=(toda->pont.coord[coordX] + toda->pont.Dimensao) && x>=(toda->pont.coord[coordX] - toda->pont.Dimensao)
 			&& y<=(toda->pont.coord[coordY] + toda->pont.Dimensao) && y>=(toda->pont.coord[coordY] - toda->pont.Dimensao)){
-				printf("haha yes \n");
-				trocaCarris(toda);
+
+				trocaCarris(toda,todos);
 			}
-			
+
 		}
 	}
 }
-	
-		
+
+

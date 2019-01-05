@@ -469,16 +469,26 @@ FERROVIA* procuraID(FERROVIA* lista[],char lident[],char IDE_X[]){
     exit(0);
 }
 
-void trocaCarris(FERROVIA* PercursoA){
+void trocaCarris(FERROVIA* PercursoA, COMBOIO *todos[]){
     /*WIP*/
     /*É importante correr esta função duas vezes, uma vez para o comboio passar e segunda depois do comboio passar,
     porque se alguém apagar uma linha enquanto os carris estão trocados, em vez de apagar essa linha vai apagar uma mistura de linhas.
     */
-    FERROVIA *temp1=PercursoA->RA;
-    PercursoA->RA = PercursoA->RB;
-    PercursoA->RB = temp1->RA;
+    int i,k=0;
+    COMBOIO* temp;
+    for (i=0; i < MAX && todos[i] != NULL; i++){
+        for (temp = todos[i];temp !=NULL; temp=temp->prox){
+            if (PercursoA == temp->cart.linha_actual)
+                k=1;
+        }
 
- }
+    }
+    if ( k != 1) {
+        FERROVIA *temp1=PercursoA->RA;
+        PercursoA->RA = PercursoA->RB;
+        PercursoA->RB = temp1;
+    }
+}
 
 void mostraCores(int cores[DIMCores][DIMrgb]){
     int i,j;
@@ -554,7 +564,7 @@ void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 	char cor[MAX];
 	int i;
 	char ident[MAX];
-	FERROVIA* head = NULL;	
+	FERROVIA* head = NULL;
     memset(nova.cident,0,3);
     memset(nova.lident,0,5);
     memset(nova.pident,0,5);
@@ -621,7 +631,7 @@ void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 	while(todos[i]!=NULL){
 		i=i+1;
 	}
-	
+
 	nova.nCarruagens = 4;
 	nova.locomotiva = 1;
 	todos[i] = inicComboios(nova);

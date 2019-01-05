@@ -87,7 +87,7 @@ int convCor(char corestr[]);
 FERROVIA* procuraID(FERROVIA* lista[],char lident[],char IDE_X[]);
 char debug;//Isto tem de ser apagado antes de entregar.
 void mostraCores(int cores[DIMCores][DIMrgb]);
-void trocaCarris(FERROVIA* PercursoA);
+void trocaCarris(FERROVIA* PercursoA, COMBOIO* todos[]);
 int nPontos(FERROVIA* lista);
 /*LER*/
 int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]); // pus char aqui.
@@ -112,6 +112,6 @@ void trajectoriaComb(COMBOIO* todo, int cores[][DIMrgb], FERROVIA* todas[]);
 void SDL_desenhaButoesHUD(int dimJanela[]);
 int RegistoDeEventos(FERROVIA *todas[], COMBOIO *todos[], SDL_Event *event, int dimJanela[], int cores[][DIMrgb]);
 void clicaParaAnda(FERROVIA *todas[], COMBOIO *todo, int cores[][DIMrgb]);
-void clicaPonto(FERROVIA *toda, int x, int y);
+void clicaPonto(FERROVIA *toda, int x, int y,COMBOIO *todos[]);
 /*-----*/
 #endif
