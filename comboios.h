@@ -19,7 +19,7 @@
 /*-------------------*/
 #define coordX 0 //
 #define coordY 1
-#define DISTSEG 20 // distancia de segurança entre comboios
+#define DISTSEG 80 // distancia de segurança entre comboios
 /*--------------------------------------------------------------------------------*/
 typedef struct pontoslinha {
 	//int nOrdem;
