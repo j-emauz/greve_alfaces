@@ -115,8 +115,6 @@ void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[
 
     int end_game = 1;
 	int i;
-//int coords[2];
-	//SDL_Point CheckPontos[]
 
     if(SDL_Init(SDL_INIT_EVERYTHING) >= 0)
     {
