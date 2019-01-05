@@ -556,6 +556,7 @@ void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 	int i;
 	char ident[MAX];
 	FERROVIA* head = NULL;
+	
     memset(nova.cident,0,3);
     memset(nova.lident,0,5);
     memset(nova.pident,0,5);
@@ -632,6 +633,7 @@ void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 		i=i+1;
 	}
 	nova.nCarruagens = 4;
+	nova.locomotiva = 1;
 
 	todos[i] = inicComboios(nova);
 	printf("Comboio CRIADO \n");
@@ -668,29 +670,31 @@ void mostraPontos(FERROVIA *todas[], char lident[]){
 }
 
 int verificaColisoes(COMBOIO* lista[]){
-    COMBOIO *temp;
-    int k,m,r, ret = 0;
+    COMBOIO *temp, *compara;
+    int k,m,ret = 0;
     double distancia=0;
     int nComboios=listaComboio(lista,0);
     if (nComboios > 1){
 
         for (k=0;k<nComboios;k++){
 
-            for (m=k+1;m<nComboios;m++){
+            for (m=0;m<nComboios;m++){
+				if(m!=k){
+					for(compara=lista[m];compara!=NULL;compara=compara->prox){
+						if(strcmp(lista[k]->cart.linha_actual->lident,compara->cart.linha_actual->lident)==0){
+							distancia = (compara->cart.DimBOLAS+lista[k]->cart.DimBOLAS) + sqrt(  pow( lista[k]->cart.PosiNoGraf[coordX] - compara->cart.PosiNoGraf[coordX],2) + pow(lista[k]->cart.PosiNoGraf[coordY] - compara->cart.PosiNoGraf[coordY],2 ) );
 
-                if(strcmp(lista[k]->cart.linha_actual->lident,lista[m]->cart.linha_actual->lident)==0){
-                    r = lista[k]->cart.DimBOLAS;
-                    distancia = sqrt(  pow( lista[k]->cart.PosiNoGraf[coordX] - lista[m]->cart.PosiNoGraf[coordX],2) + pow(lista[k]->cart.PosiNoGraf[coordY] - lista[m]->cart.PosiNoGraf[coordY],2 ) );
+							if(distancia < (DISTSEG) ){
+								ret = 1;
+								for(temp=lista[k];temp!=NULL;temp=temp->prox)
+									temp->PARACOMBOIO = true;
+								for(temp=lista[m];temp!=NULL;temp=temp->prox)
+									temp->PARACOMBOIO = true;
 
-                    if(distancia < (8*r+DISTSEG) ){
-                        ret = 1;
-                        for(temp=lista[k];temp!=NULL;temp=temp->prox)
-                            temp->PARACOMBOIO = true;
-                        for(temp=lista[m];temp!=NULL;temp=temp->prox)
-                            temp->PARACOMBOIO = true;
-
-                    }
-                }
+							}
+						}
+					}
+				}
             }
         }
     }
