@@ -133,7 +133,8 @@ void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[
 	SDL_SetRenderDrawColor(g_pRenderer, cores[BRANCO][R], cores[BRANCO][G], cores[BRANCO][B], cores[BRANCO][ALPA] );
     /* Clear the entire screen to our selected color. */
     SDL_RenderClear(g_pRenderer);
-
+	SDL_Event event;
+	
 	SDL_unepontos(todas);
 	SDL_escrevePontos(todas,cores);
 	if(InicComboios(todos, cores, todas)==1){
@@ -184,7 +185,9 @@ void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[
 
 		//outra funcao para passar ponto inicial de comboio em coordenadas, se estiver no primeiro ponto da linha este deve somar a dim do comboio a posicao inicial
         //desenhaComboios(todos,todas,cores);
-
+		while(SDL_PollEvent(&event)){
+			end_game = RegistoDeEventos(todas, todos, &event, dimJanela);
+		}
 		//outra funcao para por os comboios a andar ate detetar
      } while(end_game);
         /* Give us time to see the window. */
@@ -301,6 +304,28 @@ void SDL_desenhaButoesHUD(int dimJanela[]){
 
     stringRGBA( g_pRenderer, r3.x+2, r3.y+4,"CONTINUAR",0,0,0,255 );
     stringRGBA( g_pRenderer, r2.x+2, r2.y+4,"SUSPENDER",0,0,0,255 );
-    stringRGBA( g_pRenderer, r1.x+20, r1.y+4,"MENU",0,0,0,255 );
+    stringRGBA( g_pRenderer, r1.x+20, r1.y+4,"SDL_QUIT",0,0,0,255 );
 
+}
+
+int RegistoDeEventos(FERROVIA *todas[], COMBOIO *todos[], SDL_Event *event, int dimJanela[]){
+	
+	int x, y;
+
+	
+	switch(event->type)
+	{
+		case SDL_MOUSEBUTTONDOWN:
+			SDL_GetMouseState(&x, &y);
+			if(x>dimJanela[coordX]-100 && x<dimJanela[coordX]-20){
+				if(y>dimJanela[coordY]-45 && y<dimJanela[coordY]-25){
+					return 0;
+				}
+			}
+				
+				//funcao para procurar coordenadas, ver se nos pontos, ver se no comboio
+				//if(x<coord+10,x>coord-10&&y<coord+10,y>coord-10);
+	}
+	return 1;
+	//se calhar vai ser preciso usar case e switch
 }

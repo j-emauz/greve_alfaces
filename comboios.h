@@ -110,5 +110,6 @@ void PosInicial(COMBOIO *temp, FERROVIA* todas[]);
 int InicComboios(COMBOIO *todos[],int cores[][DIMrgb], FERROVIA* todas[]);
 void trajectoriaComb(COMBOIO* todo, int cores[][DIMrgb], FERROVIA* todas[]);
 void SDL_desenhaButoesHUD(int dimJanela[]);
+int RegistoDeEventos(FERROVIA *todas[], COMBOIO *todos[], SDL_Event *event, int dimJanela[]);
 /*-----*/
 #endif

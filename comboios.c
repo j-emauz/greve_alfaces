@@ -555,8 +555,7 @@ void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 	char cor[MAX];
 	int i;
 	char ident[MAX];
-	FERROVIA* head = NULL;
-	
+	FERROVIA* head = NULL;	
     memset(nova.cident,0,3);
     memset(nova.lident,0,5);
     memset(nova.pident,0,5);
@@ -568,7 +567,6 @@ void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
     scanf("%s", ident);
     strncpy(nova.cident,ident,2);
 
-    //scanf("%c",&debug);
 	if(nova.cident[0]==' '||nova.cident[0]=='\n'||nova.cident[0]=='\0'){
 		printf("\nInsira um identificador correto para a proxima \n");
 		return;
@@ -579,15 +577,13 @@ void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 			return;
 		}
 	}
-
 	printf("Insira raio da carruagem (entre 4 e 10): ");
 	scanf("%d",  &nova.DimBOLAS);
 	while(nova.DimBOLAS>10||nova.DimBOLAS<4){
 		printf("\nInsira o valor entre 0 e 5");
 		scanf("%d",  &nova.DimBOLAS);
 	}
-
-	printf("\nEscreva a cor (SEM ESPAÇOS E EM MINUSCULAS) de entre a lista de cores: \n"
+	printf("\nEscreva a cor (SEM ESPAÇOS E EM MAIUSCULAS) de entre a lista de cores: \n"
 	"VERMELHO, AZUL, AMARELO, CYAN, ROXO, \nVERDE, CASTANHO, PRETO, CINZENTO, BRANCO \n");
 
 	do{
@@ -613,28 +609,22 @@ void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 		printf("\nLinha não encontrada, escreva bem para a próxima!\n");
 		return;
 	}
-
 	printf("\nEscolha o ponto de entre os existentes nessa linha: \n");
 	mostraPontos(todas, nova.lident);
-
-    memset(ident,0,MAX);
+	memset(ident,0,MAX);
 	scanf("%s",ident);
-
     strncpy(nova.pident,ident,4);
-
-
 	procuraID(todas, nova.lident, nova.pident);
 
 	printf("\nInsira o numero de serviços \n");
 	scanf("%d", &nova.nservico);
-
 	i=0;
 	while(todos[i]!=NULL){
 		i=i+1;
 	}
+	
 	nova.nCarruagens = 4;
 	nova.locomotiva = 1;
-
 	todos[i] = inicComboios(nova);
 	printf("Comboio CRIADO \n");
 }
