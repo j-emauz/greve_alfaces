@@ -105,7 +105,9 @@ void trajectoriaComb(COMBOIO* todo, int cores[][DIMrgb], FERROVIA* todas[]) { //
 
 
 		}
-		temp->cart.cor = corTemp;
+		if(temp->cart.locomotiva==1){
+			temp->cart.cor = corTemp;
+		}
     }
 }
 void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[][DIMrgb]){
