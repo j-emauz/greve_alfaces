@@ -311,7 +311,6 @@ void SDL_desenhaButoesHUD(int dimJanela[]){
 int RegistoDeEventos(FERROVIA *todas[], COMBOIO *todos[], SDL_Event *event, int dimJanela[], int cores[][DIMrgb]){
 	
 	int i, x, y;
-
 	
 	switch(event->type)
 	{
@@ -334,7 +333,10 @@ int RegistoDeEventos(FERROVIA *todas[], COMBOIO *todos[], SDL_Event *event, int 
 					clicaParaAnda(todas, todos[i], cores);
 				}
 			}
-			
+			for(i=0;i<MAX && todas[i]!=NULL; ++i){
+				clicaPonto(todas[i], x, y);
+				
+			}
 				
 				//funcao para procurar coordenadas, ver se nos pontos, ver se no comboio
 				//if(x<coord+10,x>coord-10&&y<coord+10,y>coord-10);
@@ -360,4 +362,29 @@ void clicaParaAnda(FERROVIA *todas[], COMBOIO *todo, int cores[][DIMrgb]){
 		}
 	}
 }
+
+void clicaPonto(FERROVIA *toda, int x, int y){
+	for(;toda!=NULL && toda->RA!=NULL && strcmp(toda->lident, toda->RA->lident)==0;toda = toda->RA){
+		if(toda->pont.nSaidas == 2){
+			if(x<=(toda->pont.coord[coordX] + toda->pont.Dimensao) && x>=(toda->pont.coord[coordX] - toda->pont.Dimensao)
+			&& y<=(toda->pont.coord[coordY] + toda->pont.Dimensao) && y>=(toda->pont.coord[coordY] - toda->pont.Dimensao)){
+				printf("haha yes \n");
+				trocaCarris(toda);
+			}
+			
+		}
+		
+	}
+	for(;toda!=NULL && toda->RB!=NULL && strcmp(toda->lident, toda->RB->lident)==0;toda = toda->RB){
+		if(toda->pont.nSaidas == 2){
+			if(x<=(toda->pont.coord[coordX] + toda->pont.Dimensao) && x>=(toda->pont.coord[coordX] - toda->pont.Dimensao)
+			&& y<=(toda->pont.coord[coordY] + toda->pont.Dimensao) && y>=(toda->pont.coord[coordY] - toda->pont.Dimensao)){
+				printf("haha yes \n");
+				trocaCarris(toda);
+			}
+			
+		}
+	}
+}
+	
 		

@@ -59,6 +59,7 @@ int main(int argc, char *argv[]){
 				break;
 			case '6':
 				abreJanela(jancoord,todos,todas,cores);
+				printf("Pressione enter\n");
 				break;
 		}
 

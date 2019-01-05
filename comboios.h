@@ -112,5 +112,6 @@ void trajectoriaComb(COMBOIO* todo, int cores[][DIMrgb], FERROVIA* todas[]);
 void SDL_desenhaButoesHUD(int dimJanela[]);
 int RegistoDeEventos(FERROVIA *todas[], COMBOIO *todos[], SDL_Event *event, int dimJanela[], int cores[][DIMrgb]);
 void clicaParaAnda(FERROVIA *todas[], COMBOIO *todo, int cores[][DIMrgb]);
+void clicaPonto(FERROVIA *toda, int x, int y);
 /*-----*/
 #endif
