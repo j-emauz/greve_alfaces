@@ -579,9 +579,9 @@ void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 		}
 	}
 
-	printf("Insira raio da carruagem (entre 1 e 5): ");
+	printf("Insira raio da carruagem (entre 4 e 10): ");
 	scanf("%d",  &nova.DimBOLAS);
-	while(nova.DimBOLAS>5||nova.DimBOLAS<1){
+	while(nova.DimBOLAS>10||nova.DimBOLAS<4){
 		printf("\nInsira o valor entre 0 e 5");
 		scanf("%d",  &nova.DimBOLAS);
 	}
