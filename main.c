@@ -43,7 +43,7 @@ int main(int argc, char *argv[]){
 			case '2': // ELIMINA FERROVIA
 				//print instruçoes
                 //scanf("%s", Indent);
-                eliminaLinha(todas);
+                eliminaLinha(todas,todos);
                 //memset(Indent, 0, MAX);
 				break;
 			case '3': // MOSTRA COMBOIOS

@@ -77,8 +77,10 @@ int listaFerrovias(FERROVIA* lista[]);
 int listaComboio(COMBOIO* lista[],int k);
 /*DELETES*/
 void eliminaComboio(COMBOIO* lista[]);
-void eliminaLinha(FERROVIA* lista[]);
+void libertaComboio(char cident[], COMBOIO* lista[]);
+void eliminaLinha(FERROVIA* lista[],COMBOIO* todos[]);
 /*-------Funções de apoio\debug------*/
+void verifica_na_linhaComboios(COMBOIO* todos[], char lident[]);
 int verificaColisoes(COMBOIO* lista[]);
 void verificaAcessos(FERROVIA* head[],char ident[]);
 int convCor(char corestr[]);
@@ -109,7 +111,4 @@ int InicComboios(COMBOIO *todos[],int cores[][DIMrgb], FERROVIA* todas[]);
 void trajectoriaComb(COMBOIO* todo, int cores[][DIMrgb], FERROVIA* todas[]);
 
 /*-----*/
-
-
-
 #endif
