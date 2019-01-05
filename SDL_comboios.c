@@ -23,6 +23,7 @@ int InicComboios(COMBOIO *todos[],int cores[][DIMrgb], FERROVIA* todas[]){
 				moveCarr(temp, todas);
 			}
 			filledCircleRGBA(g_pRenderer,temp->cart.PosiNoGraf[coordX],temp->cart.PosiNoGraf[coordY],temp->cart.DimBOLAS,cores[temp->cart.cor][R],cores[temp->cart.cor][G],cores[temp->cart.cor][B],cores[temp->cart.cor][ALPA]);
+            circleRGBA(g_pRenderer,temp->cart.PosiNoGraf[coordX],temp->cart.PosiNoGraf[coordY],temp->cart.DimBOLAS,0,0,0,255);
 		}
 	}
 	if(verificaColisoes(todos)==1){
@@ -96,7 +97,9 @@ void trajectoriaComb(COMBOIO* todo, int cores[][DIMrgb], FERROVIA* todas[]) { //
 
         }
 		if(temp->cart.nservico>0){
+
 				filledCircleRGBA(g_pRenderer,temp->cart.PosiNoGraf[coordX],temp->cart.PosiNoGraf[coordY],temp->cart.DimBOLAS,cores[temp->cart.cor][R],cores[temp->cart.cor][G],cores[temp->cart.cor][B],cores[temp->cart.cor][ALPA]);
+                circleRGBA(g_pRenderer,temp->cart.PosiNoGraf[coordX],temp->cart.PosiNoGraf[coordY],temp->cart.DimBOLAS,0,0,0,255);
 		}
 		else{
             //limpar a posição do comboio quando desaparece, para que nao haja uma colisão "fantasma" no seu ultimo ponto.
@@ -111,43 +114,32 @@ void trajectoriaComb(COMBOIO* todo, int cores[][DIMrgb], FERROVIA* todas[]) { //
     }
 }
 void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[][DIMrgb]){
-
     SDL_Init(SDL_INIT_EVERYTHING);
-
-
+    COMBOIO *temp = NULL;
     int end_game = 1;
 	int i;
 
     if(SDL_Init(SDL_INIT_EVERYTHING) >= 0)
     {
-
-		g_pWindow = SDL_CreateWindow("ComboioSim", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-		dimJanela[coordX], dimJanela[coordY], SDL_WINDOW_SHOWN);
-	//se inicializa com sucesso inicia o render
+		g_pWindow = SDL_CreateWindow("ComboioSim", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, dimJanela[coordX], dimJanela[coordY], SDL_WINDOW_SHOWN);
 		if(g_pWindow != 0)
 			g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, 0);
-
-	}else {
+    }else{
 		exit(0);
 	}
 	SDL_SetRenderDrawColor(g_pRenderer, cores[BRANCO][R], cores[BRANCO][G], cores[BRANCO][B], cores[BRANCO][ALPA] );
-    /* Clear the entire screen to our selected color. */
+
     SDL_RenderClear(g_pRenderer);
 	SDL_Event event;
-
 	SDL_unepontos(todas);
 	SDL_escrevePontos(todas,cores);
+
 	if(InicComboios(todos, cores, todas)==1){
         printf("ERRO, COMBOIOS INICIADOS PARA ALÉM DA DISTÂNCIA DE SEGURANÇA \n");
-
         SDL_DestroyRenderer(g_pRenderer);
         g_pRenderer=NULL;
-
         SDL_Quit();
-
-
         return;
-
 	}
 	SDL_RenderPresent(g_pRenderer);
 
@@ -170,16 +162,12 @@ void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[
 
 			//if(todos[i]->PARACOMBOIO==false){
 				trajectoriaComb(todos[i], cores, todas);
-			/*}else{
 
-                todos[i]->cart.cor=BRANCO;
-
-			}*/
 		}
 
 		SDL_RenderPresent(g_pRenderer);
 
-		SDL_Delay(25);
+		SDL_Delay(15);
 
 		//funcao ir buscar pontos as ferrovias para fazer draw line de cada linha e render dos pontos entre essas posicoes, isto deve estar dentro dum for
 
@@ -193,19 +181,24 @@ void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[
 
 
         /* Always be sure to clean up */
-        SDL_DestroyRenderer(g_pRenderer);
-        g_pRenderer=NULL;
+    SDL_DestroyRenderer(g_pRenderer);
+    g_pRenderer=NULL;
 
-        SDL_Quit();
+    SDL_Quit();
 
-        gfxPrimitivesSetFont(NULL, 0, 0);
+    gfxPrimitivesSetFont(NULL, 0, 0);
 
-        return;
+    for(i=0;todos[i]!=NULL && i<MAX; i++){
+        for(temp = todos[i]; temp !=NULL ; temp = temp->prox){
+            if(temp->cart.locomotiva==0)
+                temp->cart.cor = rand()%DIMCores;
+            temp->cart.nservico= todos[i]->nServicoInicial;
 
+        }
 
+    }
 
-	// "limpa" a função de texto
-	gfxPrimitivesSetFont(NULL, 0, 0);
+    return;
 }
 void SDL_unepontos(FERROVIA *todas[]){
 	int i;
@@ -298,7 +291,7 @@ void SDL_desenhaButoesHUD(int dimJanela[]){
 
     stringRGBA( g_pRenderer, r3.x+2, r3.y+4,"CONTINUAR",0,0,0,255 );
     stringRGBA( g_pRenderer, r2.x+2, r2.y+4,"SUSPENDER",0,0,0,255 );
-    stringRGBA( g_pRenderer, r1.x+20, r1.y+4,"SDL_QUIT",0,0,0,255 );
+    stringRGBA( g_pRenderer, r1.x+2, r1.y+4,"SDL QUIT",0,0,0,255 );
 
 }
 

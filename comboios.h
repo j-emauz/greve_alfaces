@@ -9,13 +9,15 @@
 #include <stdbool.h>
 #include <math.h>
 #include "cores.h"
-
-
 /*-------------------*/
-#define MAX 200
-/*---------defines para linhas----------*/
+#define MAX 2000
+/*---------defines para dims----------*/
 #define dimEST 5
 #define dimVIA 3
+#define dimLIDENT 5
+#define dimPIDENT 5
+#define dimCIDENT 3
+
 /*-------------------*/
 #define coordX 0 //
 #define coordY 1
@@ -23,7 +25,7 @@
 /*--------------------------------------------------------------------------------*/
 typedef struct pontoslinha {
 	//int nOrdem;
-	char pident[5];
+	char pident[dimPIDENT];
 	int coord[2];// em pixeis
 	int cor; // cor=VERMELHO
 	char TipoDePonto[4];//VIA, EST, ponto de via nao aparece ID no boneco
@@ -34,7 +36,7 @@ typedef struct pontoslinha {
 }PONTOS;
 
 typedef struct ferrolinha {
-	char lident[5];
+	char lident[dimLIDENT];
 	PONTOS pont;
 	struct ferrolinha *RA;// abreviado de ROTA A
 	struct ferrolinha *RB;
@@ -42,13 +44,13 @@ typedef struct ferrolinha {
 
 typedef struct carr {
 	//int raio;//em pixeis
-	char cident[3];//BA
+	char cident[dimCIDENT];//BA
 	int nCarruagens;//numero de carruagens( dimensao)
 	int DimBOLAS; // raio em pixeis
 	int cor; /* cor do comboio é cor da locomotiva, primeira CARRUAGEM*/
-	char lident[5];	/*ex: *LinhaAB->ident e LinhaAB->p->ident ??
+	char lident[dimLIDENT];	/*ex: *LinhaAB->ident e LinhaAB->p->ident ??
     ID da linha + ID do ponto */
-	char pident[5];
+	char pident[dimPIDENT];
     int PosiNoGraf[2];//posição atual da carruagem\locomotiva
     int nservico;
     int locomotiva;
@@ -58,6 +60,7 @@ typedef struct carr {
 typedef struct comboio{
 	CARRUAGEM cart;
 	bool PARACOMBOIO;
+	int nServicoInicial;//permite fazer reset do num de serviços dos comboios no SDL
 	struct comboio *prox; // aponta para a prox carruagem
 }COMBOIO;
 /* ----------------------------------------------------------------------------------- */

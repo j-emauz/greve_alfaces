@@ -104,7 +104,7 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
 	FILE *fp = NULL;
 	char linha[MAX];
 	char *aux = NULL;
-	char lident[5];
+	char lident[dimLIDENT];
 	char ident[MAX];
 	char fim_linha[MAX];
 	int i=0, j=0;

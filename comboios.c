@@ -38,7 +38,7 @@ COMBOIO* inicComboios(CARRUAGEM dados){
     head->PARACOMBOIO = false;
 	head->prox=NULL;
 	head->cart=dados;
-
+    head->nServicoInicial=dados.nservico;
 	printf("%d cor car \n",dados.cor);
 	dados.locomotiva = 0;
 
@@ -574,7 +574,7 @@ void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 	printf("Escreva o identificador do novo comboio: ");
 
     scanf("%s", ident);
-    strncpy(nova.cident,ident,2);
+    strncpy(nova.cident,ident,dimCIDENT-1);
 
 	if(nova.cident[0]==' '||nova.cident[0]=='\n'||nova.cident[0]=='\0'){
 		printf("\nInsira um identificador correto para a proxima \n");
@@ -606,7 +606,7 @@ void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 
     memset(ident,0,MAX);
 	scanf("%s", ident);
-    strncpy(nova.lident,ident,4);
+    strncpy(nova.lident,ident,dimLIDENT-1);
 
 	for(i=0; i<MAX&&todas[i]!=NULL;++i){
 		if(strcmp(nova.lident, todas[i]->lident)==0){
@@ -622,7 +622,7 @@ void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 	mostraPontos(todas, nova.lident);
 	memset(ident,0,MAX);
 	scanf("%s",ident);
-    strncpy(nova.pident,ident,4);
+    strncpy(nova.pident,ident,dimPIDENT-1);
 	procuraID(todas, nova.lident, nova.pident);
 
 	printf("\nInsira o numero de serviços \n");
