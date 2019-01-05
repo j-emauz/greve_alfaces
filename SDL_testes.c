@@ -1,5 +1,5 @@
-int RegistoDeEventos(FERROVIA *todas, COMBOIOS *todos){
-	SDL_Event event;
+int RegistoDeEventos(FERROVIA *todas, COMBOIOS *todos, SDL_Event *event){
+	
 	int x, y;
 
 	while (SDL_PollEvent(&event)){

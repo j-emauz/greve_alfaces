@@ -1,3 +1,6 @@
 
 *.o
 tfinal/tfinal.layout
+make
+makefile.txt
+workplace
