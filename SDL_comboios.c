@@ -297,8 +297,8 @@ void SDL_desenhaButoesHUD(int dimJanela[]){
     SDL_RenderDrawRect( g_pRenderer, &r2 );
     SDL_RenderDrawRect( g_pRenderer, &r3 );
 
-    stringRGBA( g_pRenderer, r3.x, r3.y+r3.h/2,"CONTINUAR",0,0,0,255 );
-    stringRGBA( g_pRenderer, r2.x, r2.y+r2.h/2,"SUSPENDER",0,0,0,255 );
-    stringRGBA( g_pRenderer, r1.x, r1.y+r1.h/2,"MENU",0,0,0,255 );
+    stringRGBA( g_pRenderer, r3.x+2, r3.y+4,"CONTINUAR",0,0,0,255 );
+    stringRGBA( g_pRenderer, r2.x+2, r2.y+4,"SUSPENDER",0,0,0,255 );
+    stringRGBA( g_pRenderer, r1.x+20, r1.y+4,"MENU",0,0,0,255 );
 
 }
