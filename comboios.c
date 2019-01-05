@@ -491,7 +491,6 @@ void mostraCores(int cores[DIMCores][DIMrgb]){
 }
 
 int convCor(char corestr[]){
-    //printf("printei isto ::: === %s", corestr);
 
     if ( strcmp(corestr,"VERMELHO") == 0 ){
         return VERMELHO;

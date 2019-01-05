@@ -179,14 +179,14 @@ void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[
 
 		SDL_RenderPresent(g_pRenderer);
 
-		//SDL_Delay(15);
+		SDL_Delay(25);
 
 		//funcao ir buscar pontos as ferrovias para fazer draw line de cada linha e render dos pontos entre essas posicoes, isto deve estar dentro dum for
 
 		//outra funcao para passar ponto inicial de comboio em coordenadas, se estiver no primeiro ponto da linha este deve somar a dim do comboio a posicao inicial
         //desenhaComboios(todos,todas,cores);
 		while(SDL_PollEvent(&event)){
-			end_game = RegistoDeEventos(todas, todos, &event, dimJanela);
+			end_game = RegistoDeEventos(todas, todos, &event, dimJanela, cores);
 		}
 		//outra funcao para por os comboios a andar ate detetar
      } while(end_game);
@@ -308,9 +308,9 @@ void SDL_desenhaButoesHUD(int dimJanela[]){
 
 }
 
-int RegistoDeEventos(FERROVIA *todas[], COMBOIO *todos[], SDL_Event *event, int dimJanela[]){
+int RegistoDeEventos(FERROVIA *todas[], COMBOIO *todos[], SDL_Event *event, int dimJanela[], int cores[][DIMrgb]){
 	
-	int x, y;
+	int i, x, y;
 
 	
 	switch(event->type)
@@ -318,10 +318,23 @@ int RegistoDeEventos(FERROVIA *todas[], COMBOIO *todos[], SDL_Event *event, int 
 		case SDL_MOUSEBUTTONDOWN:
 			SDL_GetMouseState(&x, &y);
 			if(x>dimJanela[coordX]-100 && x<dimJanela[coordX]-20){
-				if(y>dimJanela[coordY]-45 && y<dimJanela[coordY]-25){
+				if(y>dimJanela[coordY]-45 && y<dimJanela[coordY]-25){//sair SDL
 					return 0;
 				}
+				else if(y>dimJanela[coordY]-75 && y<dimJanela[coordY]-55){//suspender
+					
+				}
+				/*else if(y>dimJanela[coordY]-105 && y<dimJanela[coordY]-85){//continuar
+					
+				}*/
 			}
+			for(i=0;i<MAX && todos[i]!=NULL; ++i){
+				if(x<=(todos[i]->cart.PosiNoGraf[coordX] + todos[i]->cart.DimBOLAS) && x>=(todos[i]->cart.PosiNoGraf[coordX] - todos[i]->cart.DimBOLAS)
+				&& y<=(todos[i]->cart.PosiNoGraf[coordY] + todos[i]->cart.DimBOLAS) && y>=(todos[i]->cart.PosiNoGraf[coordY] - todos[i]->cart.DimBOLAS)){
+					clicaParaAnda(todas, todos[i], cores);
+				}
+			}
+			
 				
 				//funcao para procurar coordenadas, ver se nos pontos, ver se no comboio
 				//if(x<coord+10,x>coord-10&&y<coord+10,y>coord-10);
@@ -329,3 +342,22 @@ int RegistoDeEventos(FERROVIA *todas[], COMBOIO *todos[], SDL_Event *event, int 
 	return 1;
 	//se calhar vai ser preciso usar case e switch
 }
+void clicaParaAnda(FERROVIA *todas[], COMBOIO *todo, int cores[][DIMrgb]){
+	COMBOIO* temp;
+	int i;
+	
+	if(todo->PARACOMBOIO==false){
+		for(temp=todo;temp!=NULL;temp=temp->prox){
+			temp->PARACOMBOIO = true;
+		}
+	}
+	else if(todo->PARACOMBOIO == true){
+		for(temp=todo;temp!=NULL;temp=temp->prox){
+			temp->PARACOMBOIO = false;
+		}
+		for(i=0;i<5;i++){
+			trajectoriaComb(todo, cores, todas);
+		}
+	}
+}
+		

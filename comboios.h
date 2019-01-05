@@ -19,7 +19,7 @@
 /*-------------------*/
 #define coordX 0 //
 #define coordY 1
-#define DISTSEG 80 // distancia de segurança entre comboios
+#define DISTSEG 40 // distancia de segurança entre comboios
 /*--------------------------------------------------------------------------------*/
 typedef struct pontoslinha {
 	//int nOrdem;
@@ -110,6 +110,7 @@ void PosInicial(COMBOIO *temp, FERROVIA* todas[]);
 int InicComboios(COMBOIO *todos[],int cores[][DIMrgb], FERROVIA* todas[]);
 void trajectoriaComb(COMBOIO* todo, int cores[][DIMrgb], FERROVIA* todas[]);
 void SDL_desenhaButoesHUD(int dimJanela[]);
-int RegistoDeEventos(FERROVIA *todas[], COMBOIO *todos[], SDL_Event *event, int dimJanela[]);
+int RegistoDeEventos(FERROVIA *todas[], COMBOIO *todos[], SDL_Event *event, int dimJanela[], int cores[][DIMrgb]);
+void clicaParaAnda(FERROVIA *todas[], COMBOIO *todo, int cores[][DIMrgb]);
 /*-----*/
 #endif
