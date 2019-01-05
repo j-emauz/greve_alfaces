@@ -1,9 +1,13 @@
-void menuSDL(char *opcao){
+void menuSDL(char *opcao, SDL_event *event, int dimJanela[], int *b){
 	char linha[MAX];
 	char teste;
+
+	*b=SDL_verificaContinua(dimJanela, event);
+	if(*b==2){
+        return;
+	}
 	getchar();
 	printf ("\nEscolha uma das opções \n"
-				"0 - Sair da janela gráfica \n"
 				"1 - Mostrar a informação de uma ferrovia \n"
 				"2 - Eliminar uma ferrovia \n"
 				"3 - Mostrar a informação de um comboio \n"
@@ -13,21 +17,32 @@ void menuSDL(char *opcao){
 				"Opção: ");
 	fgets(linha, MAX, stdin);
 	sscanf(linha, "%c%c", opcao, &teste);
+	*b=SDL_verificaContinua(dimJanela, event);
+	if(*b==2){
+        return;
+	}
 	printf("\n");
 
 	if((teste!='\n' || *opcao>'5' || *opcao<'1')&&(*opcao!='\n')){
 		printf("Insira apenas 1 numero entre 0 e 5, clique enter");
 		menuSDL(opcao);
 	}
+	*b=SDL_verificaContinua(dimJanela, event);
+	if(*b==2){
+        return;
+	}
 
 }
 
-void SDLsuspenso(COMBOIO *todos[], FERROVIA *todas[], int cores[][DIMrgb], SDL_Event *event){
+int SDLsuspenso(COMBOIO *todos[], FERROVIA *todas[], int dimJanela[], int cores[][DIMrgb], SDL_Event *event){
 	char opcao;
-	int i;
-	
+	int b;
+
 	do{
-		menuSDL(opcao);
+		menuSDL(opcao, event, dimJanela, &b);
+        if(b==2){
+            return 0;
+        }
 		switch(opcao)
 		{
 			case '1': // MOSTRA FERROVIA
@@ -54,7 +69,7 @@ void SDLsuspenso(COMBOIO *todos[], FERROVIA *todas[], int cores[][DIMrgb], SDL_E
 					}
 					filledCircleRGBA(g_pRenderer,temp->cart.PosiNoGraf[coordX],temp->cart.PosiNoGraf[coordY],temp->cart.DimBOLAS,cores[temp->cart.cor][R],cores[temp->cart.cor][G],cores[temp->cart.cor][B],cores[temp->cart.cor][ALPA]);
 				}
-					
+
 				if(verificaColisoes(todos)==1){
 					printf("ERRO, COMBOIOS INICIADOS PARA ALÉM DA DISTÂNCIA DE SEGURANÇA \n");
 
@@ -63,26 +78,28 @@ void SDLsuspenso(COMBOIO *todos[], FERROVIA *todas[], int cores[][DIMrgb], SDL_E
 
 					SDL_Quit();
 					gfxPrimitivesSetFont(NULL, 0, 0);
-					
-					break;
+
+
 				}
 				break;
+                b = SDL_verificaContinua(dimJanela, event);
 
 
-	}while(opcao!='0');
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	}while(b!=2);
+	return 0;
+
+}
+
+int SDL_verificaContinua(int dimJanela[], SDL_event *event){
+     int x, y;
+
+     while(SDL_PollEvent(event)){
+        switch(event->type){
+            case SDL_MOUSEBUTTONDOWN:
+                SDL_GetMouseState(&x, &y)
+                if(y>dimJanela[coordY]-105 && y<dimJanela[coordY]-85){//continuar
+                    return 2;
+        }
+
 }
 

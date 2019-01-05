@@ -116,5 +116,8 @@ void SDL_desenhaButoesHUD(int dimJanela[]);
 int RegistoDeEventos(FERROVIA *todas[], COMBOIO *todos[], SDL_Event *event, int dimJanela[], int cores[][DIMrgb]);
 void clicaParaAnda(FERROVIA *todas[], COMBOIO *todo, int cores[][DIMrgb]);
 void clicaPonto(FERROVIA *toda, int x, int y,COMBOIO *todos[]);
+void menuSDL(char *opcao, SDL_Event *event, int dimJanela[]);
+int SDLsuspenso(COMBOIO *todos[], FERROVIA *todas[], int dimJanela[], int cores[][DIMrgb], SDL_Event *event);
+int SDL_verificaContinua(int dimJanela[], SDL_Event *event);
 /*-----*/
 #endif

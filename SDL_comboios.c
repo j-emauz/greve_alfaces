@@ -308,10 +308,10 @@ int RegistoDeEventos(FERROVIA *todas[], COMBOIO *todos[], SDL_Event *event, int 
 					return 0;
 				}
 				else if(y>dimJanela[coordY]-75 && y<dimJanela[coordY]-55){//suspender
-
+                    while(SDLsuspenso(todos, todas, dimJanela, cores, event));
 				}
 				/*else if(y>dimJanela[coordY]-105 && y<dimJanela[coordY]-85){//continuar
-
+                    return 2;
 				}*/
 			}
 			for(i=0;i<MAX && todos[i]!=NULL; ++i){
@@ -372,6 +372,110 @@ void clicaPonto(FERROVIA *toda, int x, int y, COMBOIO *todos[]){
 
 		}
 	}
+}
+
+void menuSDL(char *opcao, SDL_Event *event, int dimJanela[]){
+	char linha[MAX];
+	char teste;
+	printf("Press enter");
+	getchar();
+	printf ("\nEscolha uma das opções \n"
+                "0 - Fechar menu (clicar continuar na janela SDL para continuar simulação)\n"
+				"1 - Mostrar a informação de uma ferrovia \n"
+				"2 - Eliminar uma ferrovia \n"
+				"3 - Mostrar a informação de um comboio \n"
+				"4 - Eliminar um comboio \n"
+				"5 - Criar um comboio \n"
+				"Opção: ");
+
+	fgets(linha, MAX, stdin);
+	sscanf(linha, "%c%c", opcao, &teste);
+
+	printf("\n");
+
+	if((teste!='\n' || *opcao>'5' || *opcao<'0')){
+		printf("Insira apenas 1 numero entre 0 e 5 \n");
+		menuSDL(opcao, event, dimJanela);
+
+	}
+}
+
+int SDLsuspenso(COMBOIO *todos[], FERROVIA *todas[], int dimJanela[], int cores[][DIMrgb], SDL_Event *event){
+	char opcao;
+	int i,d,z;
+	COMBOIO *temp;
+
+	do{
+		menuSDL(&opcao, event, dimJanela);
+
+		switch(opcao)
+		{
+
+			case '1': // MOSTRA FERROVIA
+				mostraLinha(todas);
+				break;
+			case '2': // ELIMINA FERROVIA
+                eliminaLinha(todas,todos);
+				break;
+			case '3': // MOSTRA COMBOIOS
+				mostraComboio(todos);
+				break;
+			case '4': // ELIMINA COMBOIOS
+                // Lista para depois eliminar por ID
+                eliminaComboio(todos);
+ 				break;
+			case '5':
+				criarComboio(todos, todas);
+				for(i=0; i<MAX && todos[i]!=NULL; ++i){}
+
+				for(temp=todos[i], d=4;temp!=NULL; temp=temp->prox, d--){
+					temp->PARACOMBOIO = false;
+					PosInicial(temp, todas);
+					for(z= d * 2 * (temp->cart.DimBOLAS); z>0; z--){
+						moveCarr(temp, todas);
+					}
+					filledCircleRGBA(g_pRenderer,temp->cart.PosiNoGraf[coordX],temp->cart.PosiNoGraf[coordY],temp->cart.DimBOLAS,cores[temp->cart.cor][R],cores[temp->cart.cor][G],cores[temp->cart.cor][B],cores[temp->cart.cor][ALPA]);
+				}
+
+				if(verificaColisoes(todos)==1){
+					printf("ERRO, COMBOIOS INICIADOS PARA ALÉM DA DISTÂNCIA DE SEGURANÇA \n");
+
+					SDL_DestroyRenderer(g_pRenderer);
+					g_pRenderer=NULL;
+
+					SDL_Quit();
+					gfxPrimitivesSetFont(NULL, 0, 0);
+
+
+				}
+				break;
+
+		}
+
+
+	}while(opcao!='0');
+	printf("Clique continue na JANELA!\n");
+    while(SDL_verificaContinua(dimJanela, event));
+    return 0;
+}
+
+
+int SDL_verificaContinua(int dimJanela[], SDL_Event *event){
+     int x, y;
+
+     while(SDL_WaitEvent(event)) {
+
+        switch(event->type){
+
+            case SDL_MOUSEBUTTONDOWN:
+                SDL_GetMouseState(&x, &y);
+
+                if(y>dimJanela[coordY]-105 && y<dimJanela[coordY]-85){//continuar
+                    return 0;
+                }
+        }
+     }
+     return 2;
 }
 
 
