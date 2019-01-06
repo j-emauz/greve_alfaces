@@ -2,24 +2,25 @@
 1544642075 source:c:\users\pedro\dropbox\aulas\greve_alfaces\comboios.c
 	"comboios.h"
 
-1546141520 h"
+1546734578 h"
 
 1544642207 c:\users\pedro\dropbox\aulas\greve_alfaces\comboios.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 
-1546145238 
+1546786551 
 
 1544633215 source:c:\users\pedro\dropbox\aulas\greve_alfaces\main.c
 	"comboios.h"
 
-1546138374 source:/media/sf_Prog/ProjetoFinal/main.c
+1546736808 source:/media/sf_Prog/ProjetoFinal/main.c
+	"comboios.h"
 	"comboios.h"
 	"comboios.h"
 	"comboios.h"
 
-1546145238 /media/sf_Prog/ProjetoFinal/comboios.h
+1546786551 /media/sf_Prog/ProjetoFinal/comboios.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -39,23 +40,6 @@
 	<SDL2/SDL2_gfxPrimitives.h>
 	"cores.h"
 	<time.h>
-
-1545926614 /media/sf_Prog/ProjetoFinal/cores.h
-
-1546141520 source:/media/sf_Prog/ProjetoFinal/comboios.c
-	"comboios.h"
-	"comboios.h"
-	"comboios.h"
-
-1546141905 source:/media/sf_Prog/ProjetoFinal/ler.c
-	"comboios.h"
-	"comboios.h"
-	"comboios.h"
-
-1546741783 source:/media/sf_Prog/ProjetoFinal/ler.c
-	"comboios.h"
-
-1546786551 /media/sf_Prog/ProjetoFinal/comboios.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -68,14 +52,42 @@
 
 1545926614 /media/sf_Prog/ProjetoFinal/cores.h
 
-1546736808 source:/media/sf_Prog/ProjetoFinal/main.c
+1546786686 source:/media/sf_Prog/ProjetoFinal/comboios.c
+	"comboios.h"
+	"comboios.h"
+	"comboios.h"
 	"comboios.h"
 
-1546786686 source:/media/sf_Prog/ProjetoFinal/comboios.c
+1546741783 source:/media/sf_Prog/ProjetoFinal/ler.c
+	"comboios.h"
+	"comboios.h"
+	"comboios.h"
 	"comboios.h"
 
 1546734578 source:/media/sf_Prog/ProjetoFinal/SDL_comboios.c
 	"comboios.h"
 
 1546530465 /media/sf_Prog/ProjetoFinal/SDL_comboios.h
+
+1546792510 source:/media/sf_Prog/ProjetoFinal/comboios.c
+	"comboios.h"
+
+1546793300 /media/sf_Prog/ProjetoFinal/comboios.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"SDL2/SDL.h"
+	<SDL2/SDL2_gfxPrimitives.h>
+	<time.h>
+	<stdbool.h>
+	<math.h>
+	"cores.h"
+
+1546793314 /media/sf_Prog/ProjetoFinal/cores.h
+
+1546791452 source:/media/sf_Prog/ProjetoFinal/ler.c
+	"comboios.h"
+
+1546736808 source:/media/sf_Prog/ProjetoFinal/main.c
+	"comboios.h"
 

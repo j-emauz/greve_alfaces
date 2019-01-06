@@ -86,7 +86,6 @@ int verificaColisoes(COMBOIO* lista[]);
 void verificaAcessos(FERROVIA* head[],char ident[]);
 int convCor(char corestr[]);
 FERROVIA* procuraID(FERROVIA* lista[],char lident[],char IDE_X[]);
-char debug;//Isto tem de ser apagado antes de entregar.
 void mostraCores(int cores[DIMCores][DIMrgb]);
 void trocaCarris(FERROVIA* PercursoA, COMBOIO* todos[]);
 int nPontos(FERROVIA* lista);
@@ -116,5 +115,4 @@ void clicaPonto(FERROVIA *toda, int x, int y,COMBOIO *todos[]);
 void menuSDL(char *opcao, SDL_Event *event, int dimJanela[]);
 int SDLsuspenso(COMBOIO *todos[], FERROVIA *todas[], int dimJanela[], int cores[][DIMrgb], SDL_Event *event);
 int SDL_verificaContinua(int dimJanela[], SDL_Event *event);
-
 #endif

@@ -3,7 +3,6 @@
 SDL_Window* g_pWindow = NULL;
 SDL_Renderer* g_pRenderer = NULL;
 
-/*------------------------------- */
 /* JANELA GRAFICA */
 void PosInicial(COMBOIO *temp, FERROVIA* todas[]){
 	temp->cart.linha_actual = procuraID(todas,temp->cart.lident,temp->cart.pident);
@@ -31,8 +30,6 @@ int InicComboios(COMBOIO *todos[],int cores[][DIMrgb], FERROVIA* todas[]){
 	}
 	else
         return 0;
-
-
 }
 void moveCarr(COMBOIO *temp, FERROVIA* todas[]){
 	float X1, X2, Y1, Y2, m, b;
@@ -76,13 +73,10 @@ void moveCarr(COMBOIO *temp, FERROVIA* todas[]){
         temp->cart.nservico--;
 		PosInicial(temp, todas);
     }
-
 }
 void trajectoriaComb(COMBOIO* todo, int cores[][DIMrgb], FERROVIA* todas[]) { //mudei para ser so de um comboio
     int corTemp, randoma;
-   // float m,Y1,Y2,X2,X1;
     COMBOIO* temp;
-
 	for(temp=todo; temp!=NULL; temp=temp->prox){
         corTemp=temp->cart.cor;
 
@@ -91,22 +85,16 @@ void trajectoriaComb(COMBOIO* todo, int cores[][DIMrgb], FERROVIA* todas[]) { //
 
         }else if (temp->cart.locomotiva==1){
             randoma = rand()%2;
-
             if(randoma==1)
                 temp->cart.cor=BRANCO;
-
         }
 		if(temp->cart.nservico>0){
-
 				filledCircleRGBA(g_pRenderer,temp->cart.PosiNoGraf[coordX],temp->cart.PosiNoGraf[coordY],temp->cart.DimBOLAS,cores[temp->cart.cor][R],cores[temp->cart.cor][G],cores[temp->cart.cor][B],cores[temp->cart.cor][ALPA]);
                 circleRGBA(g_pRenderer,temp->cart.PosiNoGraf[coordX],temp->cart.PosiNoGraf[coordY],temp->cart.DimBOLAS,0,0,0,255);
-		}
-		else{
-            //limpar a posição do comboio quando desaparece, para que nao haja uma colisão "fantasma" no seu ultimo ponto.
+
+		}else{//limpar a posição do comboio quando desaparece, para que nao haja uma colisão "fantasma" no seu ultimo ponto.
             temp->cart.PosiNoGraf[coordX] = 50000; //valor muito maior do que ecra com resolucao 16K
             temp->cart.PosiNoGraf[coordY] = 50000;
-
-
 		}
 		if(temp->cart.locomotiva==1){
 			temp->cart.cor = corTemp;
@@ -119,16 +107,14 @@ void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[
     int end_game = 1;
 	int i;
 
-    if(SDL_Init(SDL_INIT_EVERYTHING) >= 0)
-    {
+    if(SDL_Init(SDL_INIT_EVERYTHING) >= 0){
 		g_pWindow = SDL_CreateWindow("ComboioSim", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, dimJanela[coordX], dimJanela[coordY], SDL_WINDOW_SHOWN);
 		if(g_pWindow != 0)
-			g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, 0);
+            g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, 0);
     }else{
 		exit(0);
 	}
 	SDL_SetRenderDrawColor(g_pRenderer, cores[BRANCO][R], cores[BRANCO][G], cores[BRANCO][B], cores[BRANCO][ALPA] );
-
     SDL_RenderClear(g_pRenderer);
 	SDL_Event event;
 	SDL_unepontos(todas);
@@ -142,77 +128,49 @@ void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[
         return;
 	}
 	SDL_RenderPresent(g_pRenderer);
-
 	SDL_Delay(1000);
-
 
     do{
         SDL_SetRenderDrawColor(g_pRenderer, cores[BRANCO][R], cores[BRANCO][G], cores[BRANCO][B], cores[BRANCO][ALPA] );
-
         SDL_RenderClear(g_pRenderer);// pinta o ecra da cor acima
-
 		SDL_desenhaButoesHUD(dimJanela);
 		SDL_unepontos(todas);
         SDL_escrevePontos(todas,cores);
-
-      //  SDL_SetRenderDrawColor(g_pRenderer, cores[BRANCO][R], cores[BRANCO][G], cores[BRANCO][B], cores[BRANCO][ALPA] );
-        //filledCircleRGBA(g_pRenderer,100,100,10,255,200,100,255);
         verificaColisoes(todos);
+
 		for(i=0;i<MAX&&todos[i]!=NULL;i++){
-
-			//if(todos[i]->PARACOMBOIO==false){
 				trajectoriaComb(todos[i], cores, todas);
-
 		}
-
 		SDL_RenderPresent(g_pRenderer);
-
 		SDL_Delay(15);
-
-		//funcao ir buscar pontos as ferrovias para fazer draw line de cada linha e render dos pontos entre essas posicoes, isto deve estar dentro dum for
-
-		//outra funcao para passar ponto inicial de comboio em coordenadas, se estiver no primeiro ponto da linha este deve somar a dim do comboio a posicao inicial
-        //desenhaComboios(todos,todas,cores);
 		while(SDL_PollEvent(&event)){
 			end_game = RegistoDeEventos(todas, todos, &event, dimJanela, cores);
 		}
-		//outra funcao para por os comboios a andar ate detetar
-     } while(end_game);
 
-
-        /* Always be sure to clean up */
+    }while(end_game);
+    /* limpar SDL */
     SDL_DestroyRenderer(g_pRenderer);
     g_pRenderer=NULL;
-
     SDL_Quit();
-
     gfxPrimitivesSetFont(NULL, 0, 0);
-
+    /*Para que as vidas dos comboios voltem ao numero inicial ao sair do SDL*/
     for(i=0;todos[i]!=NULL && i<MAX; i++){
         for(temp = todos[i]; temp !=NULL ; temp = temp->prox){
             if(temp->cart.locomotiva==0)
                 temp->cart.cor = rand()%DIMCores;
             temp->cart.nservico= todos[i]->nServicoInicial;
-
         }
-
     }
-
     return;
 }
 void SDL_unepontos(FERROVIA *todas[]){
 	int i;
 	FERROVIA *head1,*head2;
 
-
 	for(i=0; todas[i]!=NULL && i<MAX; ++i){
-
         head1=(todas[i]);
         head2=(todas[i]->RA);
-
 		for_pontos(head1, head2);
-
-		//printf("%d \n",i);
 	}
 }
 void SDL_escrevePontos(FERROVIA *todas[],int cores[][DIMrgb]){
@@ -236,7 +194,6 @@ void SDL_escrevePontos(FERROVIA *todas[],int cores[][DIMrgb]){
 void for_pontos(FERROVIA *head1, FERROVIA* head2){
 		FERROVIA *head3, *headtemp;
 		char lident[MAX];
-
 		strcpy(lident, head1->lident);
 
 		for(; head1!=NULL && head2!=NULL && (strcmp(head1->lident, lident) == 0); head1 = head1->RA, head2 = head2->RA){
@@ -255,9 +212,6 @@ void for_pontos(FERROVIA *head1, FERROVIA* head2){
                     }
                 }
 			}
-
-			//SDL_RenderPresent(g_pRenderer);
-
 }
 void SDL_desenhaButoesHUD(int dimJanela[]){
     SDL_Rect r1;
@@ -267,13 +221,11 @@ void SDL_desenhaButoesHUD(int dimJanela[]){
 		r1.w = 80;
 		r1.h = 20;
     SDL_Rect r2;
-		//declara as 4 variáveis do retangulo
 		r2.x = dimJanela[coordX] - 100;
 		r2.y = dimJanela[coordY] - 75;
 		r2.w = 80;
 		r2.h = 20;
 	SDL_Rect r3;
-		//declara as 4 variáveis do retangulo
 		r3.x = dimJanela[coordX] - 100;
 		r3.y = dimJanela[coordY] - 105;
 		r3.w = 80;
@@ -292,13 +244,10 @@ void SDL_desenhaButoesHUD(int dimJanela[]){
     stringRGBA( g_pRenderer, r3.x+2, r3.y+4,"CONTINUAR",0,0,0,255 );
     stringRGBA( g_pRenderer, r2.x+2, r2.y+4,"SUSPENDER",0,0,0,255 );
     stringRGBA( g_pRenderer, r1.x+2, r1.y+4,"SDL QUIT",0,0,0,255 );
-
 }
 
 int RegistoDeEventos(FERROVIA *todas[], COMBOIO *todos[], SDL_Event *event, int dimJanela[], int cores[][DIMrgb]){
-
 	int i, x, y;
-
 	switch(event->type)
 	{
 		case SDL_MOUSEBUTTONDOWN:
@@ -310,9 +259,6 @@ int RegistoDeEventos(FERROVIA *todas[], COMBOIO *todos[], SDL_Event *event, int 
 				else if(y>dimJanela[coordY]-75 && y<dimJanela[coordY]-55){//suspender
                     while(SDLsuspenso(todos, todas, dimJanela, cores, event));
 				}
-				/*else if(y>dimJanela[coordY]-105 && y<dimJanela[coordY]-85){//continuar
-                    return 2;
-				}*/
 			}
 			for(i=0;i<MAX && todos[i]!=NULL; ++i){
 				if(x<=(todos[i]->cart.PosiNoGraf[coordX] + todos[i]->cart.DimBOLAS) && x>=(todos[i]->cart.PosiNoGraf[coordX] - todos[i]->cart.DimBOLAS)
@@ -324,12 +270,8 @@ int RegistoDeEventos(FERROVIA *todas[], COMBOIO *todos[], SDL_Event *event, int 
 				clicaPonto(todas[i], x, y,todos);
 
 			}
-
-				//funcao para procurar coordenadas, ver se nos pontos, ver se no comboio
-				//if(x<coord+10,x>coord-10&&y<coord+10,y>coord-10);
 	}
 	return 1;
-	//se calhar vai ser preciso usar case e switch
 }
 void clicaParaAnda(FERROVIA *todas[], COMBOIO *todo, int cores[][DIMrgb]){
 	COMBOIO* temp;
@@ -353,27 +295,21 @@ void clicaParaAnda(FERROVIA *todas[], COMBOIO *todo, int cores[][DIMrgb]){
 void clicaPonto(FERROVIA *toda, int x, int y, COMBOIO *todos[]){
 	for(;toda!=NULL && toda->RA!=NULL && strcmp(toda->lident, toda->RA->lident)==0;toda = toda->RA){
 		if(toda->pont.nSaidas == 2){
-			if(x<=(toda->pont.coord[coordX] + toda->pont.Dimensao) && x>=(toda->pont.coord[coordX] - toda->pont.Dimensao)
-			&& y<=(toda->pont.coord[coordY] + toda->pont.Dimensao) && y>=(toda->pont.coord[coordY] - toda->pont.Dimensao)){
-
+			if(x<=(toda->pont.coord[coordX] + toda->pont.Dimensao) && x>=(toda->pont.coord[coordX] - toda->pont.Dimensao) &&
+               y<=(toda->pont.coord[coordY] + toda->pont.Dimensao) && y>=(toda->pont.coord[coordY] - toda->pont.Dimensao) ){
 				trocaCarris(toda, todos);
 			}
-
 		}
-
 	}
 	for(;toda!=NULL && toda->RB!=NULL && strcmp(toda->lident, toda->RB->lident)==0;toda = toda->RB){
 		if(toda->pont.nSaidas == 2){
 			if(x<=(toda->pont.coord[coordX] + toda->pont.Dimensao) && x>=(toda->pont.coord[coordX] - toda->pont.Dimensao)
 			&& y<=(toda->pont.coord[coordY] + toda->pont.Dimensao) && y>=(toda->pont.coord[coordY] - toda->pont.Dimensao)){
-
 				trocaCarris(toda,todos);
 			}
-
 		}
 	}
 }
-
 void menuSDL(char *opcao, SDL_Event *event, int dimJanela[]){
 	char linha[MAX];
 	char teste;
@@ -390,13 +326,11 @@ void menuSDL(char *opcao, SDL_Event *event, int dimJanela[]){
 
 	fgets(linha, MAX, stdin);
 	sscanf(linha, "%c%c", opcao, &teste);
-
 	printf("\n");
 
 	if((teste!='\n' || *opcao>'5' || *opcao<'0')){
 		printf("Insira apenas 1 numero entre 0 e 5 \n");
 		menuSDL(opcao, event, dimJanela);
-
 	}
 }
 
@@ -407,10 +341,8 @@ int SDLsuspenso(COMBOIO *todos[], FERROVIA *todas[], int dimJanela[], int cores[
 
 	do{
 		menuSDL(&opcao, event, dimJanela);
-
 		switch(opcao)
 		{
-
 			case '1': // MOSTRA FERROVIA
 				mostraLinha(todas);
 				break;
@@ -427,33 +359,24 @@ int SDLsuspenso(COMBOIO *todos[], FERROVIA *todas[], int dimJanela[], int cores[
 			case '5':
 				criarComboio(todos, todas);
 				//InicComboios(todos, cores, todas);
-				for(i=0; i<MAX && todos[i]!=NULL; ++i){
+				for(i=0; i<MAX && todos[i]!=NULL; ++i){} // para avançar o i
 
-				}
  				for(temp=todos[i-1], d=4;temp!=NULL; temp=temp->prox, d--){
-
 					temp->PARACOMBOIO = false;
 					PosInicial(temp, todas);
-					for(z = d * 2 * (temp->cart.DimBOLAS); z>0; z--){
 
+					for(z = d * 2 * (temp->cart.DimBOLAS); z>0; z--){
 						moveCarr(temp, todas);
 					}
-
 					filledCircleRGBA(g_pRenderer,temp->cart.PosiNoGraf[coordX],temp->cart.PosiNoGraf[coordY],temp->cart.DimBOLAS,cores[temp->cart.cor][R],cores[temp->cart.cor][G],cores[temp->cart.cor][B],cores[temp->cart.cor][ALPA]);
                     circleRGBA(g_pRenderer,temp->cart.PosiNoGraf[coordX],temp->cart.PosiNoGraf[coordY],temp->cart.DimBOLAS,0,0,0,255);
 				}
-
 				if(verificaColisoes(todos)==1){
 					printf("ERRO, COMBOIOS INICIADOS PARA ALÉM DA DISTÂNCIA DE SEGURANÇA \n");
-
 					exit(0);
-
 				}
 				break;
-
 		}
-
-
 	}while(opcao!='0');
 	printf("Clique continue na JANELA!\n");
     while(SDL_verificaContinua(dimJanela, event));
@@ -464,12 +387,10 @@ int SDL_verificaContinua(int dimJanela[], SDL_Event *event){
      int x, y;
 
      while(SDL_WaitEvent(event)) {
-
         switch(event->type){
 
             case SDL_MOUSEBUTTONDOWN:
                 SDL_GetMouseState(&x, &y);
-
                 if(y>dimJanela[coordY]-105 && y<dimJanela[coordY]-85){//continuar
                     return 0;
                 }
@@ -477,5 +398,3 @@ int SDL_verificaContinua(int dimJanela[], SDL_Event *event){
      }
      return 2;
 }
-
-
