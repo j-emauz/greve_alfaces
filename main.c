@@ -27,6 +27,7 @@ int main(int argc, char *argv[]){
 	}
 	if(ler(argv,todos,todas,jancoord) == 0)
 		exit(0);
+    printf("Press enter");
 	do{
 		menu(&opcao);
 		fflush(stdin);

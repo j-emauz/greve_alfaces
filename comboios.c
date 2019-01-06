@@ -2,7 +2,6 @@
 void menu(char *opcao){
 	char linha[MAX];
 	char teste;
-	printf("Press enter");
 	getchar();
 
 	printf ("\nEscolha uma das opções \n"
@@ -20,6 +19,7 @@ void menu(char *opcao){
 
 	if(teste!='\n' || *opcao>'6' || *opcao<'0' ){
 		printf("Insira apenas 1 numero entre 0 e 6 \n");
+        printf("Press enter");
 		menu(opcao);
 	}
 }
@@ -122,12 +122,12 @@ void mostraComboio(COMBOIO* lista[]) {
 
     for(; topo!=NULL; topo=topo->prox){
 	   if(topo->cart.locomotiva == 1){
-		   printf("LOCOMOTIVA \nID: %s LINHA INICIAL: %s PONTO INICIAL: %s RAIO: %d ",topo->cart.cident, topo->cart.lident, topo->cart.pident, topo->cart.DimBOLAS);
+		   printf("LOCOMOTIVA \nID: %s, LINHA INICIAL: %s, PONTO INICIAL: %s, RAIO: %d, ",topo->cart.cident, topo->cart.lident, topo->cart.pident, topo->cart.DimBOLAS);
 		   printf("COR: ");
 		   printCor(topo->cart.cor);
 		   printf("CARRUAGENS: \n");
 	   }else{
-		   printf("RAIO: %d ", topo->cart.DimBOLAS);
+		   printf("RAIO: %d, ", topo->cart.DimBOLAS);
 		   printf("COR: ");
 		   printCor(topo->cart.cor);
 	   }
@@ -165,7 +165,7 @@ void libertaComboio(char cident[], COMBOIO* lista[]){
         head=head->prox;
         free(temp);
     }
-    printf("COMBOIO %s ELIMINADO EPIC STYLE B) \n", cident);
+    printf("COMBOIO %s ELIMINADO EPIC STYLE B) \n", elident);
 }
 /*------------------LINHAS-------------------*/
 FERROVIA* inicLinha(char lident[], PONTOS dados){
@@ -272,8 +272,8 @@ void mostraLinha(FERROVIA* lista[]) {
 
     while(head!=NULL && strcmp(lident,head->lident) == 0) {
        //printf("endereço :  %p \n",(void*)head);
-       printf("PONTO: %s ",head->pont.pident);
-       printf("Nº Entradas: %d  Nº Saidas: %d Tipo de Ponto: %s Cor: ", head->pont.nEntradas,head->pont.nSaidas, head->pont.TipoDePonto);
+       printf("PONTO: %s, ",head->pont.pident);
+       printf("Nº Entradas: %d,  Nº Saidas: %d, Tipo de Ponto: %s, Cor: ", head->pont.nEntradas,head->pont.nSaidas, head->pont.TipoDePonto);
 	   printCor(head->pont.cor);
        head=head->RA;
     }
