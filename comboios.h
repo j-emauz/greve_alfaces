@@ -115,4 +115,5 @@ void clicaPonto(FERROVIA *toda, int x, int y,COMBOIO *todos[]);//detecta o click
 void menuSDL(char *opcao, SDL_Event *event, int dimJanela[]);//menu durante o "suspender"
 int SDLsuspenso(COMBOIO *todos[], FERROVIA *todas[], int dimJanela[], int cores[][DIMrgb], SDL_Event *event);//chama o menuSDL, permite inicializar comboios criados
 int SDL_verificaContinua(int dimJanela[], SDL_Event *event);//verificar o click no butao continua
+void clicaParaAnda(FERROVIA *todas[], COMBOIO *todo, int cores[][DIMrgb]);// para e move os comboios ao clicar. faz os comboios darem um saltinho para o caso de estarem em colisao
 #endif
