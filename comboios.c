@@ -190,7 +190,7 @@ FERROVIA* addLinha(FERROVIA* head,PONTOS dados){
         return 0;
     }
     novo->pont=dados;
-    novo->pont.nEntradas = 1;//A linha já existe.
+    novo->pont.nEntradas = 1;//porque a linha já existe.
     novo->RA=NULL;
     novo->RB=NULL;
     strcpy(novo->lident, head->lident);
