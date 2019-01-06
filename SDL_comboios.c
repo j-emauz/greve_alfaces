@@ -426,15 +426,21 @@ int SDLsuspenso(COMBOIO *todos[], FERROVIA *todas[], int dimJanela[], int cores[
  				break;
 			case '5':
 				criarComboio(todos, todas);
-				for(i=0; i<MAX && todos[i]!=NULL; ++i){}
+				//InicComboios(todos, cores, todas);
+				for(i=0; i<MAX && todos[i]!=NULL; ++i){
 
-				for(temp=todos[i], d=4;temp!=NULL; temp=temp->prox, d--){
+				}
+ 				for(temp=todos[i-1], d=4;temp!=NULL; temp=temp->prox, d--){
+
 					temp->PARACOMBOIO = false;
 					PosInicial(temp, todas);
-					for(z= d * 2 * (temp->cart.DimBOLAS); z>0; z--){
+					for(z = d * 2 * (temp->cart.DimBOLAS); z>0; z--){
+
 						moveCarr(temp, todas);
 					}
+
 					filledCircleRGBA(g_pRenderer,temp->cart.PosiNoGraf[coordX],temp->cart.PosiNoGraf[coordY],temp->cart.DimBOLAS,cores[temp->cart.cor][R],cores[temp->cart.cor][G],cores[temp->cart.cor][B],cores[temp->cart.cor][ALPA]);
+                    circleRGBA(g_pRenderer,temp->cart.PosiNoGraf[coordX],temp->cart.PosiNoGraf[coordY],temp->cart.DimBOLAS,0,0,0,255);
 				}
 
 				if(verificaColisoes(todos)==1){
@@ -445,7 +451,6 @@ int SDLsuspenso(COMBOIO *todos[], FERROVIA *todas[], int dimJanela[], int cores[
 
 					SDL_Quit();
 					gfxPrimitivesSetFont(NULL, 0, 0);
-
 
 				}
 				break;
@@ -458,7 +463,6 @@ int SDLsuspenso(COMBOIO *todos[], FERROVIA *todas[], int dimJanela[], int cores[
     while(SDL_verificaContinua(dimJanela, event));
     return 0;
 }
-
 
 int SDL_verificaContinua(int dimJanela[], SDL_Event *event){
      int x, y;

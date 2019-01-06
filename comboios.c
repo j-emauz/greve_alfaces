@@ -421,6 +421,7 @@ void verificaAcessos(FERROVIA* lista[],char ident[]){
 
 void verifica_na_linhaComboios(COMBOIO* todos[], char lident[]){
     int i;
+    COMBOIO* temp;
 
     for (i=0;i<MAX && todos[i] != NULL ;i++){
         if(strcmp(todos[i]->cart.lident,lident)==0 ){
@@ -428,6 +429,13 @@ void verifica_na_linhaComboios(COMBOIO* todos[], char lident[]){
             libertaComboio(todos[i]->cart.cident,todos);
             i=0;//Temos que voltar a verificar de inicio pois a lista foi reordenada.
 
+        }
+    }
+    for (i=0;i<MAX && todos[i] != NULL; i++){
+        for(temp=todos[i];temp != NULL; temp=temp->prox){
+            if(strcmp(temp->cart.linha_actual->lident,lident)==0){
+                temp->cart.linha_actual->RA=NULL;
+            }
         }
     }
 }
@@ -470,10 +478,6 @@ FERROVIA* procuraID(FERROVIA* lista[],char lident[],char IDE_X[]){
 }
 
 void trocaCarris(FERROVIA* PercursoA, COMBOIO *todos[]){
-    /*WIP*/
-    /*É importante correr esta função duas vezes, uma vez para o comboio passar e segunda depois do comboio passar,
-    porque se alguém apagar uma linha enquanto os carris estão trocados, em vez de apagar essa linha vai apagar uma mistura de linhas.
-    */
     int i,k=0;
     COMBOIO* temp;
     for (i=0; i < MAX && todos[i] != NULL; i++){
