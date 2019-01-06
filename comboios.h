@@ -17,7 +17,6 @@
 #define dimLIDENT 5
 #define dimPIDENT 5
 #define dimCIDENT 3
-
 /*-------------------*/
 #define coordX 0 //
 #define coordY 1
@@ -48,8 +47,7 @@ typedef struct carr {
 	int nCarruagens;//numero de carruagens( dimensao)
 	int DimBOLAS; // raio em pixeis
 	int cor; /* cor do comboio é cor da locomotiva, primeira CARRUAGEM*/
-	char lident[dimLIDENT];	/*ex: *LinhaAB->ident e LinhaAB->p->ident ??
-    ID da linha + ID do ponto */
+	char lident[dimLIDENT];
 	char pident[dimPIDENT];
     int PosiNoGraf[2];//posição atual da carruagem\locomotiva
     int nservico;
@@ -102,7 +100,6 @@ void lerLigar(char *aux, FERROVIA* todas[]);
 /*CRIAR COMBOIO*/
 void criarComboio(COMBOIO *todos[], FERROVIA *todas[]);
 void mostraPontos(FERROVIA *todas[], char lident[]);
-
 /*SDL*/
 void abreJanela(int dimJanela[],COMBOIO* todos[], FERROVIA* todas[], int cores[][DIMrgb]);
 void SDL_escrevePontos(FERROVIA *todas[],int cores[][DIMrgb]) ;
@@ -119,5 +116,5 @@ void clicaPonto(FERROVIA *toda, int x, int y,COMBOIO *todos[]);
 void menuSDL(char *opcao, SDL_Event *event, int dimJanela[]);
 int SDLsuspenso(COMBOIO *todos[], FERROVIA *todas[], int dimJanela[], int cores[][DIMrgb], SDL_Event *event);
 int SDL_verificaContinua(int dimJanela[], SDL_Event *event);
-/*-----*/
+
 #endif

@@ -1,6 +1,5 @@
 #include "comboios.h"
 
-
 int main(int argc, char *argv[]){
     srand(time(NULL));
     int cores[DIMCores][DIMrgb]={ {255,0,0,255},// vermelho
@@ -16,14 +15,12 @@ int main(int argc, char *argv[]){
     int i=0;
     int jancoord[2];
     char opcao='0';
-   // char buff[MAX];
     COMBOIO* todos[MAX];
     FERROVIA* todas[MAX];
     for (i=0;i<MAX;i++){
         todos[i]=NULL;
         todas[i]=NULL;
     }
-
 	if(argc!=2){
 		printf("Por favor insira o nome do ficheiro \n""Exemplo: ./comboios hahayes.txt\n");
 		exit(0);
@@ -41,10 +38,7 @@ int main(int argc, char *argv[]){
 				mostraLinha(todas);
 				break;
 			case '2': // ELIMINA FERROVIA
-				//print instruçoes
-                //scanf("%s", Indent);
-                eliminaLinha(todas,todos);
-                //memset(Indent, 0, MAX);
+				eliminaLinha(todas,todos);
 				break;
 			case '3': // MOSTRA COMBOIOS
 				mostraComboio(todos);
@@ -55,15 +49,12 @@ int main(int argc, char *argv[]){
  				break;
 			case '5':
 				criarComboio(todos, todas);
-
 				break;
 			case '6':
 				abreJanela(jancoord,todos,todas,cores);
 				printf("Pressione enter\n");
 				break;
 		}
-
-
 	}while(opcao!='0');
 	return 0;
 }
