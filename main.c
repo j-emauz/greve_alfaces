@@ -27,10 +27,8 @@ int main(int argc, char *argv[]){
 	}
 	if(ler(argv,todos,todas,jancoord) == 0)
 		exit(0);
-    printf("PRESSIONE ENTER! \n");// ver nos LABS
 	do{
 		menu(&opcao);
-        //getchar();
 		fflush(stdin);
 		switch(opcao)
 		{
@@ -44,15 +42,18 @@ int main(int argc, char *argv[]){
 				mostraComboio(todos);
 				break;
 			case '4': // ELIMINA COMBOIOS
-                // Lista para depois eliminar por ID
-                eliminaComboio(todos);
+                eliminaComboio(todos); // Lista para depois eliminar por ID
  				break;
 			case '5':
 				criarComboio(todos, todas);
 				break;
 			case '6':
-				abreJanela(jancoord,todos,todas,cores);
-				printf("Pressione enter\n");
+				if (todas[0]!=NULL){
+                    abreJanela(jancoord,todos,todas,cores);
+                    printf("Pressione enter\n");
+				}else{
+                    printf("Não existem linhas, parece que é preciso investir em Ferrovias \n");
+				}
 				break;
 		}
 	}while(opcao!='0');

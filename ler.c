@@ -77,16 +77,11 @@ void lerLigar(char *aux, FERROVIA* todas[]){
 
 int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
 	FILE *fp = NULL;
-	char linha[MAX];
 	char *aux = NULL;
-	char lident[dimLIDENT];
-	char ident[MAX];
-	char fim_linha[MAX];
-	int i=0, j=0;
-	int n;
+	char lident[dimLIDENT], ident[MAX], fim_linha[MAX], linha[MAX];
+	int i=0, j=0, n;
 
 	fp = fopen(argv[1], "r");
-
 	if (fp == NULL){
 		printf("Erro na abertura do ficheiro! Verifique se está no sitio certo ou se o nome ta correto\n");
 		return 0;
@@ -95,7 +90,7 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
         fgets(linha, MAX, fp);//lê e avança linha no ficheiro de config
         for(n=0;n<MAX;n++){
             if (linha[n] == '\n'){
-                linha[n] = '\0';
+                linha[n] = '\0'; // substitui o \n no fim da linha por \0
 				break;
 			}
         }
@@ -103,16 +98,14 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
 			aux = linha;//aux aponta para o primeiro elemento de linha.
 			if(strspn(linha, "JANELA:")==strlen("JANELA:")){
 				lerJanela(aux, jancoord);//adquire dados da janela
-
 			}else if(strspn(linha, "COMBOIO:")==strlen("COMBOIO:")){
 				todos[i] = lerComboio(aux);//coloca um apontador para comboio no vetor de apontadores todos, posição i
 				i=i+1;
-
 			}else if(strspn(linha, "LINHA:") == strlen("LINHA:")){
 				sscanf(linha, "%s %s", ident, lident);
 				strcpy(fim_linha, "FIM_DE_LINHA: ");
-				fgets(linha,MAX,fp);
 
+				fgets(linha,MAX,fp);
 				for(n=0;n<MAX;n++){
 					if (linha[n] == '\n'){
 						linha[n] = '\0';
@@ -124,7 +117,6 @@ int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]){
 						aux = linha;
 						todas[j] = lerLinha(aux, todas[j], lident);
         			}
-
 					fgets(linha, MAX, fp);
 					for(n=0;n<MAX;n++){
 						if (linha[n] == '\n'){
