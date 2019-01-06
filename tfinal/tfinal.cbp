@@ -27,6 +27,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../comboios.h" />
+		<Unit filename="../cores.h" />
 		<Unit filename="../ler.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -292,7 +292,7 @@ void eliminaLinha(FERROVIA* lista[], COMBOIO* todos[]){
        return;
     }
     verificaAcessos(lista,lident);//ajusta o nEntradas e nSaidas
-    verifica_na_linhaComboios(todos,lident);
+    verifica_na_linhaComboios(todos,lident,lista);
     for(j=0;j<MAX;j++){
 
         if(lista[j]==NULL)
@@ -336,6 +336,10 @@ void verificaAcessos(FERROVIA* lista[],char ident[]){
                    // printf("Retirando saída %s, %s \n", temp->lident, temp->pont.pident);
                     temp->pont.nSaidas--;
                     temp->RA= NULL;
+                    if (temp->RB !=NULL){
+                        temp->RA = temp->RB;
+                        temp->RB = NULL; // é suposto perder informação de uma das saídas
+                    }
 
                 }else if(strcmp(temp->lident,ident)==0 && strcmp(temp->RA->lident,ident) != 0) {//estamos sobre a estaçao a eliminar mas o prox ponto nao pertence a ela
                    // printf("Retirando entrada %s, %s \n", temp->lident, temp->pont.pident);
@@ -358,8 +362,8 @@ void verificaAcessos(FERROVIA* lista[],char ident[]){
     }
 }
 
-void verifica_na_linhaComboios(COMBOIO* todos[], char lident[]){
-    int i;
+void verifica_na_linhaComboios(COMBOIO* todos[], char lident[], FERROVIA* todas[]){
+    int i,d,z;
     COMBOIO* temp;
 
     for (i=0;i<MAX && todos[i] != NULL ;i++){
@@ -370,10 +374,16 @@ void verifica_na_linhaComboios(COMBOIO* todos[], char lident[]){
         }
     }
     for (i=0;i<MAX && todos[i] != NULL; i++){
-        for(temp=todos[i];temp != NULL; temp=temp->prox){
-            if(temp->cart.linha_actual->lident != NULL && strcmp(temp->cart.linha_actual->lident,lident)==0) {
+
+        for(temp=todos[i],d=temp->cart.nCarruagens; temp != NULL; temp=temp->prox, d--){
+
+            if(temp->cart.linha_actual != NULL && strcmp(temp->cart.linha_actual->lident,lident)==0) {
+
                 temp->cart.linha_actual->RA=NULL;
-                printf("yes\n");
+                for (z=d*2*temp->cart.DimBOLAS; z>0 ; z--) {
+                    moveCarr(temp,todas);
+                }
+
             }
         }
     }
@@ -598,5 +608,5 @@ int verificaColisoes(COMBOIO* lista[]){
             }
         }
     }
-    return ret;
+    return ret;// se 0 não há colisões
 }

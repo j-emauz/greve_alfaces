@@ -81,7 +81,7 @@ void eliminaComboio(COMBOIO* lista[]);
 void libertaComboio(char cident[], COMBOIO* lista[]);
 void eliminaLinha(FERROVIA* lista[],COMBOIO* todos[]);
 /*-------Funções de apoio\debug------*/
-void verifica_na_linhaComboios(COMBOIO* todos[], char lident[]);
+void verifica_na_linhaComboios(COMBOIO* todos[], char lident[], FERROVIA* todas[]);
 int verificaColisoes(COMBOIO* lista[]);
 void verificaAcessos(FERROVIA* head[],char ident[]);
 int convCor(char corestr[]);
