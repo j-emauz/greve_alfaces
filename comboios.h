@@ -22,7 +22,7 @@
 #define coordY 1
 #define DISTSEG 40 // distancia de segurança entre comboios
 /*--------------------------------------------------------------------------------*/
-typedef struct pontoslinha {
+typedef struct pontoslinha{
 	//int nOrdem;
 	char pident[dimPIDENT];
 	int coord[2];// em pixeis
@@ -86,7 +86,8 @@ int verificaColisoes(COMBOIO* lista[]);
 void verificaAcessos(FERROVIA* head[],char ident[]);
 int convCor(char corestr[]);
 FERROVIA* procuraID(FERROVIA* lista[],char lident[],char IDE_X[]);
-void mostraCores(int cores[DIMCores][DIMrgb]);
+//void mostraCores(int cores[DIMCores][DIMrgb]);
+void printCor(int corc);
 void trocaCarris(FERROVIA* PercursoA, COMBOIO* todos[]);
 int nPontos(FERROVIA* lista);
 /*LER*/
