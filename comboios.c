@@ -104,7 +104,7 @@ void mostraComboio(COMBOIO* lista[]) {
 
     printf("Inserir ID do Comboio a mostrar \n");
     scanf("%s",cident);
-    printf("cident : %s \n", cident);
+    //printf("cident: %s \n", cident); debug
 
     for (i=0; i<MAX&&lista[i]!=NULL ;i++){
          if ( strcmp (cident, lista[i]->cart.cident)==0 ){
@@ -119,9 +119,17 @@ void mostraComboio(COMBOIO* lista[]) {
     }
 
     for(; topo!=NULL; topo=topo->prox){
-       //Poderao ser adicionadas outras coisas
-       printf("ID : %s LINHA: %s \n",topo->cart.cident, topo->cart.lident);
-    }
+	   if(topo->cart.locomotiva == 1){
+		   printf("LOCOMOTIVA \nID: %s LINHA INICIAL: %s PONTO INICIAL: %s RAIO: %d ",topo->cart.cident, topo->cart.lident, topo->cart.pident, topo->cart.DimBOLAS);
+		   printf("COR: ");
+		   printCor(topo->cart.cor);
+		   printf("CARRUAGENS: \n");
+	   }else{
+		   printf("RAIO: %d ", topo->cart.DimBOLAS);
+		   printf("COR: ");
+		   printCor(topo->cart.cor);
+	   }
+	}
 }
 void libertaComboio(char cident[], COMBOIO* lista[]){
     COMBOIO* temp;
@@ -153,7 +161,7 @@ void libertaComboio(char cident[], COMBOIO* lista[]){
         head=head->prox;
         free(temp);
     }
-    printf("COMBOIO %s ELIMINADO \n", cident);
+    printf("COMBOIO %s ELIMINADO EPIC STYLE B) \n", cident);
 }
 /*------------------LINHAS-------------------*/
 FERROVIA* inicLinha(char lident[], PONTOS dados){
@@ -260,8 +268,9 @@ void mostraLinha(FERROVIA* lista[]) {
 
     while(head!=NULL && strcmp(lident,head->lident) == 0) {
        //printf("endereço :  %p \n",(void*)head);
-       printf("IDENTIFICADOR : %s \n",head->pont.pident);
-       printf("nEntradas %d  nSaidas %d \n\n", head->pont.nEntradas,head->pont.nSaidas);
+       printf("PONTO: %s ",head->pont.pident);
+       printf("Nº Entradas: %d  Nº Saidas: %d Tipo de Ponto: %s Cor: ", head->pont.nEntradas,head->pont.nSaidas, head->pont.TipoDePonto);
+	   printCor(head->pont.cor);
        head=head->RA;
     }
 }
@@ -285,7 +294,7 @@ void eliminaLinha(FERROVIA* lista[], COMBOIO* todos[]){
                break;
            //}
         }
-    }
+	}
     if (head==NULL){
         // se nao existirem linhas, esta condição é sempre verificada.
        printf("ERRO, ID de linha nao encontrado");
@@ -314,8 +323,9 @@ void eliminaLinha(FERROVIA* lista[], COMBOIO* todos[]){
         free(temp);
         temp = NULL;
     }
-    printf("FERROVIA %s ELIMINADA \n", lident);
+    printf("FERROVIA %s ELIMINADA EPIC STYLE B) \n", lident);
 }
+
 /* funções de apoio e debug*/
 
 void verificaAcessos(FERROVIA* lista[],char ident[]){
@@ -432,13 +442,37 @@ void trocaCarris(FERROVIA* PercursoA, COMBOIO *todos[]){
     }
 }
 
-void mostraCores(int cores[DIMCores][DIMrgb]){
+/*void mostraCores(int cores[DIMCores][DIMrgb]){ funcao de apoio a debug
     int i,j;
     for(i=0;i<DIMCores;i++){
         for(j=0;j<DIMrgb;j++)
             printf("%d, ", cores[i][j]);
         printf("\n");
     };
+}*/
+
+void printCor(int corc){
+	if (corc == VERMELHO){
+        printf("VERMELHO \n");
+    }else if (corc == AMARELO) {
+        printf("AMARELO \n");
+    }else if (corc == CYAN) {
+        printf("CYAN \n");
+    }else if (corc == ROXO) {
+        printf("ROXO \n");
+    }else if (corc == VERDE) {
+        printf("VERDE \n");
+    }else if (corc == CASTANHO) {
+        printf("CASTANHO \n");
+    }else if (corc == PRETO){
+        printf("PRETO \n");
+    }else if (corc == CINZENTO) {
+        printf("CINZENTO \n");
+    }else if (corc == BRANCO) {
+        printf("BRANCO \n");
+    }else if (corc == AZUL) {
+        printf("AZUL \n");
+	}
 }
 
 int convCor(char corestr[]){
