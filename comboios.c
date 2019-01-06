@@ -375,15 +375,14 @@ void verifica_na_linhaComboios(COMBOIO* todos[], char lident[], FERROVIA* todas[
     }
     for (i=0;i<MAX && todos[i] != NULL; i++){
 
-        for(temp=todos[i],d=temp->cart.nCarruagens; temp != NULL; temp=temp->prox, d--){
+         if(todos[i]->cart.linha_actual != NULL && strcmp(todos[i]->cart.linha_actual->lident,lident)==0) {
 
-            if(temp->cart.linha_actual != NULL && strcmp(temp->cart.linha_actual->lident,lident)==0) {
+            for(temp=todos[i],d=temp->cart.nCarruagens; temp != NULL; temp=temp->prox, d--){
+                PosInicial(temp, todas);
 
-                temp->cart.linha_actual->RA=NULL;
                 for (z=d*2*temp->cart.DimBOLAS; z>0 ; z--) {
                     moveCarr(temp,todas);
                 }
-
             }
         }
     }
