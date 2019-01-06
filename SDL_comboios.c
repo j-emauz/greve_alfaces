@@ -446,11 +446,7 @@ int SDLsuspenso(COMBOIO *todos[], FERROVIA *todas[], int dimJanela[], int cores[
 				if(verificaColisoes(todos)==1){
 					printf("ERRO, COMBOIOS INICIADOS PARA ALÉM DA DISTÂNCIA DE SEGURANÇA \n");
 
-					SDL_DestroyRenderer(g_pRenderer);
-					g_pRenderer=NULL;
-
-					SDL_Quit();
-					gfxPrimitivesSetFont(NULL, 0, 0);
+					exit(0);
 
 				}
 				break;
