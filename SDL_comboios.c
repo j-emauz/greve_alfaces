@@ -11,10 +11,10 @@ void PosInicial(COMBOIO *temp, FERROVIA* todas[]){
 int InicComboios(COMBOIO *todos[],int cores[][DIMrgb], FERROVIA* todas[]){
 	int i, d, z;
 	COMBOIO *temp;
-
+    //inicializa todos os comboios no vetor de endereços COMBOIO
 	for(i=0;i<MAX&&todos[i]!=NULL;++i){
 		d=4;
-		for(temp=todos[i];temp!=NULL; temp=temp->prox, d--){
+		for(temp=todos[i];temp!=NULL; temp=temp->prox, d--){//
             temp->PARACOMBOIO = false;
 			PosInicial(temp, todas);
 			for(z= d * 2 * (temp->cart.DimBOLAS); z>0; z--){

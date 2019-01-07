@@ -82,13 +82,12 @@ void eliminaLinha(FERROVIA* lista[],COMBOIO* todos[]);
 /*-------Funções de apoio\debug------*/
 void verifica_na_linhaComboios(COMBOIO* todos[], char lident[], FERROVIA* todas[]);
 int verificaColisoes(COMBOIO* lista[]);//verifica se existem colisoes entre comboios
-
-void verificaAcessos(FERROVIA* head[],char ident[]);//ao eliminar linha, a funçao corrige o num de entradas e saidas de cada ponto afectado pela eliminação
+void verificaAcessos(FERROVIA* head[],char ident[]);//ao eliminar linha, corrige o num de entradas e saidas de cada ponto afectado
 int convCor(char corestr[]);// converte o string das cores para inteiros pre definidos
 FERROVIA* procuraID(FERROVIA* lista[],char lident[],char IDE_X[]);// procura por um ID de ponto especifico nas linhas existentes
 //void mostraCores(int cores[DIMCores][DIMrgb]); // apoio e debug
 void printCor(int corc);// obtem um inteiro faz print da cor (pre-definida) correspondente
-void trocaCarris(FERROVIA* PercursoA, COMBOIO* todos[]);//troca a ROTA A pela ROTA B, faz uma troca de proximo endereço na lista de linhas
+void trocaCarris(FERROVIA* PercursoA, COMBOIO* todos[]);//faz uma troca de proximo endereço na lista de linhas
 int nPontos(FERROVIA* lista);//retorna o numero de pontos numa linha
 /*LER, funções para obter informação do ficheiro de config*/
 int ler(char *argv[], COMBOIO *todos[], FERROVIA *todas[], int jancoord[]);//funcao geral para ler o ficheiro de configuracao
@@ -111,7 +110,7 @@ int InicComboios(COMBOIO *todos[],int cores[][DIMrgb], FERROVIA* todas[]);//inic
 void trajectoriaComb(COMBOIO* todo, int cores[][DIMrgb], FERROVIA* todas[]);//trata do deslocamento dos comboios
 void SDL_desenhaButoesHUD(int dimJanela[]);// desenha os butoes no SDL
 int RegistoDeEventos(FERROVIA *todas[], COMBOIO *todos[], SDL_Event *event, int dimJanela[], int cores[][DIMrgb]);//permite detectar eventos na janela grafica, por ex carregar nos butoes
-void clicaPonto(FERROVIA *toda, int x, int y,COMBOIO *todos[]);//detecta o click no ponto e altera a via se houver via alternativa, atraces do Troca carris
+void clicaPonto(FERROVIA *toda, int x, int y,COMBOIO *todos[]);//detecta o click no ponto e altera a via se houver via alternativa, através do Troca carris
 void menuSDL(char *opcao, SDL_Event *event, int dimJanela[]);//menu durante o "suspender"
 int SDLsuspenso(COMBOIO *todos[], FERROVIA *todas[], int dimJanela[], int cores[][DIMrgb], SDL_Event *event);//chama o menuSDL, permite inicializar comboios criados
 int SDL_verificaContinua(int dimJanela[], SDL_Event *event);//verificar o click no butao continua
