@@ -1,7 +1,7 @@
 #include "comboios.h"
 
 int main(int argc, char *argv[]){
-    srand(time(NULL));
+    srand(time(NULL));//inicializa seed de rand()
     int cores[DIMCores][DIMrgb]={ {255,0,0,255},// vermelho
                                   {0,0,255,255},// azul
                                   {255,255,0,255},// AMARELO
@@ -15,8 +15,8 @@ int main(int argc, char *argv[]){
     int i=0;
     int jancoord[2];
     char opcao='0';
-    COMBOIO* todos[MAX];
-    FERROVIA* todas[MAX];
+    COMBOIO* todos[MAX];//vetor de endereços de COMBOIO (guarda todos os comboios)
+    FERROVIA* todas[MAX];//vetor de endereços de FERROVIA (guarda todas as linhas)
     for (i=0;i<MAX;i++){
         todos[i]=NULL;
         todas[i]=NULL;
@@ -31,8 +31,7 @@ int main(int argc, char *argv[]){
 	do{
 		menu(&opcao);
 		fflush(stdin);
-		switch(opcao)
-		{
+		switch(opcao){
 			case '1': // MOSTRA FERROVIA
 				mostraLinha(todas);
 				break;
