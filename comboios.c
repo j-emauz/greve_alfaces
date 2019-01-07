@@ -2,8 +2,7 @@
 void menu(char *opcao){
 	char linha[MAX];
 	char teste;
-	getchar();
-
+	getchar();//limpa input do teclado
 	printf ("\nEscolha uma das opções \n"
 				"0 - Terminar programa \n"
 				"1 - Mostrar a informação de uma ferrovia \n"
@@ -36,10 +35,10 @@ COMBOIO* inicComboios(CARRUAGEM dados){
 	head->prox=NULL;
 	head->cart=dados;
     head->nServicoInicial=dados.nservico;
-	dados.locomotiva = 0;
 
+	dados.locomotiva = 0;// posteriormente é atribuido o valor de 1 para a locomotiva
 	for(i=1; i<dados.nCarruagens; ++i){
-		dados.cor = rand()%10;
+		dados.cor = rand()%10;//
 		head = addComboio(head, dados);
 	}
     return head;
@@ -65,15 +64,13 @@ COMBOIO* addComboio(COMBOIO* head,CARRUAGEM dados){
 void eliminaComboio(COMBOIO* todos[]){
 
     char cident[MAX];
-    if (listaComboio(todos,1)==0){
+    if (listaComboio(todos,1)==0){//se nao existirem comboios fecha a funçao
         return;
     }
     /*Procura de COMBOIO A ELIMINAR*/
     printf("Inserir ID do comboio a eliminar \n");
     scanf("%s", cident);
-    libertaComboio(cident,todos);
-
-
+    libertaComboio(cident,todos);//clear no bloco de memoria e rearranja os endereços no vetor de endereços
 }
 int listaComboio(COMBOIO* lista[],int k){
     // se K < 0 nao faz print, serve para funçoes que utilizem o lista mas nao precisem de printar a lista.
@@ -105,13 +102,11 @@ void mostraComboio(COMBOIO* lista[]) {
 
     printf("Inserir ID do Comboio a mostrar \n");
     scanf("%s",cident);
-    //printf("cident: %s \n", cident); debug
-
-    for (i=0; i<MAX&&lista[i]!=NULL ;i++){
-         if ( strcmp (cident, lista[i]->cart.cident)==0 ){
-             topo=lista[i];
-             break;
-         }
+    for (i=0; i<MAX&&lista[i]!=NULL ;i++){//percorre a lista e procura pelo ID
+        if ( strcmp (cident, lista[i]->cart.cident)==0 ){
+            topo=lista[i];
+            break;
+        }
     }
 
     if (topo==NULL){
@@ -197,17 +192,16 @@ FERROVIA* addLinha(FERROVIA* head,PONTOS dados){
         head=head->RA;
     }
     head->RA=novo;
-    head->pont.nSaidas = 1;
+    head->pont.nSaidas = 1;//se existe um proximo ponto entao este ponto tem 1 saída
     return temp;
 }
 void ligaLinhas(FERROVIA* lista[], char lident_Sai[], char lident_Recebe[],char ID_Sai[],char ID_Entra[]) {
-    /*FAZER VERIFICAÇAO DE NUMERO DE SAIDAS E ENTRADAS*/
     FERROVIA* ligaEntrada = NULL;
     FERROVIA* ligaSaida = NULL;
 
     ligaEntrada = procuraID(lista,lident_Recebe,ID_Entra);
     ligaSaida = procuraID(lista,lident_Sai,ID_Sai);
-
+    /*FAZER VERIFICAÇAO DE NUMERO DE SAIDAS E ENTRADAS*/
     if ( ligaSaida->pont.nSaidas == 2){
         printf("ERRO, Capacidade de saídas do ponto %s excedido \n",ID_Sai);
         return;
@@ -216,12 +210,12 @@ void ligaLinhas(FERROVIA* lista[], char lident_Sai[], char lident_Recebe[],char 
         return;
     }
 
-    if (ligaSaida -> RA==NULL) {
+    if (ligaSaida -> RA==NULL) {//prefere o RA
         ligaSaida -> RA = ligaEntrada;
         ligaSaida ->pont.nSaidas++;
         ligaEntrada ->pont.nEntradas++;
 
-    }else{
+    }else{//se estiver ocupado o RA liga pelo RB
         ligaSaida -> RB = ligaEntrada;
         ligaSaida ->pont.nSaidas++;
         ligaEntrada ->pont.nEntradas++;
@@ -266,7 +260,6 @@ void mostraLinha(FERROVIA* lista[]) {
     }
 
     while(head!=NULL && strcmp(lident,head->lident) == 0) {
-       //printf("endereço :  %p \n",(void*)head);
        printf("PONTO: %s, ",head->pont.pident);
        printf("Nº Entradas: %d,  Nº Saidas: %d, Tipo de Ponto: %s, Cor: ", head->pont.nEntradas,head->pont.nSaidas, head->pont.TipoDePonto);
 	   printCor(head->pont.cor);
@@ -321,35 +314,35 @@ void eliminaLinha(FERROVIA* lista[], COMBOIO* todos[]){
 }
 /* funções de apoio e debug*/
 void verificaAcessos(FERROVIA* lista[],char ident[]){
-    //queremos que a todas as linhas com saída para a linha com ID "ident" seja reduzida 1 saída.
-    //queremos que a todas as linhas com entradas provenientes da linha com ID "ident" seja reduzida 1 entrada.
+    /*queremos que a todas as linhas com saída para a linha com ID "ident" seja reduzida 1 saída.
+    queremos que a todas as linhas com entradas provenientes da linha com ID "ident" seja reduzida 1 entrada.*/
     int k,p,l;
     FERROVIA* temp;
-    //É preciso só verificar um numero p de pontos que será o numero total de pontos da linha K.
     for(k=0, temp=lista[k]; lista[k] != NULL && k<MAX ; k++,temp=lista[k]) { // percorremos todas as linhas existentes.
-
+        //É preciso só verificar um numero p de pontos que será o numero total de pontos da linha K.
         l=nPontos(lista[k]);// aqui para só correr uma vez e não p vezes no while
         for(p=0; p < l;p++) {
-            if(temp->RA !=NULL){//
-                if ( strcmp(temp->RA->lident,ident) == 0 && strcmp(temp->lident,ident)!=0 ){//se a proximo ponto(RA) pertencer à estação a eliminar e não estivermos sobre ela
-
+            if(temp->RA !=NULL){
+                //se a proximo ponto(RA) pertencer à estação a eliminar e não estivermos sobre ela
+                if ( strcmp(temp->RA->lident,ident) == 0 && strcmp(temp->lident,ident)!=0 ){
                     temp->pont.nSaidas--;
                     temp->RA= NULL;
                     if (temp->RB !=NULL){
                         temp->RA = temp->RB;
                         temp->RB = NULL; // é suposto perder informação de uma das saídas
                     }
-
-                }else if(strcmp(temp->lident,ident)==0 && strcmp(temp->RA->lident,ident) != 0) {//estamos sobre a estaçao a eliminar mas o prox ponto nao pertence a ela
+                //estamos sobre a estaçao a eliminar mas o prox ponto nao pertence a ela
+                }else if(strcmp(temp->lident,ident)==0 && strcmp(temp->RA->lident,ident) != 0) {
                     temp->RA->pont.nEntradas--;
                 }
             }
             if (temp->RB != NULL){//nem sempre existe
-                if ( strcmp(temp->RB->lident,ident) == 0 && strcmp(temp->lident,ident) != 0){//se a proximo ponto(RB) pertencer à estação a eliminar e não estivermos sobre ela
+                //se a proximo ponto(RB) pertencer à estação a eliminar e não estivermos sobre ela
+                if ( strcmp(temp->RB->lident,ident) == 0 && strcmp(temp->lident,ident) != 0){
                     temp ->pont.nSaidas --;
                     temp ->RB = NULL;
-
-                }else if(strcmp(temp->lident,ident)== 0 && strcmp(temp->RB->lident,ident) != 0) {//estamos sobre a estaçao a eliminar mas o prox ponto nao pertence a ela
+                //estamos sobre a estaçao a eliminar mas o prox ponto nao pertence a ela
+                }else if(strcmp(temp->lident,ident)== 0 && strcmp(temp->RB->lident,ident) != 0) {
                     temp->RB->pont.nEntradas--;
                 }
             }
@@ -360,7 +353,7 @@ void verificaAcessos(FERROVIA* lista[],char ident[]){
 void verifica_na_linhaComboios(COMBOIO* todos[], char lident[], FERROVIA* todas[]){
     int i,d,z;
     COMBOIO* temp;
-
+    //procurar comboios pertencentes à linha a ser eliminada, para eliminá-los.
     for (i=0;i<MAX && todos[i] != NULL ;i++){
         if(strcmp(todos[i]->cart.lident,lident)==0 ){
             printf("Comboio: %s, pertencente à linha %s foi eliminado \n",todos[i]->cart.cident,lident);
@@ -368,7 +361,7 @@ void verifica_na_linhaComboios(COMBOIO* todos[], char lident[], FERROVIA* todas[
             i=0;//Temos que voltar a verificar de inicio pois a lista foi reordenada.
         }
     }
-    for (i=0;i<MAX && todos[i] != NULL; i++){
+    for (i=0;i<MAX && todos[i] != NULL; i++){//devolver comboios de outras linhas à sua linha original
 
          if(todos[i]->cart.linha_actual != NULL && strcmp(todos[i]->cart.linha_actual->lident,lident)==0) {
 
@@ -385,7 +378,7 @@ void verifica_na_linhaComboios(COMBOIO* todos[], char lident[], FERROVIA* todas[
 FERROVIA* procuraID(FERROVIA* lista[],char lident[],char IDE_X[]){
     int i,p;
     FERROVIA* TempX=NULL;
-
+    //procura a linha por ID
     for(i=0;i<MAX;i++){
         if (lista[i]!=NULL){
             if( strcmp(lident,lista[i]->lident) == 0 ) {
@@ -399,7 +392,7 @@ FERROVIA* procuraID(FERROVIA* lista[],char lident[],char IDE_X[]){
        exit(0);
     }
     p = nPontos(TempX);
-
+    //procura na linha encontrada, se existir, pelo id do ponto.
     for (i=0; i<p; i++) {
             if(strcmp(TempX->pont.pident,IDE_X)==0){
                 return TempX;
@@ -497,7 +490,7 @@ void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 	char cor[MAX], ident[MAX];
 	int i;
 	FERROVIA* head = NULL;
-    memset(nova.cident,0,3);
+    memset(nova.cident,0,3);//estes memsets servem para limpar potencial lixo
     memset(nova.lident,0,5);
     memset(nova.pident,0,5);
 	printf("Comboios existentes: ");
@@ -531,10 +524,10 @@ void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 	printf("Escolha a linha para a posição inicial diante das existentes(SEM ESPAÇOS)\n:");
 	if(listaFerrovias(todas)==0)
 		return;
-    memset(ident,0,MAX);
-	scanf("%s", ident);
+    memset(ident,0,MAX);//limpa
+	scanf("%s", ident);//obtem novos dados
     strncpy(nova.lident,ident,dimLIDENT-1);
-	for(i=0; i<MAX&&todas[i]!=NULL;++i){
+	for(i=0; i<MAX&&todas[i]!=NULL;++i){//procura linha para colocar o comboio
 		if(strcmp(nova.lident, todas[i]->lident)==0){
 			head=todas[i];
 			break;
@@ -588,15 +581,13 @@ int verificaColisoes(COMBOIO* lista[]){
     int k,m,ret = 0;
     double distancia=0;
     int nComboios=listaComboio(lista,0);
-    if (nComboios > 1){
-
+    if (nComboios > 1){// verifica se existirem pelo menos 2 comboios
         for (k=0;k<nComboios;k++){
             for (m=0;m<nComboios;m++){
 				if(m!=k){//para que nao se compare o mesmo comboio
 					for(compara=lista[m];compara!=NULL;compara=compara->prox){
 						if(strcmp(lista[k]->cart.linha_actual->lident,compara->cart.linha_actual->lident)==0){
 							distancia = (compara->cart.DimBOLAS+lista[k]->cart.DimBOLAS) + sqrt(  pow( lista[k]->cart.PosiNoGraf[coordX] - compara->cart.PosiNoGraf[coordX],2) + pow(lista[k]->cart.PosiNoGraf[coordY] - compara->cart.PosiNoGraf[coordY],2 ) );
-
 							if(distancia < DISTSEG ){
 								ret = 1;
 								for(temp=lista[k];temp!=NULL;temp=temp->prox)
