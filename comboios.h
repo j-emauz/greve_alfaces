@@ -21,7 +21,7 @@
 #define coordX 0 //
 #define coordY 1
 #define DISTSEG 40 // distancia de segurança entre comboios
-/*--------------------------------------------------------------------------------*/
+/*----------------------------*/
 typedef struct pontoslinha{
 	char pident[dimPIDENT];//ID do ponto
 	int coord[2];// em pixeis
@@ -59,7 +59,7 @@ typedef struct comboio{//lista de 4 carruagens
 	int nServicoInicial;//permite fazer reset do num de serviços dos comboios no SDL
 	struct comboio *prox; // aponta para a prox carruagem
 }COMBOIO;
-/* ----------------------------------------------------------------------------------- */
+/* -----------------------------------*/
 void menu(char *opcao);//menu
 /*ADDS*/
 COMBOIO* addComboio(COMBOIO* head,CARRUAGEM dados); //adiciona carruagens no fim da lista

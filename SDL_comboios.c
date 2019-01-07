@@ -100,8 +100,7 @@ void trajectoriaComb(COMBOIO* todo, int cores[][DIMrgb], FERROVIA* todas[]){//de
 void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[][DIMrgb]){
     SDL_Init(SDL_INIT_EVERYTHING);
     COMBOIO *temp = NULL;
-    int end_game = 1;
-	int i;
+    int end_game = 1, i;
 
     if(SDL_Init(SDL_INIT_EVERYTHING) >= 0){//se SDL inicializado corretamente
 		g_pWindow = SDL_CreateWindow("ComboioSim", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, dimJanela[coordX], dimJanela[coordY], SDL_WINDOW_SHOWN);
@@ -115,7 +114,6 @@ void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[
 	SDL_Event event;//inicializa evento
 	SDL_unepontos(todas);//usa for_pontos para escrever linhas
 	SDL_escrevePontos(todas,cores);//mostra pontos das linhas
-
 	if(SDL_inicComboios(todos, cores, todas)==1){
         printf("ERRO, COMBOIOS INICIADOS PARA ALÉM DA DISTÂNCIA DE SEGURANÇA \n");
         SDL_DestroyRenderer(g_pRenderer);
@@ -125,7 +123,6 @@ void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[
 	}
 	SDL_RenderPresent(g_pRenderer);
 	SDL_Delay(1000);
-
     do{
         SDL_SetRenderDrawColor(g_pRenderer, cores[BRANCO][R], cores[BRANCO][G], cores[BRANCO][B], cores[BRANCO][ALPA]);
         SDL_RenderClear(g_pRenderer);// pinta o ecra da cor acima
@@ -133,19 +130,16 @@ void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[
 		SDL_unepontos(todas);
         SDL_escrevePontos(todas,cores);
         verificaColisoes(todos);//verifica colisoes entre todos os comboios
-
 		for(i=0;i<MAX&&todos[i]!=NULL;i++){//para mover todos os comboios
 			trajectoriaComb(todos[i], cores, todas);
 		}
 		SDL_RenderPresent(g_pRenderer);
 		SDL_Delay(15);//velocidade de simulação
-		while(SDL_PollEvent(&event)){//recebe primeiro evento da queue de eventos
+		while(SDL_PollEvent(&event)){//recebe primeiro evento da queue
 			end_game = RegistoDeEventos(todas, todos, &event, dimJanela, cores);
 		}
-
     }while(end_game);//ate fazer SDL_QUIT
-    /* limpar SDL */
-    SDL_DestroyRenderer(g_pRenderer);
+    SDL_DestroyRenderer(g_pRenderer);//limpar SDL
     g_pRenderer=NULL;
     SDL_Quit();
     gfxPrimitivesSetFont(NULL, 0, 0);
@@ -153,7 +147,7 @@ void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[
     for(i=0;todos[i]!=NULL && i<MAX; i++){
         for(temp = todos[i]; temp !=NULL ; temp = temp->prox){
             if(temp->cart.locomotiva==0)
-                temp->cart.cor = rand()%DIMCores;//da para jogar jogo outra vez com mesmos comboios, cores diferentes
+                temp->cart.cor = rand()%DIMCores;//da.para.jogar.outra.vez.com.comboios
             temp->cart.nservico= todos[i]->nServicoInicial;
         }
     }
@@ -188,26 +182,26 @@ void SDL_escrevePontos(FERROVIA *todas[],int cores[][DIMrgb]){
     }
 }
 void for_pontos(FERROVIA *head1, FERROVIA* head2){
-		FERROVIA *head3, *headtemp;
-		char lident[MAX];
-		strcpy(lident, head1->lident);
+	FERROVIA *head3, *headtemp;
+	char lident[MAX];
+	strcpy(lident, head1->lident);
 
-		for(; head1!=NULL && head2!=NULL && (strcmp(head1->lident, lident) == 0); head1 = head1->RA, head2 = head2->RA){
-			SDL_SetRenderDrawColor( g_pRenderer, 0, 0, 0, 255 );//se unir por RA a linha é preta(por onde passa comboio)
-			SDL_RenderDrawLine(g_pRenderer, head1->pont.coord[coordX], head1->pont.coord[coordY], head2->pont.coord[coordX], head2->pont.coord[coordY]);
+	for(; head1!=NULL && head2!=NULL && (strcmp(head1->lident, lident) == 0); head1 = head1->RA, head2 = head2->RA){
+		SDL_SetRenderDrawColor( g_pRenderer, 0, 0, 0, 255 );//se unir por RA a linha é preta(por onde passa comboio)
+		SDL_RenderDrawLine(g_pRenderer, head1->pont.coord[coordX], head1->pont.coord[coordY], head2->pont.coord[coordX], head2->pont.coord[coordY]);
+		
+		if(head1->RB!=NULL){
+			head3 = head1->RB;
+			SDL_SetRenderDrawColor( g_pRenderer, 255, 0, 0, 255 );//se unir por RB linha é vermelha
+			SDL_RenderDrawLine(g_pRenderer, head1->pont.coord[coordX], head1->pont.coord[coordY], head3->pont.coord[coordX], head3->pont.coord[coordY]);
 
-			if(head1->RB!=NULL){
-				head3 = head1->RB;
-				SDL_SetRenderDrawColor( g_pRenderer, 255, 0, 0, 255 );//se unir por RB linha é vermelha
-				SDL_RenderDrawLine(g_pRenderer, head1->pont.coord[coordX], head1->pont.coord[coordY], head3->pont.coord[coordX], head3->pont.coord[coordY]);
-
-				if((strcmp(head1->lident,head3->lident)==0) &&(head3->RA!=NULL)) {
-                    headtemp= head3;
-                    head3 = head3 ->RA;
-                    for_pontos(headtemp, head3);//para continuar a unir caso linhas estejam trocadas
-                    }
-                }
-			}
+			if((strcmp(head1->lident,head3->lident)==0) &&(head3->RA!=NULL)) {
+				headtemp= head3;
+				head3 = head3 ->RA;
+				for_pontos(headtemp, head3);//para continuar a unir caso linhas estejam trocadas
+            }
+        }
+	}
 }
 void SDL_desenhaButoesHUD(int dimJanela[]){
     SDL_Rect r1;
