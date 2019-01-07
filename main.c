@@ -15,8 +15,8 @@ int main(int argc, char *argv[]){
     int i=0;
     int jancoord[2];
     char opcao='0';
-    COMBOIO* todos[MAX];//vetor de endereços de COMBOIO (guarda todos os comboios)
-    FERROVIA* todas[MAX];//vetor de endereços de FERROVIA (guarda todas as linhas)
+    COMBOIO* todos[MAX];//vetor de endereços de COMBOIO (guarda os comboios)
+    FERROVIA* todas[MAX];//vetor de endereços de FERROVIA (guarda as linhas)
     for (i=0;i<MAX;i++){
         todos[i]=NULL;
         todas[i]=NULL;
