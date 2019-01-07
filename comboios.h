@@ -10,7 +10,7 @@
 #include <math.h>
 #include "cores.h"
 /*-------------------*/
-#define MAX 2000
+#define MAX 500
 /*---------defines para dims----------*/
 #define dimEST 5
 #define dimVIA 3
@@ -23,7 +23,7 @@
 #define DISTSEG 40 // distancia de segurança entre comboios
 /*--------------------------------------------------------------------------------*/
 typedef struct pontoslinha{
-	char pident[dimPIDENT];
+	char pident[dimPIDENT];//ID do ponto
 	int coord[2];// em pixeis
 	int cor; // cor=VERMELHO
 	char TipoDePonto[4];//VIA, EST, ponto de via nao aparece ID no boneco
@@ -33,7 +33,7 @@ typedef struct pontoslinha{
 
 }PONTOS;
 
-typedef struct ferrolinha {
+typedef struct ferrolinha {//lista de pontos
 	char lident[dimLIDENT];//ID da linha
 	PONTOS pont;//struct que contem os dados do Ponto
 	struct ferrolinha *RA;// abreviado de ROTA A
@@ -41,7 +41,7 @@ typedef struct ferrolinha {
 }FERROVIA;
 
 typedef struct carr {
-	char cident[dimCIDENT];//BA
+	char cident[dimCIDENT];//ID do comboio (sempre igual para cada carruagem
 	int nCarruagens;//numero de carruagens( dimensao)
 	int DimBOLAS; // raio em pixeis
 	int cor; /* cor do comboio é cor da locomotiva, primeira CARRUAGEM*/
@@ -53,14 +53,14 @@ typedef struct carr {
     FERROVIA* linha_actual;//linha atual do comboio, endereço.
 }CARRUAGEM;
 
-typedef struct comboio{
+typedef struct comboio{//lista de 4 carruagens
 	CARRUAGEM cart;
 	bool PARACOMBOIO;// se true o comboio para e vice versa.
 	int nServicoInicial;//permite fazer reset do num de serviços dos comboios no SDL
 	struct comboio *prox; // aponta para a prox carruagem
 }COMBOIO;
 /* ----------------------------------------------------------------------------------- */
-void menu(char *opcao);
+void menu(char *opcao);//menu
 /*ADDS*/
 COMBOIO* addComboio(COMBOIO* head,CARRUAGEM dados); //adiciona carruagens no fim da lista
 FERROVIA* addLinha(FERROVIA* head,PONTOS dados);//adiciona linhas a lista existente
