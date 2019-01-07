@@ -8,7 +8,7 @@ void PosInicial(COMBOIO *temp, FERROVIA* todas[]){
     temp->cart.PosiNoGraf[coordX] = temp->cart.linha_actual->pont.coord[coordX];
     temp->cart.PosiNoGraf[coordY] = temp->cart.linha_actual->pont.coord[coordY];
 }
-int InicComboios(COMBOIO *todos[],int cores[][DIMrgb], FERROVIA* todas[]){
+int SDL_inicComboios(COMBOIO *todos[],int cores[][DIMrgb], FERROVIA* todas[]){
 	int i, d, z;
 	COMBOIO *temp;
     //inicializa todos os comboios no vetor de endereços COMBOIO
@@ -118,7 +118,7 @@ void abreJanela(int dimJanela[], COMBOIO *todos[], FERROVIA *todas[], int cores[
 	SDL_unepontos(todas);
 	SDL_escrevePontos(todas,cores);
 
-	if(InicComboios(todos, cores, todas)==1){
+	if(SDL_inicComboios(todos, cores, todas)==1){
         printf("ERRO, COMBOIOS INICIADOS PARA ALÉM DA DISTÂNCIA DE SEGURANÇA \n");
         SDL_DestroyRenderer(g_pRenderer);
         g_pRenderer=NULL;

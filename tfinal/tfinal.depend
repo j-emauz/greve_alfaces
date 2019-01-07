@@ -72,7 +72,7 @@
 1546817378 source:/media/sf_Prog/ProjetoFinal/comboios.c
 	"comboios.h"
 
-1546818802 /media/sf_Prog/ProjetoFinal/comboios.h
+1546861057 /media/sf_Prog/ProjetoFinal/comboios.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -83,7 +83,7 @@
 	<math.h>
 	"cores.h"
 
-1546793314 /media/sf_Prog/ProjetoFinal/cores.h
+1546860580 /media/sf_Prog/ProjetoFinal/cores.h
 
 1546816084 source:/media/sf_Prog/ProjetoFinal/ler.c
 	"comboios.h"

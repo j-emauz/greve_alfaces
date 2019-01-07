@@ -67,8 +67,8 @@ FERROVIA* addLinha(FERROVIA* head,PONTOS dados);//adiciona linhas a lista existe
 void ligaLinhas(FERROVIA* Lista[], char lident_Sai[], char lident_Recebe[],char ID_Sai[],char ID_Entra[]);
 //faz as ligações especificadas pelo ficheiro de config
 /*INITS*/
-COMBOIO* inicComboios(CARRUAGEM dados);//inicializa um comboio
-FERROVIA* inicLinha(char lident[], PONTOS dados);//inicializa linhas
+COMBOIO* inicComboios(CARRUAGEM dados);//inicializa um comboio com alocação de memória
+FERROVIA* inicLinha(char lident[], PONTOS dados);//inicializa linhas com alocação de memória
 /*MOSTRAS*/
 void mostraComboio(COMBOIO* lista[]);//mostra info sobre comboio
 void mostraLinha(FERROVIA* lista[]);//mostra info sobre linha
@@ -106,7 +106,7 @@ void SDL_unepontos(FERROVIA *todas[]); // desenha a ligação dos pontos
 void for_pontos(FERROVIA *head1, FERROVIA* head2);// apoio ao desenho da ligação de pontos
 void moveCarr(COMBOIO *temp, FERROVIA* todas[]);//move cada carruagem e verifica se passa numa estação de cor igual
 void PosInicial(COMBOIO *temp, FERROVIA* todas[]);//apoio ao inicComboios, dá as posições iniciais das carr
-int InicComboios(COMBOIO *todos[],int cores[][DIMrgb], FERROVIA* todas[]);//inicia os comboios no ponto inicial, desenha os comboios
+int SDL_inicComboios(COMBOIO *todos[],int cores[][DIMrgb], FERROVIA* todas[]);//inicia os comboios no ponto inicial, desenha os comboios
 void trajectoriaComb(COMBOIO* todo, int cores[][DIMrgb], FERROVIA* todas[]);//trata do deslocamento dos comboios
 void SDL_desenhaButoesHUD(int dimJanela[]);// desenha os butoes no SDL
 int RegistoDeEventos(FERROVIA *todas[], COMBOIO *todos[], SDL_Event *event, int dimJanela[], int cores[][DIMrgb]);//permite detectar eventos na janela grafica, por ex carregar nos butoes
