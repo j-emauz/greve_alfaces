@@ -44,7 +44,6 @@ COMBOIO* inicComboios(CARRUAGEM dados){
 	}
     return head;
 }
-
 COMBOIO* addComboio(COMBOIO* head,CARRUAGEM dados){
     COMBOIO* temp = head;
     COMBOIO* novo = (COMBOIO*) calloc(1,sizeof(COMBOIO) );
@@ -180,7 +179,6 @@ FERROVIA* inicLinha(char lident[], PONTOS dados){
     head->pont = dados;
     return head;
 }
-
 FERROVIA* addLinha(FERROVIA* head,PONTOS dados){
     FERROVIA* temp=head;
     FERROVIA* novo=(FERROVIA*)calloc(1,sizeof(FERROVIA));
@@ -202,7 +200,6 @@ FERROVIA* addLinha(FERROVIA* head,PONTOS dados){
     head->pont.nSaidas = 1;
     return temp;
 }
-
 void ligaLinhas(FERROVIA* lista[], char lident_Sai[], char lident_Recebe[],char ID_Sai[],char ID_Entra[]) {
     /*FAZER VERIFICAÇAO DE NUMERO DE SAIDAS E ENTRADAS*/
     FERROVIA* ligaEntrada = NULL;
@@ -230,7 +227,6 @@ void ligaLinhas(FERROVIA* lista[], char lident_Sai[], char lident_Recebe[],char 
         ligaEntrada ->pont.nEntradas++;
     }
 }
-
 int listaFerrovias(FERROVIA* lista[]){
     int i;
     printf("Lista de Ferrovias: ");
@@ -246,7 +242,6 @@ int listaFerrovias(FERROVIA* lista[]){
     printf("\nTotal de ferrovias: %d\n",i);
     return i;
 }
-
 void mostraLinha(FERROVIA* lista[]) {
     if(listaFerrovias(lista)==0){
         return;
@@ -278,7 +273,6 @@ void mostraLinha(FERROVIA* lista[]) {
        head=head->RA;
     }
 }
-
 void eliminaLinha(FERROVIA* lista[], COMBOIO* todos[]){
     FERROVIA* temp = NULL;
     FERROVIA* head = NULL;
@@ -363,7 +357,6 @@ void verificaAcessos(FERROVIA* lista[],char ident[]){
         }
     }
 }
-
 void verifica_na_linhaComboios(COMBOIO* todos[], char lident[], FERROVIA* todas[]){
     int i,d,z;
     COMBOIO* temp;
@@ -389,7 +382,6 @@ void verifica_na_linhaComboios(COMBOIO* todos[], char lident[], FERROVIA* todas[
         }
     }
 }
-
 FERROVIA* procuraID(FERROVIA* lista[],char lident[],char IDE_X[]){
     int i,p;
     FERROVIA* TempX=NULL;
@@ -417,7 +409,6 @@ FERROVIA* procuraID(FERROVIA* lista[],char lident[],char IDE_X[]){
     printf("ERRO, ID de ponto nao encontrado, verificar ficheiro de config!");
     exit(0);
 }
-
 void trocaCarris(FERROVIA* PercursoA, COMBOIO *todos[]){
     int i,k=0;
     COMBOIO* temp;
@@ -464,7 +455,6 @@ void printCor(int corc){
         printf("AZUL \n");
 	}
 }
-
 int convCor(char corestr[]){
     if ( strcmp(corestr,"VERMELHO") == 0 ){
         return VERMELHO;
@@ -492,7 +482,6 @@ int convCor(char corestr[]){
         return 100;
     }
 }
-
 int nPontos(FERROVIA* lista){
     if (lista == NULL)
         return 0;
@@ -503,7 +492,6 @@ int nPontos(FERROVIA* lista){
     }
     return numero;
 }
-
 void criarComboio(COMBOIO *todos[], FERROVIA *todas[]){
 	CARRUAGEM nova;
 	char cor[MAX], ident[MAX];
@@ -595,7 +583,6 @@ void mostraPontos(FERROVIA *todas[], char lident[]){
        head=head->RA;
     }
 }
-
 int verificaColisoes(COMBOIO* lista[]){
     COMBOIO *temp, *compara;
     int k,m,ret = 0;
